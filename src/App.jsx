@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PemesananPage from "./pages/PemesananPage/PemesananPage";
+import DetailConselor from "./pages/PemesananPage/DetailConselor";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<div>Home</div>} />
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/booking" element={<PemesananPage />} />
+        <Route path="/booking/:idKonselor" element={<DetailConselor />} />
       </Routes>
     </BrowserRouter>
   );
