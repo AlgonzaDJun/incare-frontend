@@ -12,14 +12,19 @@ import { Button, Label, Modal, Radio } from "flowbite-react";
 
 const DetailConselor = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [medKonseling, setMedKonseling] = useState(null)
+  const [medKonseling, setMedKonseling] = useState(null);
   const swiperRef = useRef();
 
   const handleMedKonseling = (e) => {
-    setOpenModal(false)
+    if (!medKonseling) {
+      alert("Pilih media konseling terlebih dahulu");
+      return;
+    }
+    setOpenModal(false);
     e.preventDefault();
-    console.log(medKonseling)
-  }
+    window.location.replace(`/payment/${medKonseling}`);
+    // console.log(medKonseling);
+  };
 
   return (
     <>
@@ -94,8 +99,8 @@ const DetailConselor = () => {
                     >
                       2
                     </th>
-                    <td className="px-6 py-4">29 September 2023</td>
-                    <td className="px-6 py-4">19.00-20.00</td>
+                    <td className="px-6 py-4">30 September 2023</td>
+                    <td className="px-6 py-4">16.00-17.00</td>
                     <td className="px-6 py-4">
                       <button
                         className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
@@ -112,8 +117,8 @@ const DetailConselor = () => {
                     >
                       3
                     </th>
-                    <td className="px-6 py-4">29 September 2023</td>
-                    <td className="px-6 py-4">19.00-20.00</td>
+                    <td className="px-6 py-4">31 September 2023</td>
+                    <td className="px-6 py-4">15.00-16.00</td>
                     <td className="px-6 py-4">
                       <button
                         className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
@@ -138,7 +143,12 @@ const DetailConselor = () => {
             <div className="">
               <fieldset className="flex max-w-md gap-4">
                 <div className="flex items-center gap-2">
-                  <Radio id="zoom" name="countries" value="zoom" onChange={() => setMedKonseling("zoom")} />
+                  <Radio
+                    id="zoom"
+                    name="countries"
+                    value="zoom"
+                    onChange={() => setMedKonseling("zoom")}
+                  />
                   <Label htmlFor="zoom">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +172,12 @@ const DetailConselor = () => {
                   </Label>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Radio id="chat" name="countries" value="chat" onChange={() => setMedKonseling("chat")} />
+                  <Radio
+                    id="chat"
+                    name="countries"
+                    value="chat"
+                    onChange={() => setMedKonseling("chat")}
+                  />
                   <Label htmlFor="chat">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -185,7 +200,10 @@ const DetailConselor = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="bg-incare-primary hover:bg-incare-darker" onClick={handleMedKonseling}>
+          <Button
+            className="bg-incare-primary hover:bg-incare-darker"
+            onClick={handleMedKonseling}
+          >
             Pesan Sekarang
           </Button>
         </Modal.Footer>

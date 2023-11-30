@@ -21,7 +21,7 @@ const CardConselor = ({
     <div className="max-w-[232px] bg-white border border-gray-200 rounded-lg shadow-xl dark:bg-gray-800 dark:border-gray-700 mx-6 my-6">
       <a href="#">
         <img
-          className="rounded-t-lg w-full h-48 object-cover"
+          className="rounded-t-lg w-full h-44 object-cover"
           src={imgKonselor}
           alt="image"
         />
