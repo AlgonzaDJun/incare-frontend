@@ -5,13 +5,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+
 import { Navigation, Pagination } from "swiper/modules";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { Button, Label, Modal, Radio } from "flowbite-react";
 
 const DetailConselor = () => {
-  // const navigationNextRef = useRef(null);
-  // const navigationPrevRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [medKonseling, setMedKonseling] = useState(null)
   const swiperRef = useRef();
+
+  const handleMedKonseling = (e) => {
+    setOpenModal(false)
+    e.preventDefault();
+    console.log(medKonseling)
+  }
 
   return (
     <>
@@ -71,7 +79,10 @@ const DetailConselor = () => {
                     <td className="px-6 py-4">29 September 2023</td>
                     <td className="px-6 py-4">19.00-20.00</td>
                     <td className="px-6 py-4">
-                      <button className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white">
+                      <button
+                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
+                        onClick={() => setOpenModal(true)}
+                      >
                         Pilih
                       </button>
                     </td>
@@ -86,7 +97,10 @@ const DetailConselor = () => {
                     <td className="px-6 py-4">29 September 2023</td>
                     <td className="px-6 py-4">19.00-20.00</td>
                     <td className="px-6 py-4">
-                      <button className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white">
+                      <button
+                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
+                        onClick={() => setOpenModal(true)}
+                      >
                         Pilih
                       </button>
                     </td>
@@ -101,7 +115,10 @@ const DetailConselor = () => {
                     <td className="px-6 py-4">29 September 2023</td>
                     <td className="px-6 py-4">19.00-20.00</td>
                     <td className="px-6 py-4">
-                      <button className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white">
+                      <button
+                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
+                        onClick={() => setOpenModal(true)}
+                      >
                         Pilih
                       </button>
                     </td>
@@ -112,11 +129,74 @@ const DetailConselor = () => {
           </div>
         </div>
       </div>
+
+      {/* MODAL */}
+      <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Header>Pilih Media Konseling</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6 flex">
+            <div className="">
+              <fieldset className="flex max-w-md gap-4">
+                <div className="flex items-center gap-2">
+                  <Radio id="zoom" name="countries" value="zoom" onChange={() => setMedKonseling("zoom")} />
+                  <Label htmlFor="zoom">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      x="0px"
+                      y="0px"
+                      width="50"
+                      height="50"
+                      viewBox="0 0 48 48"
+                    >
+                      <circle cx="24" cy="24" r="20" fill="#2196f3"></circle>
+                      <path
+                        fill="#fff"
+                        d="M29,31H14c-1.657,0-3-1.343-3-3V17h15c1.657,0,3,1.343,3,3V31z"
+                      ></path>
+                      <polygon
+                        fill="#fff"
+                        points="37,31 31,27 31,21 37,17"
+                      ></polygon>
+                    </svg>
+                    <p className="text-center">Video Call Zoom</p>
+                  </Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Radio id="chat" name="countries" value="chat" onChange={() => setMedKonseling("chat")} />
+                  <Label htmlFor="chat">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-12 h-w-12 text-incare-primary hover:text-incare-darker"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+
+                    <p className="text-center">Chat</p>
+                  </Label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="bg-incare-primary hover:bg-incare-darker" onClick={handleMedKonseling}>
+            Pesan Sekarang
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* END MODAL */}
+
       <div className="w-full p-7 relative box-border overflow-hidden">
         <h1 className="font-bold text-2xl">Rekomendasi Konselor Lainnya</h1>
 
         {/* CAROUSEL */}
-
         <div className="ml-12 lg:ml-0">
           <Swiper
             breakpoints={{
