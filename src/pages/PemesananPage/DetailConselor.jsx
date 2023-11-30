@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { useRef, useState } from "react";
 import { Button, Label, Modal, Radio } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 const DetailConselor = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -29,7 +30,25 @@ const DetailConselor = () => {
   return (
     <>
       <div className="w-full p-7 block md:grid grid-cols-2">
-        <div id="imgKonselor" className="flex items-center mt-9">
+        <div id="imgKonselor" className="mt-4">
+          <Link
+            to={"/booking"}
+            className="font-bold flex text-lg text-incare-primary hover:text-incare-darker mb-2 gap-3"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Kembali Pilih Konselor
+          </Link>
           <img
             src="https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg"
             alt=""
