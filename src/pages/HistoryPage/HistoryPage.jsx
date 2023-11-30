@@ -1,34 +1,48 @@
 import SidebarSecond from "../../components/SidebarSecond";
 
 const HistoryPage = () => {
+  const disabledRatingClass =
+    "text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center";
+  const enabledRatingClass =
+    "text-white bg-incare-primary hover:bg-incare-darker font-medium rounded-lg text-sm px-5 py-2.5 text-center";
+
   return (
     <SidebarSecond>
       <div className="p-4 flex-grow">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+          <h1 className="mt-10 text-2xl font-semibold text-gray-900 dark:text-white">
             Pertemuan Anda
           </h1>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-10 flex-grow w-[350px] md:w-auto">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table className=" overflow-x-scroll text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Product name
+                    No
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Color
+                    Nama Konselor
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Category
+                    Tanggal Konseling
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Price
+                    Jam Konseling
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    <span className="sr-only">Edit</span>
+                    Media Konseling
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Status Booking
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Aksi
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Rating
                   </th>
                 </tr>
               </thead>
@@ -38,18 +52,29 @@ const HistoryPage = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    Apple MacBook Pro 17
+                    1
                   </th>
-                  <td className="px-6 py-4">Silver</td>
-                  <td className="px-6 py-4">Laptop</td>
-                  <td className="px-6 py-4">$2999</td>
+                  <td className="px-6 py-4">Dr. Udin</td>
+                  <td className="px-6 py-4">12-12-2023</td>
+                  <td className="px-6 py-4">09.00-10.00</td>
+                  <td className="px-6 py-4">Zoom</td>
+                  <td className="px-6 py-4">PENDING</td>
                   <td className="px-6 py-4 text-right">
                     <a
                       href="#"
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
-                      Edit
+                      Mulai Konseling
                     </a>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <button
+                      type="button"
+                      className={disabledRatingClass}
+                      disabled
+                    >
+                      Rating
+                    </button>
                   </td>
                 </tr>
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -57,18 +82,29 @@ const HistoryPage = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    Microsoft Surface Pro
+                    2
                   </th>
-                  <td className="px-6 py-4">White</td>
-                  <td className="px-6 py-4">Laptop PC</td>
-                  <td className="px-6 py-4">$1999</td>
+                  <td className="px-6 py-4">Dr. Ajeng</td>
+                  <td className="px-6 py-4">23-11-2023</td>
+                  <td className="px-6 py-4">16.00-18.00</td>
+                  <td className="px-6 py-4">Chat</td>
+                  <td className="px-6 py-4">PAID</td>
                   <td className="px-6 py-4 text-right">
                     <a
                       href="#"
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
-                      Edit
+                      Mulai Konseling
                     </a>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <button
+                      type="button"
+                      className={disabledRatingClass}
+                      disabled
+                    >
+                      Rating
+                    </button>
                   </td>
                 </tr>
                 <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -76,18 +112,25 @@ const HistoryPage = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    Magic Mouse 2
+                    3
                   </th>
-                  <td className="px-6 py-4">Black</td>
-                  <td className="px-6 py-4">Accessories</td>
-                  <td className="px-6 py-4">$99</td>
+                  <td className="px-6 py-4">Dr. Pemai</td>
+                  <td className="px-6 py-4">24-11-2023</td>
+                  <td className="px-6 py-4">19.00-20.00</td>
+                  <td className="px-6 py-4">chat</td>
+                  <td className="px-6 py-4">FINISHED</td>
                   <td className="px-6 py-4 text-right">
                     <a
                       href="#"
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
-                      Edit
+                      Mulai Konseling
                     </a>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <button type="button" className={enabledRatingClass}>
+                      Rating
+                    </button>
                   </td>
                 </tr>
               </tbody>

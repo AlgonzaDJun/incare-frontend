@@ -1,8 +1,24 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from "react-router-dom";
 import CardConselor from "./CardConselor";
 import SidebarSecond from "../../components/SidebarSecond";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getKonselor } from "../../redux/reducers/konselorReducer";
 
 const PemesananPage = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.konselor);
+  
+  const {counselors, isErrored, isLoading} = data;
+
+  useEffect(() => {
+    dispatch(getKonselor());
+  }, []);
+
+  // console.log(data);
+
   return (
     <SidebarSecond>
       <div className="min-h-screen p-4">
