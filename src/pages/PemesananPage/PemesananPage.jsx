@@ -6,18 +6,21 @@ import SidebarSecond from "../../components/SidebarSecond";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getKonselor } from "../../redux/reducers/konselorReducer";
+import { Spinner } from "flowbite-react";
 
 const PemesananPage = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.konselor);
-  
-  const {counselors, isErrored, isLoading} = data;
+
+  const { konselor, isErrored, isLoading } = data;
+
+  const { counselors } = konselor;
 
   useEffect(() => {
     dispatch(getKonselor());
   }, []);
 
-  // console.log(data);
+  console.log(data);
 
   return (
     <SidebarSecond>
@@ -26,7 +29,31 @@ const PemesananPage = () => {
           id="cardContainer"
           className="flex flex-wrap mx-auto justify-center lg:justify-start"
         >
-          <Link to="/booking/1">
+          {isLoading ? (
+            <h1>
+              <Spinner color="purple" aria-label="Purple spinner example" />
+              {"  "}Loading...
+            </h1>
+          ) : isErrored ? (
+            <h1>Terjadi Error</h1>
+          ) : (
+            counselors.map((item) => {
+              const rate = item.rate
+                ? item.rate.reduce((a, b) => a + b.rate, 0) / item.rate.length
+                : 0;
+
+              return (
+                <Link to={`/booking/${item._id}`} key={item._id}>
+                  <CardConselor
+                    namaKonselor={item.user_id.fullname}
+                    hargaKonselor={item.price}
+                    ratingKonselor={Math.round(rate)}
+                  />
+                </Link>
+              );
+            })
+          )}
+          {/* <Link to="/booking/1">
             <CardConselor
               namaKonselor={"udin"}
               hargaKonselor={40000}
@@ -35,8 +62,8 @@ const PemesananPage = () => {
                 "https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg"
               }
             />
-          </Link>
-          <Link to="/booking/2">
+          </Link> */}
+          {/* <Link to="/booking/2">
             <CardConselor
               namaKonselor={"asep"}
               hargaKonselor={45000}
@@ -49,7 +76,7 @@ const PemesananPage = () => {
               hargaKonselor={30000}
               ratingKonselor={2}
             />
-          </Link>
+          </Link> */}
         </div>
       </div>
     </SidebarSecond>
