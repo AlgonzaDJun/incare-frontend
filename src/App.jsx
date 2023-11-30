@@ -1,15 +1,25 @@
 import Community from "./page/Community";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HistoryPage from "./pages/HistoryPage/HistoryPage";
+import PemesananPage from "./pages/PemesananPage/PemesananPage";
+import DetailConselor from "./pages/PemesananPage/DetailConselor";
+import CheckoutPage from "./pages/PemesananPage/CheckoutPage";
+
 
 function App() {
+  // const [count, setCount] = useState(0)
+
   return (
-    <>
-      <div className="flex">
-        <div className="w-1/5 px-5">
-          <h1 className="font-nunito "> Menu</h1>
-        </div>
-        <Community />
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<div>Home</div>} />
+        <Route path="/history" element={<HistoryPage />} />
+        <Route path="/booking" element={ <PemesananPage />} />
+        <Route path="/booking/:idKonselor" element={<DetailConselor />} />
+        <Route path="/payment/:idbooking" element={<CheckoutPage />} />
+        <Route path="/community" element={        <Community />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
