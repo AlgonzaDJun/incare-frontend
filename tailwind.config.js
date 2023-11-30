@@ -6,7 +6,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "primary-blue": "#435EBE",
+        "netral-bluesky": "#F2F7FF",
+        "netral-white": "#FFFFFF",
+      },
+      fontFamily: {
+        nunito: ["Nunito"],
+      },
+    },
   },
   plugins: [
     // eslint-disable-next-line no-undef
