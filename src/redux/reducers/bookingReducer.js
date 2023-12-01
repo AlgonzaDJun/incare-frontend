@@ -51,6 +51,13 @@ function bookingReducer(state = initialState, action) {
         isFulfilled: true,
         booking: action.payload,
       };
+    case "GET_ALL_BOOKING_FULLFILED":
+      return {
+        ...state,
+        isLoading: false,
+        isFulfilled: true,
+        allBooking: action.payload,
+      };
 
     default:
       return state;
@@ -97,6 +104,13 @@ function getBookingFulfilled(booking) {
   };
 }
 
+function getAllBookingFulfilled(booking) {
+  return {
+    type: "GET_ALL_BOOKING_FULLFILED",
+    payload: booking,
+  };
+}
+
 export function postBooking(data, token) {
   return async function (dispatch) {
     dispatch(postBookingPending());
@@ -121,7 +135,9 @@ export function getBookingById(id) {
   return async function (dispatch) {
     dispatch(getBookingPending());
     try {
-      const { data } = await axios.get("https://incare-backend-production.up.railway.app/booking/" + id);
+      const { data } = await axios.get(
+        "https://incare-backend-production.up.railway.app/booking/" + id
+      );
 
       dispatch(getBookingFulfilled(data));
     } catch (error) {
@@ -136,11 +152,31 @@ export function updateStatusByidBooking(id, data) {
     try {
       const response = await axios.put(
         `https://incare-backend-production.up.railway.app/booking/${id}`,
-        data,
+        data
       );
       dispatch(postBookingFulfilled(response.data));
     } catch (error) {
       dispatch(postBookingRejected(error.message));
+    }
+  };
+}
+
+export function getAllBooking(token) {
+  return async function (dispatch) {
+    dispatch(getBookingPending());
+    try {
+      const { data } = await axios.get(
+        "https://incare-backend-production.up.railway.app/booking/user",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(getAllBookingFulfilled(data));
+    } catch (error) {
+      dispatch(getBookingRejected(error));
     }
   };
 }

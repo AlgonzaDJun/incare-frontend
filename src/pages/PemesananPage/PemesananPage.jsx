@@ -43,7 +43,12 @@ const PemesananPage = () => {
                 : 0;
 
               return (
-                <Link to={`/booking/${item._id}`} key={item._id}>
+                <Link
+                  onClick={() =>
+                    (window.location.href = "/booking/" + item._id)
+                  }
+                  key={item._id}
+                >
                   <CardConselor
                     namaKonselor={item.user_id.fullname}
                     hargaKonselor={item.price}

@@ -18,6 +18,7 @@ const CheckoutPage = () => {
   const bookingData = useSelector((state) => state.booking);
   const { booking, isLoading, isFulfilled, isErrored } = bookingData;
   const { data } = booking;
+  // const { conselor_id } = data;
 
   const invoice = useSelector((state) => state.invoice);
   const {
@@ -74,7 +75,7 @@ const CheckoutPage = () => {
     };
 
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjE3ZTUyZWZkM2RiMDJjY2U5NTA3YiIsImVtYWlsIjoicmp4MTQwNkBnbWFpbC5jb20iLCJpYXQiOjE3MDE0MDQzNDh9.94w8Yc9iOwdst2y8NndJ5jgVFc-iemSC9L6QEgBG0XQ";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxNDA3NzM5fQ.OCmndHFkbbWVUbQVaCw551brFiZdCbM0NOubzmvFnE8";
     // console.log(invoice);
     dispatch(postInvoice(invoice, token));
   };
@@ -100,7 +101,10 @@ const CheckoutPage = () => {
                 <div className="flex w-full flex-col px-4 py-4">
                   <span className="font-semibold text-lg">
                     Konseling Dr.{" "}
-                    {isFulfilled
+                    {data &&
+                    data.conselor_id &&
+                    data.conselor_id.user_id &&
+                    data.conselor_id.user_id.fullname
                       ? data.conselor_id.user_id.fullname
                       : "loading"}
                   </span>
