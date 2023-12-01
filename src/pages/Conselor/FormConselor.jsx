@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerConselor } from "../../redux/actions/conselorAction";
+import SidebarSecond from "../../components/SidebarSecond";
 
 const FormConselor = () => {
   const dispatch = useDispatch();
@@ -36,17 +37,23 @@ const FormConselor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
       // Validasi checkbox
       if (!isChecked) {
         setError("Checkbox harus di-centang untuk melanjutkan.");
+        setError("")
         return;
       }
 
     try {
+        // Mengambil token dari local storage
+        const token = localStorage.getItem('token'); // Ganti 'token' sesuai dengan nama key token di local storage
+        if (!token) {
+          // Handle jika token tidak ditemukan
+          return;
+        }
       const dataToSend = { ...userData, user_id: userId }; 
       // Dispatch action to register counselor
-      dispatch(registerConselor(dataToSend));
+      dispatch(registerConselor(dataToSend, token));
       setError(null);
       setIsChecked(false);
       console.log(dataToSend)
@@ -56,6 +63,7 @@ const FormConselor = () => {
       setError(err.message);
     }
   };
+
   const spesialisasiOptions = [
     { label: "Relationship", value: "Relationship" },
     { label: "Family Issues", value: "Family Issues" },
@@ -67,6 +75,7 @@ const FormConselor = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F2F7FF] px-4">
+        <SidebarSecond/>
     <form onSubmit={handleSubmit} className=" w-11/12 mx-auto bg-white p-6 rounded-xl shadow-xl">
       <h1  className="text-3xl font-bold mb-4 text-center text-[#435EBE]">Register Conselor</h1>
       <br />

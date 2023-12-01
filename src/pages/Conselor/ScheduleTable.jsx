@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
+import SidebarSecond from '../../components/SidebarSecond';
 
 const ScheduleTable = () => {
   const [selectedSchedule, setSelectedSchedule] = useState(null);
 
   const scheduleOptions = [
-    { id: 1, day: 'Monday', time: '10:00 AM', selected: false },
-    { id: 2, day: 'Tuesday', time: '08:AM', selected: false },
-    { id: 3, day: 'Wednesday', time: '19:00 PM', selected: false },
-    { id: 4, day: 'Thursday', time: '10:00 AM', selected: false },
-    { id: 5, day: 'Friday', time: '15:00 PM', selected: false },
-    { id: 6, day: 'Saturday', time: '19:00 PM', selected: false },
-    { id: 7, day: 'Sunday', time: '07:00 AM', selected: false },
+    { id: 1, day: 'Monday', time: '10:00 AM'},
+    { id: 2, day: 'Tuesday', time: '08:AM' },
+    { id: 3, day: 'Wednesday', time: '19:00 PM' },
+    { id: 4, day: 'Thursday', time: '10:00 AM' },
+    { id: 5, day: 'Friday', time: '15:00 PM' },
+    { id: 6, day: 'Saturday', time: '19:00 PM' },
+    { id: 7, day: 'Sunday', time: '07:00 AM' },
   ];
 
   // Handle pemilihan jadwal
@@ -21,6 +22,7 @@ const ScheduleTable = () => {
   // Simpan perubahan jadwal yang dipilih
   const handleSaveSchedule = (e) => {
     e.preventDefault()
+    
     if (selectedSchedule) {
       console.log('Jadwal disimpan:', selectedSchedule);
     } else {
@@ -29,13 +31,15 @@ const ScheduleTable = () => {
   };
 
   return (
-    <div className="container mx-auto py-6">
-      <h2 className="text-3xl font-semibold mb-4">Counselor Schedule(2023)</h2>
-      <div className="grid grid-cols-2 gap-4">
+    <div className="min-h-screen flex bg-[#F2F7FF] px-4">
+      <SidebarSecond/>
+      <div>
+      <h2 className="text-3xl font-bold mb-4 text-center text-[#435EBE] p-10">Counselor Schedule(2023)</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 ml-12">
         {scheduleOptions.map((schedule) => (
           <div
             key={schedule.id}
-            className={`p-4 border rounded-md cursor-pointer ${
+            className={`p-4 w-full border rounded-md cursor-pointer ${
               schedule.selected ? 'bg-blue-200' : 'bg-gray-100'
             }`}
             onClick={() => handleSelectSchedule(schedule)}
@@ -66,7 +70,7 @@ const ScheduleTable = () => {
       </button>
         </div>
       </form>
-   
+      </div>
     </div>
   );
 };

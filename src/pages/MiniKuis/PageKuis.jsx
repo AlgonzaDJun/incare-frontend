@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SidebarSecond from "../../components/SidebarSecond";
 
 
 const PageKuis = () => {
@@ -10,7 +11,9 @@ const PageKuis = () => {
   };
 
   return (
-    <div className="bg-[#F2F7FF] min-h-screen p-8 md:p-28">
+    <div className="bg-[#F2F7FF] min-h-screen p-3">
+      <div className="min-h-screen flex items-center justify-center bg-[#F2F7FF] px-4">
+      <SidebarSecond/>
       <div className="flex flex-col md:flex-row items-center">
         <img src="/img/Group 49.png" className="max-w-full h-auto md:max-w-sm md:mr-8 mb-4 md:mb-0" alt="Gambar" />
         <div className="text-center md:text-left">
@@ -20,6 +23,7 @@ const PageKuis = () => {
           <Link to="/quiz" style={{ cursor: 'pointer', color: '#435EBE' }}>
             <button onClick={handleStartQuiz} className="bg-[#435EBE] text-white  mx-auto md:mx-0 block px-4 py-2 rounded hover:bg-[#3d55ab]">Coba Test!</button>
           </Link>
+        </div>
         </div>
       </div>
     </div>

@@ -48,6 +48,7 @@ function Register() {
         sendOTP(email);
       
         setEmailSent(true);
+        dispatch(sendOTP(register))
         setErrorMessage("")
       } catch (error) {
         console.error("Error sending OTP email:", error);

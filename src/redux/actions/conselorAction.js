@@ -1,12 +1,19 @@
 import axios from "axios";
 
-export const registerConselor = (userData) => {
+export const registerConselor = (userData, token) => {
     // Logic to register as a counselor
     return async (dispatch) => {
       dispatch({ type: "REGISTER_CONSELOR_REQUEST" });
       try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        };
+  
         // Make API call to register counselor
-        await axios.post(`https://incare-backend-production.up.railway.app/conselors/asconselor`, userData);
+        await axios.post(`https://incare-backend-production.up.railway.app/conselors/asconselor`, userData, config);
         dispatch({ type:"REGISTER_CONSELOR_SUCCESS", payload: userData });
       } catch (error) {
         dispatch({ type: "REGISTER_CONSELOR_FAILURE", payload: error.message });

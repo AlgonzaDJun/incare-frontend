@@ -3,6 +3,7 @@ import { quizAnswers, userQuizResults } from "../../redux/actions/quizAction";
 import { useEffect, useState } from "react";
 import ResultPage from "./ResultPage";
 import { userLogin } from "../../redux/actions/authAction";
+import SidebarSecond from "../../components/SidebarSecond";
 // import ResultPage from "./ResultPage";
 
 function Quiz(){
@@ -125,7 +126,9 @@ function Quiz(){
 }; 
 
   return (
-    <div className="min-h-screen items-center justify-center p-10 bg-[#F2F7FF]">
+    <div className="min-h-screen items-center justify-center p-3 bg-[#F2F7FF]">
+        <div className="flex px-4">
+       <SidebarSecond/>
       <div className="container mx-auto p-4 bg-white shadow-md rounded-lg">
         {showResult ? (
           <ResultPage totalScore={totalScore} mood={mood} />
@@ -137,7 +140,7 @@ function Quiz(){
           </div>
             <br />
             {questions.map((ques) => (
-              <div key={ques.id} className="mb-6 ml-20">
+              <div key={ques.id} className="mb-6 ml-12">
                 <h4 className="text-lg font-semibold mb-2">{ques.question}</h4> 
                 {ques.options.map((opt) => (
                   <div key={opt.option} className="flex items-center mb-2">
@@ -163,6 +166,7 @@ function Quiz(){
             </div>
           </>
         )}
+        </div>
       </div>
     </div>
   );
