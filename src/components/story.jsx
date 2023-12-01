@@ -17,19 +17,19 @@ export default function Story({
   likes,
   isLike,
   comments,
-  openModal,
+  onCardClick,
 }) {
   const dispatch = useDispatch();
 
   const handleClick = async () => {
     const token = localStorage.getItem("token");
     await dispatch(updateLike({ token, id }));
-    dispatch(getAllStories({ token, id }));
+    dispatch(getAllStories({ token }));
   };
 
   return (
     <>
-      <div className="max-w-4xl mb-5 p-6 bg-white  border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-w-4xl mb-5 p-6 bg-netral-bluesky  border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
         <h1 className="font-nunito text-xl text-[#607080] font-bold">
           {username}
         </h1>
@@ -46,7 +46,7 @@ export default function Story({
 
             {likes}
           </button>
-          <button onClick={() => openModal(id)}>
+          <button onClick={() => onCardClick(id)}>
             <MdOutlineModeComment className="inline-block w-6 h-6 text-[#607080] mr-1" />
             {comments}
           </button>
@@ -64,5 +64,5 @@ Story.propTypes = {
   totalComments: PropTypes.number,
   comments: PropTypes.array,
   isLike: PropTypes.bool,
-  openModal: PropTypes.func,
+  onCardClick: PropTypes.func,
 };

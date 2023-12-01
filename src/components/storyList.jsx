@@ -2,37 +2,34 @@ import { useDispatch, useSelector } from "react-redux";
 import Story from "./story";
 import { useEffect, useState } from "react";
 import { getAllStories } from "../redux/slice/all-stories-slice";
-import Comment from "./comment";
-
+import Modal from "./modal";
 export default function StoryList() {
   const dispatch = useDispatch();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
-  const [selectedStoryId, setSelectedStoryId] = useState(null);
-
-  const handleStoryClick = (id) => {
-    setSelectedStoryId(id);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
   const data = useSelector((state) => state.getStories.data);
   const status = useSelector((state) => state.getStories.status);
   const error = useSelector((state) => state.getStories.error);
   useEffect(() => {
     const token = localStorage.getItem("token");
     dispatch(getAllStories({ token }));
-  }, []);
+  }, [dispatch]);
   if (status === "loading") {
     return <div>Loading...</div>;
   }
-  console.log(data);
+
   if (status === "failed") {
     return <div>Error: {error}</div>;
   }
+  const handleCardClick = (id) => {
+    setSelectedCardId(id);
+    setModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   return (
     <>
       <div className="">
@@ -43,16 +40,12 @@ export default function StoryList() {
             isLike={item.isLike}
             username={item.user.username}
             content={item.content}
-            likes={item.likes}
-            comments={item.comments}
-            openModal={handleStoryClick}
+            likes={item.likes.length}
+            comments={item.comments.length}
+            onCardClick={handleCardClick}
           />
         ))}
-        <Comment
-          id={selectedStoryId}
-          isOpen={modalIsOpen}
-          onClose={closeModal}
-        ></Comment>
+        <Modal id={selectedCardId} isOpen={modalOpen} onClose={closeModal} />
       </div>
     </>
   );
