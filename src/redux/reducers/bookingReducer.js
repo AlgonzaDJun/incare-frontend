@@ -121,7 +121,7 @@ export function getBookingById(id) {
     dispatch(getBookingPending());
     try {
       const { data } = await axios.get(
-        "https://incare-backend-production.up.railway.app/booking/" + id
+        "http://localhost:3000/booking/" + id
       );
 
       dispatch(getBookingFulfilled(data));
