@@ -75,7 +75,7 @@ export function getKonselor() {
     dispatch(getKonselorPending());
     try {
       const { data } = await axios.get(
-        "https://incare-backend-production.up.railway.app/conselors/getconselor"
+        "http://13.210.51.154:3000/conselors/getconselor"
       );
       dispatch(getKonselorFulfilled(data));
     } catch (error) {
@@ -89,7 +89,7 @@ export function getKonselorById(id) {
     dispatch(getKonselorPending());
     try {
       const { data } = await axios.get(
-        "https://incare-backend-production.up.railway.app/conselors/" + id
+        "http://13.210.51.154:3000/conselors/" + id
       );
       dispatch(getKonselorByIdFulfilled(data));
     } catch (error) {
