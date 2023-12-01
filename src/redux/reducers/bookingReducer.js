@@ -55,17 +55,22 @@ function postBookingFulfilled(booking) {
   };
 }
 
-export function postBooking(data) {
+export function postBooking(data, token) {
   return async function (dispatch) {
     dispatch(postBookingPending());
     try {
       const response = await axios.post(
         `https://incare-backend-production.up.railway.app/booking`,
-        data
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(postBookingFulfilled(response.data));
     } catch (error) {
-      dispatch(postBookingRejected(error));
+      dispatch(postBookingRejected(error.message));
     }
   };
 }
