@@ -239,6 +239,8 @@ const DetailConselor = () => {
                         month: "long",
                         day: "numeric",
                       };
+
+                      // untuk tampilan user
                       const formattedDate = dateForItem.toLocaleDateString(
                         "id-ID",
                         options
@@ -250,7 +252,12 @@ const DetailConselor = () => {
                       let month = dateForItem.getMonth() + 1; // Ingat bahwa bulan dimulai dari 0 (Januari) hingga 11 (Desember)
                       month = month < 10 ? `0${month}` : month; // Tambahkan '0' di depan jika bulan kurang dari 10
                       const day = dateForItem.getDate();
-                      const formattedDateForDB = `${year}-${month}-${day}`;
+
+                      const hour1 = item.time.split("-")[0];
+                      const realHour = hour1.split(".")[0];
+                      const formattedDateForDB = `${year}-${month}-${day} ${realHour}:00:00`;
+
+                      // const formattedDateTimeForDB = dateForItem.toISOString();
 
                       return (
                         <tr
