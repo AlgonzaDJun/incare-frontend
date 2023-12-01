@@ -74,8 +74,9 @@ const CheckoutPage = () => {
       external_id: data.kode_pembayaran,
     };
 
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxNDA3NzM5fQ.OCmndHFkbbWVUbQVaCw551brFiZdCbM0NOubzmvFnE8";
+    const token = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxNDA3NzM5fQ.OCmndHFkbbWVUbQVaCw551brFiZdCbM0NOubzmvFnE8";
     // console.log(invoice);
     dispatch(postInvoice(invoice, token));
   };

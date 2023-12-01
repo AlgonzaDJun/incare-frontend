@@ -17,16 +17,16 @@ const SidebarSecond = ({ children }) => {
   const menus = [
     { name: "Konseling", link: "/booking", icon: MdDateRange },
     { name: "Pertemuan", link: "/history", icon: MdPhotoCamera },
-    { name: "Chat", link: "/", icon: FiMessageSquare },
+    { name: "Chat", link: "#", icon: FiMessageSquare },
     {
       name: "Ceritaku",
       link: "/community",
       icon: MdQuestionAnswer,
       margin: true,
     },
-    { name: "Quiz Incare", link: "/", icon: TbReportAnalytics },
-    { name: "Profile", link: "/", icon: MdPerson },
-    { name: "Daftar Konselor", link: "/", icon: FiUserPlus, margin: true },
+    { name: "Quiz Incare", link: "#", icon: TbReportAnalytics },
+    { name: "Profile", link: "#", icon: MdPerson },
+    { name: "Daftar Konselor", link: "#", icon: FiUserPlus, margin: true },
     { name: "FAQ", link: "/faq", icon: RiQuestionFill },
   ];
 

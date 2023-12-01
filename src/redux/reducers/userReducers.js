@@ -59,7 +59,7 @@ export function getUserById(id) {
     dispatch(getUserPending());
     try {
       const { data } = await axios.get(
-        "https://incare-backend-production.up.railway.app/users" + id
+        `${import.meta.env.VITE_SERVER_URL}/users` + id
       );
 
       dispatch(getUserFulfilled(data));

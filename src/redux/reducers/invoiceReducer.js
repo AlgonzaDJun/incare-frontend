@@ -103,7 +103,7 @@ export function postInvoice(data, token) {
   return async function (dispatch) {
     dispatch(postInvoicePending());
     try {
-      const response = await axios.post(`http://localhost:3000/payment`, data, {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/payment`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -119,7 +119,7 @@ export function getAllInvoice() {
   return async function (dispatch) {
     dispatch(getAllInvoicePending());
     try {
-      const { data } = await axios.get(`http://localhost:3000/payment`);
+      const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}/payment`);
       dispatch(getAllInvoiceFulfilled(data));
     } catch (error) {
       dispatch(getAllInvoiceRejected(error.message));
