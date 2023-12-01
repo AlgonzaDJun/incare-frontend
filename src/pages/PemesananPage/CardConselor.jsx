@@ -1,3 +1,5 @@
+import { FormatRupiah } from "@arismun/format-rupiah";
+
 /* eslint-disable react/prop-types */
 const CardConselor = ({
   namaKonselor,
@@ -33,7 +35,7 @@ const CardConselor = ({
           </h5>
         </a>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          Rp. {hargaKonselor} / hour
+          {<FormatRupiah value={hargaKonselor} />} / hour
         </p>
 
         <div className="flex items-center">

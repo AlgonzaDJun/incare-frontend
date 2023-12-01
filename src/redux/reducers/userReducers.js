@@ -58,11 +58,11 @@ export function getUserById(id) {
   return async function (dispatch) {
     dispatch(getUserPending());
     try {
-      const response = await axios.get(
-        "https://incare-backend-production.up.railway.app/conselors/getconselor" +
-          id
+      const { data } = await axios.get(
+        "https://incare-backend-production.up.railway.app/users" + id
       );
-      dispatch(getUserFulfilled(response.data));
+
+      dispatch(getUserFulfilled(data));
     } catch (error) {
       dispatch(getUserRejected(error));
     }
