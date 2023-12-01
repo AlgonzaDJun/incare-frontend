@@ -5,6 +5,7 @@ import PemesananPage from "./pages/PemesananPage/PemesananPage";
 import DetailConselor from "./pages/PemesananPage/DetailConselor";
 import CheckoutPage from "./pages/PemesananPage/CheckoutPage";
 import Faq from "./pages/Faq/Faq";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -12,8 +13,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<div>Home</div>} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/history/:kodeBooking" element={<HistoryPage />} />
         <Route path="/booking" element={<PemesananPage />} />
         <Route path="/booking/:idKonselor" element={<DetailConselor />} />
         <Route path="/payment/:idbooking" element={<CheckoutPage />} />

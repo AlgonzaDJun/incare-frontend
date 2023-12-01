@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 // import { Link } from "react-router-dom";
 import CardConselor from "./CardConselor";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,29 +9,102 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { Navigation, Pagination } from "swiper/modules";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Label, Modal, Radio } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getKonselor,
+  getKonselorById,
+} from "../../redux/reducers/konselorReducer";
+import { FormatRupiah } from "@arismun/format-rupiah";
+import { postBooking } from "../../redux/reducers/bookingReducer";
+import LoadingFullPage from "../../components/LoadingFullPage";
 
 const DetailConselor = () => {
   const [openModal, setOpenModal] = useState(false);
   const [medKonseling, setMedKonseling] = useState(null);
+  const [date, setDate] = useState(null);
   const swiperRef = useRef();
+  const navigate = useNavigate();
+
+  const { idKonselor } = useParams();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.konselor);
+  const booking = useSelector((state) => state.booking);
+
+  // console.log(data);
+
+  const { konselor, isErrored, isLoading, konselorDetail } = data;
+
+  const {
+    booking: dataBooking,
+    isLoading: loadingBooking,
+    isErrored: errorBoking,
+    isFulfilled: fullFiledBooking,
+  } = booking;
+
+  const { counselors: allKonselor } = konselor;
+  const { data: detailKonselor } = konselorDetail;
+
+  // console.log(allKonselor);
+
+  const handleOpenModal = (data) => {
+    setOpenModal(true);
+    setDate(data);
+  };
 
   const handleMedKonseling = (e) => {
+    e.preventDefault();
     if (!medKonseling) {
       alert("Pilih media konseling terlebih dahulu");
       return;
     }
     setOpenModal(false);
-    e.preventDefault();
-    window.location.replace(`/payment/${medKonseling}`);
-    // console.log(medKonseling);
+    // console.log({
+    //   idKonselor,
+    //   date,
+    //   medKonseling
+    // });
+
+    const dataToPost = {
+      conselor_id: idKonselor,
+      tanggal_konseling: date,
+      media_konseling: medKonseling,
+    };
+
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxMzkyMDkxfQ.M25J0ZPCcrcNWq50xuI3-YW4H2mtkyCrcQ7-7Si6y-0";
+
+    dispatch(postBooking(dataToPost, token));
+
+    // console.log(dataBooking);
+    // console.log(dataToPost)
   };
+
+  useEffect(() => {
+    dispatch(getKonselor());
+    dispatch(getKonselorById(idKonselor));
+  }, []);
+
+  useEffect(() => {
+    if (fullFiledBooking === true) {
+      navigate("/payment/" + dataBooking.data._id);
+      // console.log({
+      //   dataBooking,
+      //   loadingBooking,
+      //   errorBoking,
+      //   fullFiledBooking,
+      // });
+      // console.log(`id booking : ${dataBooking.data._id}`)
+    }
+  }, [fullFiledBooking]);
 
   return (
     <>
       <div className="w-full p-7 block md:grid grid-cols-2">
+        {loadingBooking && <LoadingFullPage />}
+
         <div id="imgKonselor" className="mt-4">
           <Link
             to={"/booking"}
@@ -59,15 +134,28 @@ const DetailConselor = () => {
           <div className="w-72">
             <div className="flex mb-6 justify-between">
               <h1 className="font-semibold text-lg">Nama</h1>
-              <p className="text-lg">Udin</p>
+              <p className="text-lg">
+                {detailKonselor
+                  ? detailKonselor.user_id.fullname
+                  : "loading..."}
+                {isErrored && "Terjadi Error"}
+              </p>
             </div>
             <div className="flex mb-6 justify-between">
               <h1 className=" font-semibold text-lg">Spesialisasi</h1>
-              <p className="text-lg">Gangguan Jawa</p>
+              <p className="text-lg">
+                {detailKonselor ? detailKonselor.spesialisasi : "loading..."}
+              </p>
             </div>
             <div className="flex mb-6 justify-between">
               <h1 className=" font-semibold text-lg">Harga</h1>
-              <p className="text-lg">Rp. 40.000</p>
+              <p className="text-lg">
+                {detailKonselor ? (
+                  <FormatRupiah value={detailKonselor.price} />
+                ) : (
+                  "loading..."
+                )}
+              </p>
             </div>
           </div>
 
@@ -82,7 +170,7 @@ const DetailConselor = () => {
                       No
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Tanggal
+                      Hari
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Waktu
@@ -93,32 +181,119 @@ const DetailConselor = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      1
-                    </th>
-                    <td className="px-6 py-4">29 September 2023</td>
-                    <td className="px-6 py-4">19.00-20.00</td>
-                    <td className="px-6 py-4">
-                      <button
-                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
-                        onClick={() => setOpenModal(true)}
-                      >
-                        Pilih
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  {!detailKonselor ? (
+                    <h1>Loading...</h1>
+                  ) : (
+                    detailKonselor.schedule.map((item, index) => {
+                      // Ambil tanggal hari ini
+                      const today = new Date();
+
+                      // Tambah 1 hari untuk mendapatkan tanggal esok
+                      const tomorrow = new Date(today);
+                      tomorrow.setDate(today.getDate() + 1);
+
+                      // Misal 'item.day' adalah representasi hari dalam bentuk string (e.g., 'Senin', 'Selasa', dst.)
+                      // Anda perlu mengubah 'item.day' menjadi tanggal
+
+                      // Mengubah hari menjadi tanggal jika belum lewat (hari ini atau setelahnya)
+                      const dateForItem = new Date();
+                      const itemDay = item.day.toLowerCase(); // Ubah ke huruf kecil untuk keperluan perbandingan
+
+                      if (itemDay === "senin") {
+                        dateForItem.setDate(
+                          today.getDate() === 1
+                            ? today.getDate()
+                            : tomorrow.getDate() + 1
+                        );
+                      } else if (itemDay === "selasa") {
+                        dateForItem.setDate(
+                          today.getDate() === 2
+                            ? today.getDate()
+                            : tomorrow.getDate() + 2
+                        );
+                      } else if (itemDay === "rabu") {
+                        dateForItem.setDate(
+                          today.getDate() === 3
+                            ? today.getDate()
+                            : tomorrow.getDate() + 3
+                        );
+                      } else if (itemDay === "kamis") {
+                        dateForItem.setDate(
+                          today.getDate() === 4
+                            ? today.getDate()
+                            : tomorrow.getDate() + 4
+                        );
+                      } else if (itemDay === "jumat") {
+                        dateForItem.setDate(
+                          today.getDate() === 5
+                            ? today.getDate()
+                            : tomorrow.getDate() + 5
+                        );
+                      }
+                      // ... dan seterusnya untuk hari-hari lainnya
+
+                      // Format tanggal menjadi string untuk ditampilkan di <td>
+                      const options = {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      };
+
+                      // untuk tampilan user
+                      const formattedDate = dateForItem.toLocaleDateString(
+                        "id-ID",
+                        options
+                      );
+
+                      // const formattedDateForDB = dateForItem.toISOString();
+                      // Format tanggal menjadi 'yyyy-mm-dd' untuk disimpan di database MongoDB
+                      const year = dateForItem.getFullYear();
+                      let month = dateForItem.getMonth() + 1; // Ingat bahwa bulan dimulai dari 0 (Januari) hingga 11 (Desember)
+                      month = month < 10 ? `0${month}` : month; // Tambahkan '0' di depan jika bulan kurang dari 10
+                      const day = dateForItem.getDate();
+
+                      const hour1 = item.time.split("-")[0];
+                      const realHour = hour1.split(".")[0];
+                      const formattedDateForDB = `${year}-${month}-${day} ${realHour}:00:00`;
+
+                      // const formattedDateTimeForDB = dateForItem.toISOString();
+
+                      return (
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                          key={index}
+                        >
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          >
+                            {index + 1}
+                          </th>
+                          <td className="px-6 py-4">{formattedDate}</td>
+                          <td className="px-6 py-4">{item.time}</td>
+                          <td className="px-6 py-4">
+                            <button
+                              className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
+                              onClick={() =>
+                                handleOpenModal(formattedDateForDB)
+                              }
+                            >
+                              Pilih
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                  {/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       2
                     </th>
-                    <td className="px-6 py-4">30 September 2023</td>
+                    <td className="px-6 py-4">Jumat</td>
                     <td className="px-6 py-4">16.00-17.00</td>
                     <td className="px-6 py-4">
                       <button
@@ -136,7 +311,7 @@ const DetailConselor = () => {
                     >
                       3
                     </th>
-                    <td className="px-6 py-4">31 September 2023</td>
+                    <td className="px-6 py-4">Sabtu</td>
                     <td className="px-6 py-4">15.00-16.00</td>
                     <td className="px-6 py-4">
                       <button
@@ -146,7 +321,7 @@ const DetailConselor = () => {
                         Pilih
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
@@ -221,7 +396,7 @@ const DetailConselor = () => {
         <Modal.Footer>
           <Button
             className="bg-incare-primary hover:bg-incare-darker"
-            onClick={handleMedKonseling}
+            onClick={(e) => handleMedKonseling(e)}
           >
             Pesan Sekarang
           </Button>
@@ -262,7 +437,7 @@ const DetailConselor = () => {
             modules={[Pagination, Navigation]}
             className="mySwiper"
           >
-            <SwiperSlide>
+            {/* <SwiperSlide>
               <CardConselor
                 namaKonselor={"udin"}
                 hargaKonselor={40000}
@@ -311,7 +486,29 @@ const DetailConselor = () => {
                   "https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg"
                 }
               />
-            </SwiperSlide>
+            </SwiperSlide> */}
+
+            {allKonselor ? (
+              allKonselor.map((item) => {
+                const rate = item.rate
+                  ? item.rate.reduce((a, b) => a + b.rate, 0) / item.rate.length
+                  : 0;
+
+                return (
+                  <SwiperSlide key={item._id}>
+                    <Link to={`/booking/${item._id}`}>
+                      <CardConselor
+                        namaKonselor={item.user_id.fullname}
+                        hargaKonselor={item.price}
+                        ratingKonselor={Math.round(rate)}
+                      />
+                    </Link>
+                  </SwiperSlide>
+                );
+              })
+            ) : (
+              <h1>loading...</h1>
+            )}
           </Swiper>
         </div>
         <div className="absolute top-1/2 z-10 flex justify-between w-full pr-16 xl:pr-32">
