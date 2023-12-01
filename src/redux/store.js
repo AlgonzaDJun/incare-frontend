@@ -1,12 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import konselorReducer from "./reducers/konselorReducer";
-import bookingReducer from "./reducers/bookingReducer";
-import invoiceReducer from "./reducers/invoiceReducer";
+import rootReducer from "./rootReducer";
 
-export default configureStore({
-  reducer: {
-    konselor: konselorReducer,
-    booking: bookingReducer,
-    invoice: invoiceReducer,
-  },
+const store = configureStore({
+  reducer: rootReducer,
 });
+
+export default store;

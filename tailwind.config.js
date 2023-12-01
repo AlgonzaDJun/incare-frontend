@@ -7,11 +7,18 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      "incare-primary": "#435EBE",
-      "incare-darker": "#2e4185",
+    extend: {
+      colors: {
+        "primary-blue": "#435EBE",
+        "incare-primary": "#435EBE",
+        "netral-bluesky": "#F2F7FF",
+        "netral-white": "#FFFFFF",
+        "incare-darker": "#2e4185",
+      },
+      fontFamily: {
+        nunito: ["Nunito"],
+      },
     },
-    extend: {},
   },
   plugins: [
     // eslint-disable-next-line no-undef
