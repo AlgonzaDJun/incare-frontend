@@ -60,7 +60,7 @@ export function postInvoice(data, token) {
     dispatch(postInvoicePending());
     try {
       const response = await axios.post(
-        `http://localhost:3000/payment`,
+        `https://incare-backend-production.up.railway.app/payment`,
         data,
         {
           headers: {
@@ -74,5 +74,7 @@ export function postInvoice(data, token) {
     }
   };
 }
+
+
 
 export default invoiceReducer;

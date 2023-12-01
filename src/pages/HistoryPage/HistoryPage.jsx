@@ -1,12 +1,23 @@
 import { useParams } from "react-router-dom";
 import SidebarSecond from "../../components/SidebarSecond";
+import { useDispatch, useSelector } from "react-redux";
+import { updateStatusByidBooking } from "../../redux/reducers/bookingReducer";
+import { useEffect } from "react";
 
 const HistoryPage = () => {
+  const dispatch = useDispatch();
   const { kodeBooking } = useParams();
 
-  if(kodeBooking) {
-    console.log('ada')
-  }
+  const updateBooking = useSelector((state) => state.booking);
+
+  console.log(updateBooking);
+
+  useEffect(() => {
+    if (kodeBooking) {
+      // console.log(kodeBooking)
+      dispatch(updateStatusByidBooking(kodeBooking, { status: "success" }));
+    }
+  }, []);
 
   const disabledRatingClass =
     "text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center";

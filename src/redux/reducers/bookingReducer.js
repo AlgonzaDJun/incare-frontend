@@ -2,6 +2,7 @@ import axios from "axios";
 
 const initialState = {
   booking: [],
+  allBooking: [],
   isLoading: false,
   isFulfilled: false,
   isErrored: {},
@@ -120,13 +121,26 @@ export function getBookingById(id) {
   return async function (dispatch) {
     dispatch(getBookingPending());
     try {
-      const { data } = await axios.get(
-        "http://localhost:3000/booking/" + id
-      );
+      const { data } = await axios.get("https://incare-backend-production.up.railway.app/booking/" + id);
 
       dispatch(getBookingFulfilled(data));
     } catch (error) {
       dispatch(getBookingRejected(error));
+    }
+  };
+}
+
+export function updateStatusByidBooking(id, data) {
+  return async function (dispatch) {
+    dispatch(postBookingPending());
+    try {
+      const response = await axios.put(
+        `https://incare-backend-production.up.railway.app/booking/${id}`,
+        data,
+      );
+      dispatch(postBookingFulfilled(response.data));
+    } catch (error) {
+      dispatch(postBookingRejected(error.message));
     }
   };
 }
