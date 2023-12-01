@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 // import { Link } from "react-router-dom";
 import CardConselor from "./CardConselor";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,14 +9,33 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { Navigation, Pagination } from "swiper/modules";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Label, Modal, Radio } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getKonselor,
+  getKonselorById,
+} from "../../redux/reducers/konselorReducer";
+import { FormatRupiah } from "@arismun/format-rupiah";
 
 const DetailConselor = () => {
   const [openModal, setOpenModal] = useState(false);
   const [medKonseling, setMedKonseling] = useState(null);
   const swiperRef = useRef();
+
+  const { idKonselor } = useParams();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.konselor);
+
+  console.log(data);
+
+  const { konselor, isErrored, isLoading, konselorDetail } = data;
+
+  const { counselors: allKonselor } = konselor;
+  const { data: detailKonselor } = konselorDetail;
+
+  console.log(allKonselor);
 
   const handleMedKonseling = (e) => {
     if (!medKonseling) {
@@ -26,6 +47,11 @@ const DetailConselor = () => {
     window.location.replace(`/payment/${medKonseling}`);
     // console.log(medKonseling);
   };
+
+  useEffect(() => {
+    dispatch(getKonselor());
+    dispatch(getKonselorById(idKonselor));
+  }, []);
 
   return (
     <>
@@ -59,15 +85,28 @@ const DetailConselor = () => {
           <div className="w-72">
             <div className="flex mb-6 justify-between">
               <h1 className="font-semibold text-lg">Nama</h1>
-              <p className="text-lg">Udin</p>
+              <p className="text-lg">
+                {detailKonselor
+                  ? detailKonselor.user_id.fullname
+                  : "loading..."}
+                {isErrored && "Terjadi Error"}
+              </p>
             </div>
             <div className="flex mb-6 justify-between">
               <h1 className=" font-semibold text-lg">Spesialisasi</h1>
-              <p className="text-lg">Gangguan Jawa</p>
+              <p className="text-lg">
+                {detailKonselor ? detailKonselor.spesialisasi : "loading..."}
+              </p>
             </div>
             <div className="flex mb-6 justify-between">
               <h1 className=" font-semibold text-lg">Harga</h1>
-              <p className="text-lg">Rp. 40.000</p>
+              <p className="text-lg">
+                {detailKonselor ? (
+                  <FormatRupiah value={detailKonselor.price} />
+                ) : (
+                  "loading..."
+                )}
+              </p>
             </div>
           </div>
 
@@ -82,7 +121,7 @@ const DetailConselor = () => {
                       No
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Tanggal
+                      Hari
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Waktu
@@ -93,32 +132,38 @@ const DetailConselor = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      1
-                    </th>
-                    <td className="px-6 py-4">29 September 2023</td>
-                    <td className="px-6 py-4">19.00-20.00</td>
-                    <td className="px-6 py-4">
-                      <button
-                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
-                        onClick={() => setOpenModal(true)}
-                      >
-                        Pilih
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  {!detailKonselor ? (
+                    <h1>Loading...</h1>
+                  ) : (
+                    detailKonselor.schedule.map((item, index) => (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={index}>
+                        <th
+                          scope="row"
+                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        >
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-4">{item.day}</td>
+                        <td className="px-6 py-4">{item.time}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
+                            onClick={() => setOpenModal(true)}
+                          >
+                            Pilih
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                  {/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       2
                     </th>
-                    <td className="px-6 py-4">30 September 2023</td>
+                    <td className="px-6 py-4">Jumat</td>
                     <td className="px-6 py-4">16.00-17.00</td>
                     <td className="px-6 py-4">
                       <button
@@ -136,7 +181,7 @@ const DetailConselor = () => {
                     >
                       3
                     </th>
-                    <td className="px-6 py-4">31 September 2023</td>
+                    <td className="px-6 py-4">Sabtu</td>
                     <td className="px-6 py-4">15.00-16.00</td>
                     <td className="px-6 py-4">
                       <button
@@ -146,7 +191,7 @@ const DetailConselor = () => {
                         Pilih
                       </button>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>
@@ -262,7 +307,7 @@ const DetailConselor = () => {
             modules={[Pagination, Navigation]}
             className="mySwiper"
           >
-            <SwiperSlide>
+            {/* <SwiperSlide>
               <CardConselor
                 namaKonselor={"udin"}
                 hargaKonselor={40000}
@@ -311,7 +356,29 @@ const DetailConselor = () => {
                   "https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg"
                 }
               />
-            </SwiperSlide>
+            </SwiperSlide> */}
+
+            {allKonselor ? (
+              allKonselor.map((item) => {
+                const rate = item.rate
+                  ? item.rate.reduce((a, b) => a + b.rate, 0) / item.rate.length
+                  : 0;
+
+                return (
+                  <SwiperSlide key={item._id}>
+                    <Link to={`/booking/${item._id}`}>
+                      <CardConselor
+                        namaKonselor={item.user_id.fullname}
+                        hargaKonselor={item.price}
+                        ratingKonselor={Math.round(rate)}
+                      />
+                    </Link>
+                  </SwiperSlide>
+                );
+              })
+            ) : (
+              <h1>loading...</h1>
+            )}
           </Swiper>
         </div>
         <div className="absolute top-1/2 z-10 flex justify-between w-full pr-16 xl:pr-32">
