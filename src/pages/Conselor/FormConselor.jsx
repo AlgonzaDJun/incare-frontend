@@ -14,7 +14,7 @@ const FormConselor = () => {
 
   useEffect(() => {
     // Mengambil user_id dari localStorage saat komponen dimuat
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserId = JSON.parse(localStorage.getItem('userId'));
     if (storedUserId) {
       setUserId(storedUserId);
     }

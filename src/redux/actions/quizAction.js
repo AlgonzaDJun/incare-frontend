@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3000"
-
 export function submitAnswers(newQuizResult) {
     return {
         type: "SUBMIT_ANSWERS",
@@ -10,7 +8,7 @@ export function submitAnswers(newQuizResult) {
 };
 export function quizAnswers(userResults) {
     return async function(dispatch) {
-        return axios.post(`${BASE_URL}/hasilquizzes/quiz`, userResults)
+        return axios.post(`https://incare-backend-production.up.railway.app/hasilquizzes/quiz`, userResults)
             .then(response => {
                 const newQuizResult = response.data;
                 dispatch(submitAnswers(newQuizResult));
@@ -46,7 +44,7 @@ export function fetchUserResults(userResults) {
 
 export function userQuizResults(userId) {
    return async function(dispatch) {
-    const response = await axios.get(`${BASE_URL}/hasilquizzes/${userId}`);
+    const response = await axios.get(`https://incare-backend-production.up.railway.app/hasilquizzes/${userId}`);
     const userResults = response.data;
     dispatch(fetchAllResults(userResults));
    }

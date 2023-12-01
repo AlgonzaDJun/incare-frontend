@@ -1,7 +1,5 @@
 import axios from "axios"
 
-const BASE_URL = "http://localhost:3000"
-
 export function loginRequest(data) {
     return {
         type: "LOGIN_REQUEST",
@@ -70,7 +68,7 @@ export function userLogin(data) {
     return async function(dispatch) {
         dispatch(loginRequest(data));
 
-      axios.post(`${BASE_URL}/auth/login`, data)
+      axios.post(`https://incare-backend-production.up.railway.app/auth/login`, data)
             .then(response => {
                 const user = response.data;
                 dispatch(loginSuccess(user));
@@ -85,7 +83,7 @@ export function userRegister(data) {
     return async function(dispatch) {
         dispatch(registerRequest(data));
 
-        axios.post(`${BASE_URL}/auth/register`, data)
+        axios.post(`https://incare-backend-production.up.railway.app/auth/register`, data)
             .then(response => {
                 const user = response.data;
                 dispatch(registerSuccess(user));
@@ -100,7 +98,7 @@ export function sendOTP(data) {
     return async function(dispatch) {
       dispatch(sendOTPRequest(data));
   
-      return axios.post(`${BASE_URL}/auth/send-otp`, data)
+      return axios.post(`https://incare-backend-production.up.railway.app/auth/send-otp`, data)
         .then(response => {
           dispatch(sendOTPSuccess(response.data));
         })

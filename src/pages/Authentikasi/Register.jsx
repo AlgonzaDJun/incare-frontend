@@ -26,10 +26,6 @@ function Register() {
         })
     }
 
-    const handleTogglePassword = () => {
-      setPasswordVisible(!passwordVisible)
-    }
-
     const handleRegist = async (e) => {
       e.preventDefault();
   

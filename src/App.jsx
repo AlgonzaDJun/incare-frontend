@@ -5,6 +5,7 @@ import Register from "./pages/Authentikasi/Register";
 import PageKuis from "./pages/MiniKuis/PageKuis";
 import Quiz from "./pages/MiniKuis/Quiz";
 import FormConselor from "./pages/Conselor/FormConselor";
+import ScheduleTable from "./pages/Conselor/ScheduleTable";
 
 
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/quizpage" element={<PageKuis/>}/>
             <Route path="/quiz" element={<Quiz/>} />
             <Route path="/conselor" element={<FormConselor/>} />
+            <Route path="/schedule" element={<ScheduleTable/>} />
         </Routes> 
     </Router>
   )

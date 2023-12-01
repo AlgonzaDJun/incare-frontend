@@ -30,16 +30,25 @@ function Login() {
             }
             
           const response = await dispatch(userLogin(login))
+          if (response && response.payload && response.payload.userId && response.payload.token) {
           const { userId, token } = response.payload;
-
+          
           // Save userId and token to localStorage
           localStorage.setItem("userId", userId);
           localStorage.setItem("token", token);
-        }catch(error) {
-            setErrorMessage("Invalid Email and Password!")
-        }
-        console.log(login)
-    }
+          
+
+        } else {
+            // Jika respons tidak sesuai yang diharapkan
+            setErrorMessage("Failed to login. Please try again later.");
+            setErrorMessage("");
+          }
+      } catch (error) {
+        // Tangani kesalahan yang mungkin terjadi selama proses login
+        // console.error("Error during login:", error);
+        setErrorMessage("Failed to login. Please try again later.");
+      }
+    };
    
     return (
       <div className=" bg-[#F2F7FF] min-h-screen flex items-center justify-center">

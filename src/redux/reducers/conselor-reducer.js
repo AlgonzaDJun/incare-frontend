@@ -1,6 +1,5 @@
 const initialState = {
     user: {},
-    // cv: {},
     schedule: [{}],
     loading: false,
     error: null,
@@ -30,6 +29,11 @@ const initialState = {
       //     loading: false,
       //   };
       case "SAVE_SCHEDULE_SUCCESS":
+        return {
+          ...state,
+          schedule: action.payload, 
+          loading: false,
+        };
       case "UPDATE_SCHEDULE_SUCCESS":
         return {
           ...state,
