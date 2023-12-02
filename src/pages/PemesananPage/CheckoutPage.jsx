@@ -23,6 +23,7 @@ const CheckoutPage = () => {
   const invoice = useSelector((state) => state.invoice);
   const {
     invoice: dataInvoice,
+    isLoading: loadingInvoice,
     isErrored: errorInvoice,
     isFulfilled: fullFiledInvoice,
   } = invoice;
@@ -83,6 +84,7 @@ const CheckoutPage = () => {
 
   return (
     <>
+      {loadingInvoice && <LoadingFullPage />}
       {!isFulfilled ? (
         <LoadingFullPage />
       ) : (

@@ -167,227 +167,242 @@ const HistoryPage = () => {
 
   return (
     <SidebarSecond>
-      {isLoading && <LoadingFullPage />}
-      <div className="p-4 flex-grow">
-        <div className="flex justify-between items-center">
-          <h1 className="mt-10 text-2xl font-semibold text-gray-900 dark:text-white">
-            Pertemuan Anda
-          </h1>
-        </div>
+      {!isFulfilled ? (
+        <LoadingFullPage />
+      ) : (
+        <div className="p-4 flex-grow">
+          <div className="flex justify-between items-center">
+            <h1 className="mt-10 text-2xl font-semibold text-gray-900 dark:text-white">
+              Pertemuan Anda
+            </h1>
+          </div>
 
-        <Modal show={openModal} size="md" onClose={onCloseModal} popup>
-          <Modal.Header />
-          <Modal.Body>
-            <div className="space-y-6">
-              <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                Berikan penilaian anda
-              </h3>
-              <div>
-                <div className="mb-2 block">
-                  <div className="flex">
-                    {stars.map((star, index) => (
-                      <span key={index}>{star}</span>
-                    ))}
+          <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+            <Modal.Header />
+            <Modal.Body>
+              <div className="space-y-6">
+                <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                  Berikan penilaian anda
+                </h3>
+                <div>
+                  <div className="mb-2 block">
+                    <div className="flex">
+                      {stars.map((star, index) => (
+                        <span key={index}>{star}</span>
+                      ))}
+                    </div>
                   </div>
+
+                  <label
+                    htmlFor="message"
+                    className="block mt-6 mb-3 text-lg font-medium text-gray-900 dark:text-white"
+                  >
+                    Your message
+                  </label>
+                  <textarea
+                    onChange={(e) => setComment(e.target.value)}
+                    value={comment}
+                    id="message"
+                    rows="4"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Write your thoughts here..."
+                  ></textarea>
                 </div>
-
-                <label
-                  htmlFor="message"
-                  className="block mt-6 mb-3 text-lg font-medium text-gray-900 dark:text-white"
-                >
-                  Your message
-                </label>
-                <textarea
-                  onChange={(e) => setComment(e.target.value)}
-                  value={comment}
-                  id="message"
-                  rows="4"
-                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Write your thoughts here..."
-                ></textarea>
+                <div className="w-full">
+                  <Button onClick={handleModalRating}>Nilai</Button>
+                </div>
               </div>
-              <div className="w-full">
-                <Button onClick={handleModalRating}>Nilai</Button>
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
+            </Modal.Body>
+          </Modal>
 
-        <div className="mt-10 flex-grow w-[350px] md:w-auto">
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className=" overflow-x-scroll text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    No
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Nama Konselor
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Tanggal Konseling
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Jam Konseling
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Media Konseling
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Status Booking
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Aksi
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Rating
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {allBooking.data ? (
-                  []
-                    .concat(allBooking.data)
-                    .sort(
-                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-                    )
-                    // allBooking.data
-                    .map((item, index) => {
-                      const date = moment
-                        .utc(item.tanggal_konseling)
-                        .format("DD MMMM YYYY");
+          <div className="mt-10 flex-grow w-[350px] md:w-auto">
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <table className=" overflow-x-scroll text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      No
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Nama Konselor
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Tanggal Konseling
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Jam Konseling
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Media Konseling
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Status Booking
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Aksi
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Rating
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allBooking.data ? (
+                    []
+                      .concat(allBooking.data)
+                      .sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      // allBooking.data
+                      .map((item, index) => {
+                        const date = moment
+                          .utc(item.tanggal_konseling)
+                          .format("DD MMMM YYYY");
 
-                      const time = moment
-                        .utc(item.tanggal_konseling)
-                        .format("HH:mm");
+                        const time = moment
+                          .utc(item.tanggal_konseling)
+                          .format("HH:mm");
 
-                      const time2 = moment
-                        .utc(item.tanggal_konseling)
-                        .add(1, "hours")
-                        .format("HH:mm");
+                        const time2 = moment
+                          .utc(item.tanggal_konseling)
+                          .add(1, "hours")
+                          .format("HH:mm");
 
-                      // Waktu dari database
-                      const targetTime = new Date(item.tanggal_konseling);
-                      // selisih waktu 7 jam
-                      targetTime.setHours(targetTime.getHours() - 7 + 1);
-                      // Waktu saat ini
-                      const currentTime = new Date();
-                      // check current time is past 1 hour from target time
-                      const isPast1Hours = currentTime > targetTime;
+                        // Waktu dari database
+                        const targetTime = new Date(item.tanggal_konseling);
+                        // selisih waktu 7 jam
+                        targetTime.setHours(targetTime.getHours() - 7 + 1);
+                        const conselingTime = new Date(item.tanggal_konseling);
+                        conselingTime.setHours(conselingTime.getHours() - 7);
 
-                      return (
-                        <>
-                          <tr
-                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                            key={index}
-                          >
-                            <th
-                              scope="row"
-                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        // Waktu saat ini
+                        const currentTime = new Date();
+                        // check current time is past 1 hour from target time
+                        const isPast1Hours = currentTime > targetTime;
+                        const isConselingTIme = currentTime > conselingTime;
+
+                        return (
+                          <>
+                            <tr
+                              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                              key={index}
                             >
-                              {index + 1}
-                            </th>
-                            <td className="px-6 py-4">
-                              Dr. {item.conselor_id.user_id.fullname}
-                            </td>
-                            <td className="px-6 py-4">{date}</td>
-                            <td className="px-6 py-4">
-                              {time}-{time2}
-                            </td>
-                            <td className="px-6 py-4">
-                              {item.media_konseling === "zoom" ? (
-                                <>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    x="0px"
-                                    y="0px"
-                                    width="48"
-                                    height="48"
-                                    viewBox="0 0 48 48"
-                                  >
-                                    <circle
-                                      cx="24"
-                                      cy="24"
-                                      r="20"
-                                      fill="#2196f3"
-                                    ></circle>
-                                    <path
-                                      fill="#fff"
-                                      d="M29,31H14c-1.657,0-3-1.343-3-3V17h15c1.657,0,3,1.343,3,3V31z"
-                                    ></path>
-                                    <polygon
-                                      fill="#fff"
-                                      points="37,31 31,27 31,21 37,17"
-                                    ></polygon>
-                                  </svg>
-                                  <h2 className="font-semibold">
-                                    {item.media_konseling}
-                                  </h2>
-                                </>
-                              ) : (
-                                <>
-                                  <img
-                                    width="48"
-                                    height="48"
-                                    src="https://img.icons8.com/color/48/chat--v1.png"
-                                    alt="chat--v1"
-                                  />
-                                  <h2 className="font-semibold">
-                                    {item.media_konseling}
-                                  </h2>
-                                </>
-                              )}
-                            </td>
-                            <td className="px-6 py-4">{item.status}</td>
-                            <td className="px-6 py-4 text-right">
-                              <a
-                                href="#"
-                                className={
-                                  item.status === "pending"
-                                    ? "text-white bg-incare-primary hover:bg-incare-darker font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                    : "text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                }
-                                onClick={
-                                  item.status === "pending"
-                                    ? () => handleBayar(item)
-                                    : () => handleAksiMulai(item)
-                                }
+                              <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                               >
-                                {item.status === "pending" ? "Bayar" : "Mulai"}
-                              </a>
-                            </td>
-                            <td className="px-6 py-4 text-right">
-                              <button
-                                onClick={() => {
-                                  item.conselor_id.user_id._id
-                                    ? setKonselor(item.conselor_id._id)
-                                    : null;
-                                  setOpenModal(true);
-                                }}
-                                type="button"
-                                disabled={!isPast1Hours}
-                                className={
-                                  !isPast1Hours
-                                    ? disabledRatingClass
-                                    : enabledRatingClass
-                                }
-                                // className={enabledRatingClass}
-                              >
-                                Rating
-                              </button>
-                            </td>
-                          </tr>
-                        </>
-                      );
-                    })
-                ) : (
-                  <>Loading....</>
-                )}
-              </tbody>
-            </table>
+                                {index + 1}
+                              </th>
+                              <td className="px-6 py-4">
+                                Dr. {item.conselor_id.user_id.fullname}
+                              </td>
+                              <td className="px-6 py-4">{date}</td>
+                              <td className="px-6 py-4">
+                                {time}-{time2}
+                              </td>
+                              <td className="px-6 py-4">
+                                {item.media_konseling === "zoom" ? (
+                                  <>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      x="0px"
+                                      y="0px"
+                                      width="48"
+                                      height="48"
+                                      viewBox="0 0 48 48"
+                                    >
+                                      <circle
+                                        cx="24"
+                                        cy="24"
+                                        r="20"
+                                        fill="#2196f3"
+                                      ></circle>
+                                      <path
+                                        fill="#fff"
+                                        d="M29,31H14c-1.657,0-3-1.343-3-3V17h15c1.657,0,3,1.343,3,3V31z"
+                                      ></path>
+                                      <polygon
+                                        fill="#fff"
+                                        points="37,31 31,27 31,21 37,17"
+                                      ></polygon>
+                                    </svg>
+                                    <h2 className="font-semibold">
+                                      {item.media_konseling}
+                                    </h2>
+                                  </>
+                                ) : (
+                                  <>
+                                    <img
+                                      width="48"
+                                      height="48"
+                                      src="https://img.icons8.com/color/48/chat--v1.png"
+                                      alt="chat--v1"
+                                    />
+                                    <h2 className="font-semibold">
+                                      {item.media_konseling}
+                                    </h2>
+                                  </>
+                                )}
+                              </td>
+                              <td className="px-6 py-4">{item.status}</td>
+                              <td className="px-6 py-4 text-right">
+                                <button
+                                  href="#"
+                                  className={
+                                    item.status === "pending"
+                                      ? "text-white bg-incare-primary hover:bg-incare-darker font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                      : isConselingTIme
+                                      ? "text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                      : disabledRatingClass
+                                  }
+                                  disabled={
+                                    !isConselingTIme &&
+                                    item.status !== "pending"
+                                  }
+                                  onClick={
+                                    item.status === "pending"
+                                      ? () => handleBayar(item)
+                                      : () => handleAksiMulai(item)
+                                  }
+                                >
+                                  {item.status === "pending"
+                                    ? "Bayar"
+                                    : "Mulai"}
+                                </button>
+                              </td>
+                              <td className="px-6 py-4 text-right">
+                                <button
+                                  onClick={() => {
+                                    item.conselor_id.user_id._id
+                                      ? setKonselor(item.conselor_id._id)
+                                      : null;
+                                    setOpenModal(true);
+                                  }}
+                                  type="button"
+                                  disabled={!isPast1Hours}
+                                  className={
+                                    !isPast1Hours
+                                      ? disabledRatingClass
+                                      : enabledRatingClass
+                                  }
+                                  // className={enabledRatingClass}
+                                >
+                                  Rating
+                                </button>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })
+                  ) : (
+                    <>Loading....</>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </SidebarSecond>
   );
 };
