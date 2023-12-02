@@ -116,7 +116,7 @@ export function postBooking(data, token) {
     dispatch(postBookingPending());
     try {
       const response = await axios.post(
-        `http://13.210.51.154:3000/booking`,
+        `${import.meta.env.VITE_SERVER_URL}/booking`,
         data,
         {
           headers: {
@@ -136,7 +136,7 @@ export function getBookingById(id) {
     dispatch(getBookingPending());
     try {
       const { data } = await axios.get(
-        "http://13.210.51.154:3000/booking/" + id
+        `${import.meta.env.VITE_SERVER_URL}/booking/` + id
       );
 
       dispatch(getBookingFulfilled(data));
@@ -151,7 +151,7 @@ export function updateStatusByidBooking(id, data) {
     dispatch(postBookingPending());
     try {
       const response = await axios.put(
-        `http://13.210.51.154:3000/booking/${id}`,
+        `${import.meta.env.VITE_SERVER_URL}/booking/${id}`,
         data
       );
       dispatch(postBookingFulfilled(response.data));
@@ -166,7 +166,7 @@ export function getAllBooking(token) {
     dispatch(getBookingPending());
     try {
       const { data } = await axios.get(
-        "http://13.210.51.154:3000/booking/user",
+        `${import.meta.env.VITE_SERVER_URL}/booking/user`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -33,10 +33,10 @@ const HistoryPage = () => {
   const dataInvoice = allInvoice.data;
 
   console.log(allBooking);
-  console.log("kontol");
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxMzkyMDkxfQ.M25J0ZPCcrcNWq50xuI3-YW4H2mtkyCrcQ7-7Si6y-0";
+  const token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxMzkyMDkxfQ.M25J0ZPCcrcNWq50xuI3-YW4H2mtkyCrcQ7-7Si6y-0";
   // console.log(updateBooking);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const HistoryPage = () => {
       (data) => data.externalId === item.kode_pembayaran
     );
     // console.log(data)
-    
+
     window.open(data[0].invoiceUrl);
   };
 
@@ -115,9 +115,9 @@ const HistoryPage = () => {
                   <th scope="col" className="px-6 py-3">
                     Aksi
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  {/* <th scope="col" className="px-6 py-3">
                     Rating
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -182,7 +182,7 @@ const HistoryPage = () => {
                                 {item.status === "pending" ? "Bayar" : "Mulai"}
                               </a>
                             </td>
-                            <td className="px-6 py-4 text-right">
+                            {/* <td className="px-6 py-4 text-right">
                               <button
                                 type="button"
                                 className={
@@ -193,7 +193,7 @@ const HistoryPage = () => {
                               >
                                 Rating
                               </button>
-                            </td>
+                            </td> */}
                           </tr>
                         </>
                       );
