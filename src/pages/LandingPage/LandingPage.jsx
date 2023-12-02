@@ -94,7 +94,7 @@ const LandingPage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="#konselor"
                     className="block py-2 px-3 text-white hover:text-slate-400 rounded md:bg-transparent md:p-0 "
                   >
                     Konselor
@@ -102,7 +102,7 @@ const LandingPage = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="#berita"
                     className="block py-2 px-3 text-white hover:text-slate-400 rounded md:bg-transparent md:p-0 "
                   >
                     Berita
@@ -225,7 +225,7 @@ const LandingPage = () => {
 
           {/* START BERITA */}
           <section
-            id="layanan"
+            id="berita"
             className="bg-slate-100 -m-4 mt-24 p-4 rounded-lg flex flex-col justify-center items-center pt-4 pb-28 text-slate-900"
           >
             <div className="text-center flex flex-col gap-y-8 mb-20 mt-24">
