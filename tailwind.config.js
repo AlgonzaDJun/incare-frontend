@@ -14,6 +14,7 @@ export default {
         "netral-bluesky": "#F2F7FF",
         "netral-white": "#FFFFFF",
         "incare-darker": "#2e4185",
+        "landing-secondary" : "#A0E4F1"
       },
       fontFamily: {
         nunito: ["Nunito"],
