@@ -11,9 +11,13 @@ import {
 import { RiQuestionFill } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FiMessageSquare, FiUserPlus } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SidebarSecond = ({ children }) => {
+  const location = useLocation().pathname;
+
+  // console.log(location.pathname)
+
   const menus = [
     { name: "Konseling", link: "/booking", icon: MdDateRange },
     { name: "Pertemuan", link: "/history", icon: MdPhotoCamera },
@@ -52,7 +56,9 @@ const SidebarSecond = ({ children }) => {
               key={i}
               className={` ${
                 menu?.margin && "mt-5"
-              } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-incare-darker hover:text-white rounded-md`}
+              } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-incare-darker ${
+                location == menu.link && "bg-incare-darker text-white"
+              } hover:text-white rounded-md`}
             >
               <div>{React.createElement(menu?.icon, { size: "20" })}</div>
               <h2

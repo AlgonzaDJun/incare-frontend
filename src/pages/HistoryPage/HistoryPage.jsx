@@ -115,9 +115,9 @@ const HistoryPage = () => {
                   <th scope="col" className="px-6 py-3">
                     Aksi
                   </th>
-                  {/* <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-6 py-3">
                     Rating
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -182,7 +182,7 @@ const HistoryPage = () => {
                                 {item.status === "pending" ? "Bayar" : "Mulai"}
                               </a>
                             </td>
-                            {/* <td className="px-6 py-4 text-right">
+                            <td className="px-6 py-4 text-right">
                               <button
                                 type="button"
                                 className={
@@ -193,7 +193,7 @@ const HistoryPage = () => {
                               >
                                 Rating
                               </button>
-                            </td> */}
+                            </td>
                           </tr>
                         </>
                       );
