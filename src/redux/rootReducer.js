@@ -8,6 +8,7 @@ import konselorReducer from "./reducers/konselorReducer";
 
 import bookingReducer from "./reducers/bookingReducer";
 import invoiceReducer from "./reducers/invoiceReducer";
+import reviewReducer from "./reducers/reviewReducer";
 
 const rootReducer = combineReducers({
   getStories: getStoriesReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   konselor: konselorReducer,
   booking: bookingReducer,
   invoice: invoiceReducer,
+  review: reviewReducer
 });
 
 export default rootReducer;

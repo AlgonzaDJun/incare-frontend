@@ -4,6 +4,8 @@ import { useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import {
   MdDateRange,
+  MdHome,
+  MdLogout,
   MdPerson,
   MdPhotoCamera,
   MdQuestionAnswer,
@@ -19,6 +21,7 @@ const SidebarSecond = ({ children }) => {
   // console.log(location.pathname)
 
   const menus = [
+    { name: "Home", link: "/", icon: MdHome },
     { name: "Konseling", link: "/booking", icon: MdDateRange },
     { name: "Pertemuan", link: "/history", icon: MdPhotoCamera },
     { name: "Chat", link: "#", icon: FiMessageSquare },
@@ -32,6 +35,8 @@ const SidebarSecond = ({ children }) => {
     { name: "Profile", link: "#", icon: MdPerson },
     { name: "Daftar Konselor", link: "#", icon: FiUserPlus, margin: true },
     { name: "FAQ", link: "/faq", icon: RiQuestionFill },
+    // logout
+    { name: "Logout", link: "/", icon: MdLogout, margin: true },
   ];
 
   const [open, setOpen] = useState(true);
@@ -57,7 +62,8 @@ const SidebarSecond = ({ children }) => {
               className={` ${
                 menu?.margin && "mt-5"
               } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-incare-darker ${
-                location == menu.link && "bg-incare-darker text-white"
+                location == (menu.link || menu.link + "/") &&
+                "bg-incare-darker text-white"
               } hover:text-white rounded-md`}
             >
               <div>{React.createElement(menu?.icon, { size: "20" })}</div>
