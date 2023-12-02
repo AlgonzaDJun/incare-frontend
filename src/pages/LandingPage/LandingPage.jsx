@@ -2,9 +2,11 @@
 import { Link } from "react-router-dom";
 import logoIncare from "../../assets/incare_bg.png";
 import headerImage from "../../assets/animation2.webp";
+import consOffline from "../../assets/conseling_offline.jpg";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import CardConsLanding from "./CardConsLanding";
+import FaqLanding from "./FaqLanding";
 
 const LandingPage = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -210,7 +212,7 @@ const LandingPage = () => {
           {/* START KONSELOR */}
           <section
             id="konselor"
-            className="mt-20 p-4 rounded-lg md:flex md:justify-end md:items-center pt-8 pb-28 text-slate-900 relative"
+            className="mt-20 p-4 rounded-lg md:flex md:justify-end md:items-center pt-8 text-slate-900 relative"
           >
             <div className="absolute -z-10 -top-9 right-0 bg-yellow-400 py-7 md:px-10 pl-5 -mr-3 md:-mr-5 rounded-l-full">
               <h1 className="font-semibold text-6xl">Konselor Kami</h1>
@@ -220,6 +222,83 @@ const LandingPage = () => {
             <CardConsLanding namaKonselor={"arjun"} spesialis={"Olahraga"} />
           </section>
           {/* END KONSELOR */}
+
+          {/* START BERITA */}
+          <section
+            id="layanan"
+            className="bg-slate-100 -m-4 mt-24 p-4 rounded-lg flex flex-col justify-center items-center pt-4 pb-28 text-slate-900"
+          >
+            <div className="text-center flex flex-col gap-y-8 mb-20 mt-24">
+              <h1 className="text-6xl font-semibold text-incare-primary">
+                Berita Incare
+              </h1>
+            </div>
+
+            <div className="md:grid md:grid-cols-2">
+              <div className="w-full mx-auto flex justify-center items-center">
+                <img
+                  src={consOffline}
+                  className="md:h-48"
+                  alt="offline conseling"
+                />
+              </div>
+              <div className="mt-10 md:mt-0 md:ml-5">
+                <h1 className="font-bold text-4xl">Mental Health Week</h1>
+                <div className="font-semibold text-lg mt-8 mb-5">
+                  <h2>Sabtu, 31 Desember 2023</h2>
+                  <h2>10.00 WIB - selesai</h2>
+                </div>
+
+                <div className="font-semibold text-xl mb-5">
+                  <h2 className="inline-flex items-center">
+                    LIVE ON{" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      x="0px"
+                      y="0px"
+                      width="48"
+                      height="48"
+                      viewBox="0 0 48 48"
+                    >
+                      <circle cx="24" cy="24" r="20" fill="#2196f3"></circle>
+                      <path
+                        fill="#fff"
+                        d="M29,31H14c-1.657,0-3-1.343-3-3V17h15c1.657,0,3,1.343,3,3V31z"
+                      ></path>
+                      <polygon
+                        fill="#fff"
+                        points="37,31 31,27 31,21 37,17"
+                      ></polygon>
+                    </svg>
+                  </h2>
+                  <h2 className="mb-5 text-4xl">Gratis</h2>
+                  <h2>Limited Slot</h2>
+                </div>
+
+                <button
+                  type="button"
+                  className="text-white bg-yellow-400 hover:bg-yellow-500  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-2 text-center shadow-xl"
+                >
+                  Daftar Sekarang
+                </button>
+              </div>
+            </div>
+          </section>
+          {/* END BERITA */}
+
+          {/* FAQ */}
+          <section
+            id="faq"
+            className="p-4 rounded-lg md:flex md:flex-col md:justify-center md:items-center pt-8 text-slate-900 md:mx-44"
+          >
+            <div className="text-center flex flex-col gap-y-8 mb-20 mt-24">
+              <h1 className="text-6xl font-semibold text-incare-primary">
+                FAQ
+              </h1>
+            </div>
+            <FaqLanding />
+          </section>
+          {/* END FAQ */}
         </main>
       </div>
     </div>
