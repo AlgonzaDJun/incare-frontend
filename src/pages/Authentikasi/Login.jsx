@@ -31,11 +31,15 @@ function Login() {
             
           const response = await dispatch(userLogin(login))
           if (response && response.payload && response.payload.userId && response.payload.token) {
-          const { userId, token } = response.payload;
+          // const { userId, token } = response.payload;
           
-          // Save userId and token to localStorage
-          localStorage.setItem("userId", userId);
-          localStorage.setItem("token", token);
+          // // Save userId and token to localStorage
+          // localStorage.setItem("userId", userId);
+          // localStorage.setItem("token", token);
+
+          console.log(response)
+          console.log(response.data)
+          console.log(response.payload)
           
 
         } else {
@@ -45,13 +49,13 @@ function Login() {
           }
       } catch (error) {
         // Tangani kesalahan yang mungkin terjadi selama proses login
-        // console.error("Error during login:", error);
+        console.error("Error during login:", error);
         setErrorMessage("Failed to login. Please try again later.");
       }
     };
    
     return (
-      <div className=" bg-[#F2F7FF] min-h-screen flex items-center justify-center">
+      <div className=" bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6">
          <div className="bg-white p-8 rounded-2xl shadow-md w-full md:max-w-3xl">
             <img src="/img/Incare 1.png" className="mx-auto w-56"/><br/>
                 <h2 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">Login</h2>

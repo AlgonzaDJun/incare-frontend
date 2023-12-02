@@ -46,14 +46,14 @@ const FormConselor = () => {
 
     try {
         // Mengambil token dari local storage
-        const token = localStorage.getItem('token'); // Ganti 'token' sesuai dengan nama key token di local storage
-        if (!token) {
-          // Handle jika token tidak ditemukan
-          return;
-        }
+        // const token = localStorage.getItem('token'); // Ganti 'token' sesuai dengan nama key token di local storage
+        // if (!token) {
+        //   setError("Token tidak ditemukan.");
+        //   return;
+        // }
       const dataToSend = { ...userData, user_id: userId }; 
       // Dispatch action to register counselor
-      dispatch(registerConselor(dataToSend, token));
+      dispatch(registerConselor(dataToSend));
       setError(null);
       setIsChecked(false);
       console.log(dataToSend)

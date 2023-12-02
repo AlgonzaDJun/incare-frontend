@@ -64,20 +64,23 @@ export function sendOTPRequest(data) {
     }
   };
 
-export function userLogin(data) {
+  export function userLogin(data) {
     return async function(dispatch) {
-        dispatch(loginRequest(data));
-
-      axios.post(`https://incare-backend-production.up.railway.app/auth/login`, data)
-            .then(response => {
-                const user = response.data;
-                dispatch(loginSuccess(user));
-            })
-            .catch(error => {
-                dispatch(loginFailure(error.message));
-            });
+      dispatch(loginRequest(data));
+  
+      try {
+        const response = await axios.post(
+          `https://incare-backend-production.up.railway.app/auth/login`,
+          data
+        );
+  
+        const user = response.data;
+        dispatch(loginSuccess(user));
+      } catch (error) {
+        dispatch(loginFailure(error.message));
+      }
     };
-}
+  }
 
 export function userRegister(data) {
     return async function(dispatch) {

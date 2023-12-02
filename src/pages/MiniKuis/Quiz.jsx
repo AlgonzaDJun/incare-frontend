@@ -8,7 +8,7 @@ import SidebarSecond from "../../components/SidebarSecond";
 
 function Quiz(){
     const dispatch = useDispatch();
-    // const user_id = useSelector(state => state.auth.user.id);
+    const loggedInUserId = useSelector((state) => state.auth.userId);
     const [answers, setAnswers] = useState({
         question1: null,
         question2: null,
@@ -16,6 +16,13 @@ function Quiz(){
         question4: null,
         question5: null,
     })
+
+    useEffect(() => {
+      const userIdFromLocalStorage = localStorage.getItem("userId");
+      if (userIdFromLocalStorage && !loggedInUserId) {
+        dispatch(userLogin(userIdFromLocalStorage));
+      }
+    }, []);
     
     const [error, setError] = useState('');
     const [showResult, setShowResult] = useState(false);
@@ -113,15 +120,18 @@ function Quiz(){
     setMood(calculateMood);
     setShowResult(true);
    
+    const userId = loggedInUserId ? loggedInUserId.id : localStorage.getItem("userId")
+
     const userResults = {
-        user_id: "655f4975dce10db540026322",
+        user_id: userId,
         questions: questions.map(ques => `Question ${ques.id}`),
         answers: Object.values(answers),
         score: score,
         mood: calculateMood
     };
-    dispatch(quizAnswers(userResults));
-    // console.log(quizAnswers)
+    dispatch(quizAnswers(userId, userResults));
+    console.log("New quiz result:", userResults);
+    // console.log(userId)
   }
 }; 
 

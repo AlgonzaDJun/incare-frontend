@@ -35,7 +35,7 @@ const ScheduleTable = () => {
       <SidebarSecond/>
       <div>
       <h2 className="text-3xl font-bold mb-4 text-center text-[#435EBE] p-10">Counselor Schedule(2023)</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 ml-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 ml-20">
         {scheduleOptions.map((schedule) => (
           <div
             key={schedule.id}

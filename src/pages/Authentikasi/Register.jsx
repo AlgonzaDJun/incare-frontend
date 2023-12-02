@@ -57,7 +57,7 @@ function Register() {
     }
 
     return (
-      <div className=" bg-[#F2F7FF] min-h-screen flex items-center justify-center p-8">
+      <div className=" bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6">
          <div className="bg-white p-8 rounded-2xl shadow-md w-full md:max-w-3xl">
          <img src="/img/Incare 1.png" className="mx-auto w-56"/><br/>
                 <h2 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">Sign Up</h2>
