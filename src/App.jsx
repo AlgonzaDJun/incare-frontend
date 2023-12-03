@@ -21,6 +21,7 @@ function App() {
         <Route path="/payment/:idbooking" element={<CheckoutPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="*" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );

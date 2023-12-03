@@ -398,7 +398,7 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
-            <h1 className="mt-8 md:mt-0 text-center font-semibold text-xl text-incare-primary">
+            <h1 className="mt-8 md:mt-5 text-center font-semibold text-xl text-incare-primary">
               InCare | Prioritize your mental health &copy;{" "}
               {new Date().getFullYear()}
             </h1>
