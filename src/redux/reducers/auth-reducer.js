@@ -14,7 +14,7 @@ function authReducer (state = initialState, action) {
             };
         case "LOGIN_SUCCESS":
             return {
-               isLoggedIn: true
+               isLoggedIn: true,
             };
         case "LOGIN_FAILURE":
         case "REGISTER_REQUEST":

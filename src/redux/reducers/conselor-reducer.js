@@ -17,9 +17,10 @@ const initialState = {
           error: null,
         };
       case "REGISTER_CONSELOR_SUCCESS":
+        const newConselor = action.payload
         return {
           ...state,
-          user: action.payload,
+          user: {...newConselor},
           loading: false,
         };
       // case "UPLOAD_CV_SUCCESS":

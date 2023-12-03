@@ -29,17 +29,17 @@ function Login() {
                 return;
             }
             
-          const response = await dispatch(userLogin(login))
+          const response = dispatch(userLogin(login))
           if (response && response.payload && response.payload.userId && response.payload.token) {
-          // const { userId, token } = response.payload;
+          const { userId, token } = response.payload;
           
-          // // Save userId and token to localStorage
-          // localStorage.setItem("userId", userId);
-          // localStorage.setItem("token", token);
+          // Save userId and token to localStorage
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("token", token);
 
-          console.log(response)
-          console.log(response.data)
-          console.log(response.payload)
+          // console.log(response)
+          // console.log(response.data)
+          // console.log(response.payload)
           
 
         } else {

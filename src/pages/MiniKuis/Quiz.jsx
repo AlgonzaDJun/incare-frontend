@@ -8,7 +8,7 @@ import SidebarSecond from "../../components/SidebarSecond";
 
 function Quiz(){
     const dispatch = useDispatch();
-    const loggedInUserId = useSelector((state) => state.auth.userId);
+    // const loggedInUserId = useSelector((state) => state.auth.user);
     const [answers, setAnswers] = useState({
         question1: null,
         question2: null,
@@ -17,12 +17,13 @@ function Quiz(){
         question5: null,
     })
 
-    useEffect(() => {
-      const userIdFromLocalStorage = localStorage.getItem("userId");
-      if (userIdFromLocalStorage && !loggedInUserId) {
-        dispatch(userLogin(userIdFromLocalStorage));
-      }
-    }, []);
+    // useEffect(() => {
+    //   const userIdFromLocalStorage = localStorage.getItem("userId");
+    //   // console.log(userIdFromLocalStorage)
+    //   if (userIdFromLocalStorage && !loggedInUserId) {
+    //     dispatch(userLogin(userIdFromLocalStorage));
+    //   }
+    // }, []);
     
     const [error, setError] = useState('');
     const [showResult, setShowResult] = useState(false);
@@ -107,7 +108,7 @@ function Quiz(){
     console.log(selectedValue)
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const unansweredQuestions = questions.filter(ques => !answers[`question${ques.id}`]);
 
     if (unansweredQuestions.length > 0) {
@@ -120,16 +121,17 @@ function Quiz(){
     setMood(calculateMood);
     setShowResult(true);
    
-    const userId = loggedInUserId ? loggedInUserId.id : localStorage.getItem("userId")
+    const user_id = localStorage.getItem("userId")
+    // console.log(user_id)
 
     const userResults = {
-        user_id: userId,
+        user_id: user_id,
         questions: questions.map(ques => `Question ${ques.id}`),
         answers: Object.values(answers),
         score: score,
         mood: calculateMood
     };
-    dispatch(quizAnswers(userId, userResults));
+    await dispatch(quizAnswers(userResults));
     console.log("New quiz result:", userResults);
     // console.log(userId)
   }
@@ -152,6 +154,7 @@ function Quiz(){
             {questions.map((ques) => (
               <div key={ques.id} className="mb-6 ml-12">
                 <h4 className="text-lg font-semibold mb-2">{ques.question}</h4> 
+                <div className="ml-7">
                 {ques.options.map((opt) => (
                   <div key={opt.option} className="flex items-center mb-2">
                     <label>
@@ -167,6 +170,7 @@ function Quiz(){
                     </label>
                   </div>
                 ))}
+              </div>
               </div>
             ))} <br />
             <div className="grid grid-cols-1">

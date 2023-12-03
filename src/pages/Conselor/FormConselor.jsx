@@ -2,24 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerConselor } from "../../redux/actions/conselorAction";
 import SidebarSecond from "../../components/SidebarSecond";
+import CardModal from "../../components/CardModal";
 
 const FormConselor = () => {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
   const [userData, setUserData] = useState({
     spesialisasi: "",
     deskripsi: "",
   });
   const [error, setError] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
-  const [userId, setUserId] = useState("");
-
-  useEffect(() => {
-    // Mengambil user_id dari localStorage saat komponen dimuat
-    const storedUserId = JSON.parse(localStorage.getItem('userId'));
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,20 +38,18 @@ const FormConselor = () => {
       }
 
     try {
-        // Mengambil token dari local storage
-        // const token = localStorage.getItem('token'); // Ganti 'token' sesuai dengan nama key token di local storage
-        // if (!token) {
-        //   setError("Token tidak ditemukan.");
-        //   return;
-        // }
-      const dataToSend = { ...userData, user_id: userId }; 
+        
+      const user_id = localStorage.getItem("userId")
+
+      const newConselor = { ...userData, user_id: user_id }; 
       // Dispatch action to register counselor
-      dispatch(registerConselor(dataToSend));
+      dispatch(registerConselor(newConselor));
       setError(null);
       setIsChecked(false);
-      console.log(dataToSend)
+      console.log(newConselor)
       // Clear form after successful registration
       setUserData({ spesialisasi: "", deskripsi: "" });
+      setShowModal(true);
     } catch (err) {
       setError(err.message);
     }
@@ -128,7 +119,7 @@ const FormConselor = () => {
       {error && <div className="text-red-500">{error}</div>}
       <br />
       <div className="grid grid-cols-1">
-      <button
+     <button
         type="submit"
         className=" w-52 bg-[#435EBE] text-white px-4 py-2 place-self-end rounded hover:bg-[#3d55ab]"
       >
@@ -136,6 +127,7 @@ const FormConselor = () => {
       </button>
       </div>
     </form>
+    <CardModal showModal={showModal} closeModal={() => setShowModal(false)} />
     </div>
   );
 };

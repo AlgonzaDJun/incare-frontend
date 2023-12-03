@@ -6,10 +6,10 @@ const initialState = {
 const quizReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SUBMIT_ANSWERS":
-            const { newQuizResult, userId}  = action.payload;
+            const newQuizResult = action.payload;
             return {
                 ...state,
-                userResults: {...newQuizResult, userId }
+                userResults: {...newQuizResult}
             };
         case "FETCH_ALL_RESULTS":
             return {

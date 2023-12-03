@@ -17,8 +17,7 @@ function Register() {
     const [emailSent, setEmailSent] = useState(false);
 
     const { username, fullname, email, no_hp, password, otp } = register;
-    const [passwordVisible, setPasswordVisible] = useState(false);
-
+    
     const handleInput = (e) => {
         setRegister ({
             ...register,
@@ -122,18 +121,13 @@ function Register() {
 
           <div className="block text-md font-medium text-gray-700">
             <label>Password</label> <br />
-            <input type={passwordVisible ? "text" : "password"}
+            <input
             className="mt-1 block w-full border-gray-300 rounded-xl shadow-sm focus:border-[#435EBE] focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             name="password" 
             placeholder="enter your password" 
             value={password} 
             onChange={handleInput}
             />
-            <span
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-            onClick={() => setPasswordVisible(!passwordVisible)}
-            ></span>
-            {/* kasih vektor mata dalam span */}
           </div> 
 
           <div className="block text-md font-medium text-gray-700">
