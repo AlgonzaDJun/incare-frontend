@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import logoIncare from "../../assets/incare_bg.png";
 import headerImage from "../../assets/animation2.webp";
 import consOffline from "../../assets/conseling_offline.jpg";
+import doktor1 from "../../assets/female_doktor.jpeg";
+import doktor2 from "../../assets/male_doktor1.jpg";
+import doktor3 from "../../assets/male_doktor2.jpg";
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import CardConsLanding from "./CardConsLanding";
@@ -251,14 +254,17 @@ const LandingPage = () => {
             <CardConsLanding
               namaKonselor={"Dr. Saman"}
               spesialis={"Percintaan"}
+              img={doktor2}
             />
             <CardConsLanding
               namaKonselor={"Dr. Melati"}
               spesialis={"Depresit"}
+              img={doktor1}
             />
             <CardConsLanding
               namaKonselor={"Dr. Arjun"}
               spesialis={"Olahraga"}
+              img={doktor3}
             />
           </section>
           {/* END KONSELOR */}
