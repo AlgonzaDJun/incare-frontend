@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import React from "react";
 import { Link } from "react-router-dom";
 import logoIncare from "../../assets/incare_bg.png";
@@ -7,13 +8,43 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import CardConsLanding from "./CardConsLanding";
 import FaqLanding from "./FaqLanding";
+import TestimoniCard from "./TestimoniCard";
 
 const LandingPage = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
+  const testi = [
+    {
+      nama: "santai",
+      // komentar tentang website konseling mental
+      komentar:
+        "Saya menemukan tempat yang sempurna untuk mendapatkan bantuan kesehatan mental saya. Situs ini sangat ramah pengguna, dengan konselor yang ramah dan berpengetahuan luas. Terima kasih telah memberikan layanan yang sangat membantu.",
+      rating: 5,
+    },
+    {
+      nama: "agus",
+      // komentar tentang website konseling mental
+      komentar:
+        "Pengalaman saya dengan situs konseling ini sangat luar biasa. Interaksi dengan konselor sangat menghibur dan membangun rasa percaya diri. Saya merasa lebih baik setiap kali melakukan sesi konseling..",
+      rating: 4,
+    },
+    {
+      nama: "ravi",
+      komentar:
+        "Website ini benar-benar membantu saya dalam menghadapi masalah kehidupan sehari-hari. Sesi konseling yang mudah diakses membuat saya lebih fokus dan tenang. Saya merasa diperhatikan dan didengar.",
+      rating: 5,
+    },
+    {
+      nama: "anna",
+      komentar:
+        "Website konseling ini benar-benar membawa perubahan positif dalam hidup saya. Konselor yang saya temui sangat terampil dalam mendengarkan dan memberikan saran yang berguna. Terima kasih telah memberikan platform yang sangat membantu!",
+      rating: 4,
+    },
+  ];
+
   return (
     <div>
-      <div className="w-full min-h-screen box-border mb-32 md:mb-0">
+      <div className="w-full min-h-screen box-border mb-16 md:mb-0">
         {/* NAVBAR */}
         <nav className="bg-incare-primary dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
           <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -217,9 +248,18 @@ const LandingPage = () => {
             <div className="absolute -z-10 -top-9 right-0 bg-yellow-400 py-7 md:px-10 pl-5 -mr-3 md:-mr-5 rounded-l-full">
               <h1 className="font-semibold text-6xl">Konselor Kami</h1>
             </div>
-            <CardConsLanding namaKonselor={"saman"} spesialis={"Percintaan"} />
-            <CardConsLanding namaKonselor={"melati"} spesialis={"Depresit"} />
-            <CardConsLanding namaKonselor={"arjun"} spesialis={"Olahraga"} />
+            <CardConsLanding
+              namaKonselor={"Dr. Saman"}
+              spesialis={"Percintaan"}
+            />
+            <CardConsLanding
+              namaKonselor={"Dr. Melati"}
+              spesialis={"Depresit"}
+            />
+            <CardConsLanding
+              namaKonselor={"Dr. Arjun"}
+              spesialis={"Olahraga"}
+            />
           </section>
           {/* END KONSELOR */}
 
@@ -289,7 +329,7 @@ const LandingPage = () => {
           {/* FAQ */}
           <section
             id="faq"
-            className="p-4 rounded-lg md:flex md:flex-col md:justify-center md:items-center pt-8 text-slate-900 md:mx-44"
+            className="p-4 rounded-lg md:flex md:flex-col md:justify-center md:items-center pt-8 pb-28 text-slate-900 md:mx-44"
           >
             <div className="text-center flex flex-col gap-y-8 mb-20 mt-24">
               <h1 className="text-6xl font-semibold text-incare-primary">
@@ -299,6 +339,65 @@ const LandingPage = () => {
             <FaqLanding />
           </section>
           {/* END FAQ */}
+
+          {/* TESTIMONIAL */}
+          <section
+            id="faq"
+            className="p-4 rounded-lg md:flex md:flex-col md:justify-center md:items-center pb-28 text-slate-900 -mx-5 bg-slate-100"
+          >
+            <div className="text-center flex flex-col gap-y-8 mt-16">
+              <h1 className="text-6xl font-semibold text-incare-primary">
+                Testimoni
+              </h1>
+              <h3 className="font-bold text-4xl">Kata Client Kami</h3>
+            </div>
+
+            <div className="md:flex md:justify-between md:items-center">
+              {testi.map((item, index) => {
+                return (
+                  <TestimoniCard
+                    key={index}
+                    nama={item.nama}
+                    komentar={item.komentar}
+                    rating={item.rating}
+                  />
+                );
+              })}
+            </div>
+          </section>
+          {/* END TESTIMONIAL */}
+
+          {/* START FOOTER */}
+          <section id="faq" className="p-4 rounded-lg text-slate-900 -mx-5 ">
+            <div className="md:grid md:grid-cols-2">
+              <div className="flex justify-center items-center">
+                <img src={logoIncare} alt="" />
+              </div>
+              <div className="md:flex md:justify-around md:items-center space-y-10 md:space-y-0">
+                <div className="flex flex-col gap-y-4">
+                  <h1 className="text-xl font-semibold text-incare-primary">
+                    Get To Know Us
+                  </h1>
+                  <p className="font-medium text-base">About Us</p>
+                  <p className="font-medium text-base">Contact Us</p>
+                  <p className="font-medium text-base">Join as Conselor</p>
+                </div>
+                <div className="flex flex-col gap-y-4">
+                  <h1 className="text-xl font-semibold text-incare-primary">
+                    Others
+                  </h1>
+                  <p className="font-medium text-base">Counseling Pricing</p>
+                  <p className="font-medium text-base">News</p>
+                  <p className="font-medium text-base">FAQ</p>
+                </div>
+              </div>
+            </div>
+            <h1 className="mt-8 md:mt-0 text-center font-semibold text-xl text-incare-primary">
+              InCare | Prioritize your mental health &copy;{" "}
+              {new Date().getFullYear()}
+            </h1>
+          </section>
+          {/* END FOOTER */}
         </main>
       </div>
     </div>
