@@ -9,6 +9,7 @@ import konselorReducer from "./reducers/konselorReducer";
 import bookingReducer from "./reducers/bookingReducer";
 import invoiceReducer from "./reducers/invoiceReducer";
 import reviewReducer from "./reducers/reviewReducer";
+import chatReducer from "./reducers/chatReducer";
 
 const rootReducer = combineReducers({
   getStories: getStoriesReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   konselor: konselorReducer,
   booking: bookingReducer,
   invoice: invoiceReducer,
-  review: reviewReducer
+  review: reviewReducer,
+  chat: chatReducer
 });
 
 export default rootReducer;
