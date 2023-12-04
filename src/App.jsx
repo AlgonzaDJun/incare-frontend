@@ -1,4 +1,4 @@
-import Community from "./page/Community";
+import Community from "./pages/Community/Community";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PemesananPage from "./pages/PemesananPage/PemesananPage";

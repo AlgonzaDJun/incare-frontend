@@ -1,6 +1,6 @@
-import SidebarSecond from "../components/SidebarSecond";
-import Newpost from "../components/newpost";
-import StoryList from "../components/storyList";
+import SidebarSecond from "../../components/SidebarSecond";
+import Newpost from "../../components/newpost";
+import StoryList from "../../components/storyList";
 
 export default function Community() {
   return (
