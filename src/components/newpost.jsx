@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { MdSend } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { postStory } from "../redux/slice/post-story-slice";
-import { getAllStories } from "../redux/slice/all-stories-slice";
+import { getStories, postStory } from "../redux/reducers/storyReducer";
 export default function NewPost() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
@@ -12,9 +11,8 @@ export default function NewPost() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    await dispatch(postStory({ token, data: value }));
-    dispatch(getAllStories({ token }));
+    await dispatch(postStory(value));
+    dispatch(getStories());
     setValue("");
   };
   return (

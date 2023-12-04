@@ -1,11 +1,29 @@
 import { Accordion } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getFaqs } from "../../redux/reducers/faqReducer";
 
 const FaqLanding = () => {
+  const dispatch = useDispatch();
+  const { data, error } = useSelector((state) => state.faq);
+  useEffect(() => {
+    dispatch(getFaqs());
+  }, [dispatch]);
+  console.log(error);
   return (
     <div className="w-full">
       <Accordion collapseAll>
-        <Accordion.Panel>
+        {data.map((faq) => (
+          <Accordion.Panel key={faq._id}>
+            <Accordion.Title>{faq.question}</Accordion.Title>
+            <Accordion.Content>
+              <p className="mb-2 text-gray-500 dark:text-gray-400">
+                {faq.answer}
+              </p>
+            </Accordion.Content>
+          </Accordion.Panel>
+        ))}
+        {/* <Accordion.Panel>
           <Accordion.Title>Bagaimana Caranya memesan konselor?</Accordion.Title>
           <Accordion.Content>
             <p className="mb-2 text-gray-500 dark:text-gray-400">
@@ -45,7 +63,7 @@ const FaqLanding = () => {
           <Accordion.Content>
             <p className="mb-2 text-gray-500 dark:text-gray-400">
               Cara mendafatar sebagai konselor adalah cukup mudah, anda hanya
-                perlu mengikuti langkah-langkah berikut:
+              perlu mengikuti langkah-langkah berikut:
               <ol className="list-decimal pl-5 text-gray-500 dark:text-gray-400">
                 <li>
                   Pergi ke daftar konselor{" "}
@@ -63,7 +81,7 @@ const FaqLanding = () => {
               </ol>
             </p>
           </Accordion.Content>
-        </Accordion.Panel>
+        </Accordion.Panel> */}
       </Accordion>
     </div>
   );

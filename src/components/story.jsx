@@ -7,8 +7,8 @@ import {
 } from "react-icons/md";
 
 import { useDispatch } from "react-redux";
-import { updateLike } from "../redux/slice/update-like-slice";
-import { getAllStories } from "../redux/slice/all-stories-slice";
+
+import { getStories, updateLike } from "../redux/reducers/storyReducer";
 
 export default function Story({
   id,
@@ -22,9 +22,8 @@ export default function Story({
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    const token = localStorage.getItem("token");
-    await dispatch(updateLike({ token, id }));
-    dispatch(getAllStories({ token }));
+    await dispatch(updateLike(id));
+    dispatch(getStories());
   };
 
   return (

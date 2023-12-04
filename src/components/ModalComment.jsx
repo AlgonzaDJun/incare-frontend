@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addComment } from "../redux/slice/add-comment-slice";
+
 import { BsFillSendFill } from "react-icons/bs";
 
 import axios from "axios";
@@ -10,6 +10,12 @@ import {
   MdOutlineFavorite,
   MdOutlineModeComment,
 } from "react-icons/md";
+import { Spinner } from "flowbite-react";
+import {
+  addComment,
+  getStories,
+  updateLike,
+} from "../redux/reducers/storyReducer";
 // eslint-disable-next-line react/prop-types
 export default function Modal({ isOpen, onClose, id }) {
   const dispatch = useDispatch();
@@ -39,10 +45,13 @@ export default function Modal({ isOpen, onClose, id }) {
       fetchDetail();
     }
   }, [isOpen, id]);
+  const handleLikeClick = async () => {
+    await dispatch(updateLike(id));
+    dispatch(getStories());
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    await dispatch(addComment({ token, data: value, id }));
+    await dispatch(addComment(value, id));
     setValue("");
     await fetchDetail();
   };
@@ -70,7 +79,7 @@ export default function Modal({ isOpen, onClose, id }) {
             <div className="my-2">
               <hr />
               <div className="flex gap-5 my-2">
-                <button className="font-nunito">
+                <button onClick={handleLikeClick} className="font-nunito">
                   {detail.isLike ? (
                     <MdOutlineFavorite className="inline-block w-6 h-6 mr-1 text-red-600" />
                   ) : (
@@ -116,7 +125,9 @@ export default function Modal({ isOpen, onClose, id }) {
             </div>
           </>
         ) : (
-          <p>Loading...</p>
+          <div className="text-center">
+            <Spinner className="mx-auto" aria-label="Loading Get Story List" />
+          </div>
         )}
       </div>
     </div>

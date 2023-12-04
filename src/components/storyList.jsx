@@ -1,25 +1,28 @@
 import { useDispatch, useSelector } from "react-redux";
 import Story from "./story";
 import { useEffect, useState } from "react";
-import { getAllStories } from "../redux/slice/all-stories-slice";
-import Modal from "./modal";
+import Modal from "./ModalComment";
+import { getStories } from "../redux/reducers/storyReducer";
+import { Spinner } from "flowbite-react";
 export default function StoryList() {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
 
-  const data = useSelector((state) => state.getStories.data);
-  const status = useSelector((state) => state.getStories.status);
-  const error = useSelector((state) => state.getStories.error);
+  const { stories, loading, error } = useSelector((state) => state.story);
+
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    dispatch(getAllStories({ token }));
+    dispatch(getStories());
   }, [dispatch]);
-  if (status === "loading") {
-    return <div>Loading...</div>;
+  if (loading === true) {
+    return (
+      <div className="text-center">
+        <Spinner className="mx-auto" aria-label="Loading Get Story List" />
+      </div>
+    );
   }
 
-  if (status === "failed") {
+  if (loading === false && error !== null) {
     return <div>Error: {error}</div>;
   }
   const handleCardClick = (id) => {
@@ -33,7 +36,7 @@ export default function StoryList() {
   return (
     <>
       <div className="">
-        {data.map((item) => (
+        {stories.map((item) => (
           <Story
             key={item._id}
             id={item._id}

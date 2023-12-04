@@ -34,7 +34,11 @@ const SidebarSecond = ({ children }) => {
     { name: "Quiz Incare", link: "#", icon: TbReportAnalytics },
     { name: "Profile", link: "#", icon: MdPerson },
     { name: "Daftar Konselor", link: "#", icon: FiUserPlus, margin: true },
-    { name: "FAQ", link: "/faq", icon: RiQuestionFill },
+    {
+      name: "Pertemuan Konselor",
+      link: "/meet-conselor",
+      icon: RiQuestionFill,
+    },
     // logout
     { name: "Logout", link: "/", icon: MdLogout, margin: true },
   ];
