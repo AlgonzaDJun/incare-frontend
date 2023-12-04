@@ -1,41 +1,50 @@
 import axios from "axios";
 
-export const registerConselor = (userId, token) => {
-    // Logic to register as a counselor
-    return async (dispatch) => {
-    try {
-      dispatch({ type: "REGISTER_CONSELOR_REQUEST" });
-   
-        // Make API call to register counselor
-        await axios.post(`https://incare-backend-production.up.railway.app/conselors/asconselor`,
-        {
-          user_id: "65698347ca1b27d33ef4199c",
-          spesialisasi: "Relationship",
-          deskripsi: "halo nama saya mark lee"
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-        const newConselor = await response.data;
-        dispatch({ type:"REGISTER_CONSELOR_SUCCESS", payload: newConselor, userId});
-      } catch (error) {
-        dispatch({ type: "REGISTER_CONSELOR_FAILURE", payload: error.message });
-      }
-    };
+export function registerConselorRequest(data) {
+  return {
+      type: "REGISTER_CONSELOR_REQUEST",
+      payload: data,
+  }
+};
+
+export function registerConselorSuccess(user) {
+  return {
+      type: "REGISTER_CONSELOR_SUCCESS",
+      payload: user,
+  }
+};
+
+export function registerConselorFailure(error) {
+  return {
+      type: "REGISTER_CONSELOR_FAILURE",
+      payload: error,
+  }
+};
+
+export function registerConselor(data) {
+  return async function(dispatch) {
+      dispatch(registerConselorRequest(data));
+  
+    axios.post(`https://incare-backend-production.up.railway.app/conselors/asconselor`, data)
+          .then(response => {
+              const user = response.data;
+              dispatch(registerConselorSuccess(user));
+          })
+          .catch(error => {
+              dispatch(registerConselorFailure(error.message));
+          });
   };
+};
 
   
-  export const saveSchedule = (newSchedule) => {
+  export const saveSchedule = (data) => {
     // Logic to save schedule
     return async (dispatch) => {
       dispatch({ type: "SAVE_SCHEDULE_REQUEST" });
       try {
         // Make API call to save schedule
-        await axios.post(`https://incare-backend-production.up.railway.app/conselors/save`, newSchedule);
-        dispatch({ type: "SAVE_SCHEDULE_SUCCESS", payload: newSchedule });
+        await axios.post(`https://incare-backend-production.up.railway.app/conselors/save`, data);
+        dispatch({ type: "SAVE_SCHEDULE_SUCCESS", payload:schedule});
       } catch (error) {
         dispatch({ type: "SAVE_SCHEDULE_FAILURE", payload: error.message });
       }

@@ -11,12 +11,17 @@ const FormConselor = () => {
     spesialisasi: "",
     deskripsi: "",
   });
-  const [error, setError] = useState(null);
+  
+  const [error, setError] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
+  const { spesialisasi, deskripsi } = userData;
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value
+    })
   };
 
   const handleSpesialisasiChange = (e) => {
@@ -31,21 +36,26 @@ const FormConselor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
       // Validasi checkbox
+
+      if (!spesialisasi || !deskripsi) {
+        setError("Please enter spesialisasi and deskripsi!")
+        return;
+      }
       if (!isChecked) {
         setError("Checkbox harus di-centang untuk melanjutkan.");
-        setError("")
+        // setError("")
         return;
       }
 
     try {
         
-      const user_id = localStorage.getItem("userId")
+      const userId = localStorage.getItem("userId")
 
-      const newConselor = { ...userData, user_id: user_id }; 
+      const newConselor = { ...userData, user_id: userId }; 
       // Dispatch action to register counselor
-      dispatch(registerConselor(newConselor));
-      setError(null);
-      setIsChecked(false);
+      await dispatch(registerConselor(newConselor));
+      setError("");
+      setIsChecked(true);
       console.log(newConselor)
       // Clear form after successful registration
       setUserData({ spesialisasi: "", deskripsi: "" });
@@ -61,7 +71,6 @@ const FormConselor = () => {
     { label: "Emotional Problems", value: "Emotional Problems" },
     { label: "Social Relation", value: "Social Relation" },
     { label: "Education Issues", value: "Education Issues" },
-    // ...Tambahkan opsi spesialisasi lainnya di sini sesuai kebutuhan
   ];
 
   return (
@@ -77,7 +86,7 @@ const FormConselor = () => {
         <select
           id="spesialisasi"
           name="spesialisasi"
-          value={userData.spesialisasi}
+          value={spesialisasi}
           onChange={handleSpesialisasiChange}
           required
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
@@ -100,7 +109,7 @@ const FormConselor = () => {
           id="deskripsi"
           name="deskripsi"
           placeholder="Ceritakan pengalamanmu"
-          value={userData.deskripsi}
+          value={deskripsi}
           onChange={handleChange}
           required
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"

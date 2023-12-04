@@ -109,7 +109,7 @@ function Quiz(){
   };
 
   const handleSubmit = async () => {
-    const unansweredQuestions = questions.filter(ques => !answers[`question${ques.id}`]);
+    const unansweredQuestions = questions.filter(ques => answers[`question${ques.id}`] === null || answers[`question${ques.id}`] === undefined);
 
     if (unansweredQuestions.length > 0) {
       setError('Mohon isi semua pertanyaan sebelum melanjutkan.');
@@ -127,11 +127,11 @@ function Quiz(){
     const userResults = {
         user_id: user_id,
         questions: questions.map(ques => `Question ${ques.id}`),
-        answers: Object.values(answers),
+        answers: questions.map(ques => answers[`question${ques.id}`]),
         score: score,
         mood: calculateMood
     };
-    await dispatch(quizAnswers(userResults));
+    await dispatch(quizAnswers(user_id, userResults));
     console.log("New quiz result:", userResults);
     // console.log(userId)
   }
