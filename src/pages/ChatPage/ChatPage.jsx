@@ -9,12 +9,24 @@ import BubbleKonselor from "./BubbleKonselor";
 import BubbleUser from "./BubbleUser";
 import NamaKonselor from "./NamaKonselor";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getChatBySenderReceiver } from "../../redux/reducers/chatReducer";
+import LoadingFullPage from "../../components/LoadingFullPage";
 
 const ChatPage = () => {
   const { idKonselor } = useParams();
   const userId = localStorage.getItem("userId");
 
   const [pesan, setPesan] = useState([]);
+
+  const chat = useSelector((state) => state.chat);
+  const { messages } = chat;
+  console.log(messages.data);
+
+  // console.log(chat)
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const pusher = new Pusher("c9ce2e95cbf7337b0b48", {
       cluster: "ap1",
@@ -33,6 +45,8 @@ const ChatPage = () => {
       ]);
       // console.log(data)
     });
+
+    dispatch(getChatBySenderReceiver(userId, idKonselor));
 
     console.log(pesan);
   }, []);
@@ -78,9 +92,7 @@ const ChatPage = () => {
             <div className="flex flex-col mt-8">
               <div className="flex flex-row items-center justify-between text-xs">
                 <span className="font-bold">Active Conversations</span>
-                <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
-                  
-                </span>
+                <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"></span>
               </div>
               <div className="flex flex-col space-y-1 mt-4 -mx-2 h-72 overflow-y-auto">
                 <Link to={"/chat/6560731aeeb6528b4fbd8bb2"}>
@@ -97,6 +109,17 @@ const ChatPage = () => {
                 <div className="flex flex-col h-full overflow-x-auto mb-4">
                   <div className="flex flex-col h-full">
                     <div className="grid grid-cols-12 gap-y-2" ref={scrollRef}>
+                      {messages.data ? (
+                        messages.data.message.map((item, id) => {
+                          return item.sender === userId ? (
+                            <BubbleUser key={id} pesan={item.content} />
+                          ) : (
+                            <BubbleKonselor key={id} pesan={item.content} />
+                          );
+                        })
+                      ) : (
+                        <LoadingFullPage />
+                      )}
                       <BubbleKonselor pesan={"helo"} />
                       <BubbleUser pesan={"hi"} />
                       {pesan.map((item, id) =>

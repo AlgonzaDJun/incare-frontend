@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
     case "RECEIVE_MESSAGE":
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        messages: action.payload,
       };
     default:
       return state;
@@ -58,7 +58,7 @@ export function getChatBySenderReceiver(senderId, receiverId) {
   return async (dispatch) => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/chat/${senderId}/${receiverId}`
+        `${import.meta.env.VITE_SERVER_URL}/pusher/${senderId}/${receiverId}`
       );
       dispatch(receiveMessage(res.data));
     } catch (error) {

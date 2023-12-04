@@ -189,51 +189,22 @@ const DetailConselor = () => {
                       // Ambil tanggal hari ini
                       const today = new Date();
 
-                      // Tambah 1 hari untuk mendapatkan tanggal esok
-                      const tomorrow = new Date(today);
-                      tomorrow.setDate(today.getDate() + 1);
+                      const dayOffsets = {
+                        senin: 0,
+                        selasa: 1,
+                        rabu: 2,
+                        kamis: 3,
+                        jumat: 4,
+                        sabtu: 5,
+                        minggu: 6,
+                      };
 
-                      // Misal 'item.day' adalah representasi hari dalam bentuk string (e.g., 'Senin', 'Selasa', dst.)
-                      // Anda perlu mengubah 'item.day' menjadi tanggal
+                      const itemDay = item.day.toLowerCase();
+                      const dayOffset = dayOffsets[itemDay];
 
-                      // Mengubah hari menjadi tanggal jika belum lewat (hari ini atau setelahnya)
-                      const dateForItem = new Date();
-                      const itemDay = item.day.toLowerCase(); // Ubah ke huruf kecil untuk keperluan perbandingan
+                      const dateForItem = new Date(today);
+                      dateForItem.setDate(today.getDate() + dayOffset);
 
-                      if (itemDay === "senin") {
-                        dateForItem.setDate(
-                          today.getDate() === 1
-                            ? today.getDate()
-                            : tomorrow.getDate() + 1
-                        );
-                      } else if (itemDay === "selasa") {
-                        dateForItem.setDate(
-                          today.getDate() === 2
-                            ? today.getDate()
-                            : tomorrow.getDate() + 2
-                        );
-                      } else if (itemDay === "rabu") {
-                        dateForItem.setDate(
-                          today.getDate() === 3
-                            ? today.getDate()
-                            : tomorrow.getDate() + 3
-                        );
-                      } else if (itemDay === "kamis") {
-                        dateForItem.setDate(
-                          today.getDate() === 4
-                            ? today.getDate()
-                            : tomorrow.getDate() + 4
-                        );
-                      } else if (itemDay === "jumat") {
-                        dateForItem.setDate(
-                          today.getDate() === 5
-                            ? today.getDate()
-                            : tomorrow.getDate() + 5
-                        );
-                      }
-                      // ... dan seterusnya untuk hari-hari lainnya
-
-                      // Format tanggal menjadi string untuk ditampilkan di <td>
                       const options = {
                         weekday: "long",
                         year: "numeric",
@@ -241,7 +212,6 @@ const DetailConselor = () => {
                         day: "numeric",
                       };
 
-                      // untuk tampilan user
                       const formattedDate = dateForItem.toLocaleDateString(
                         "id-ID",
                         options
