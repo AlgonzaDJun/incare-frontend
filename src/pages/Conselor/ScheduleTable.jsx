@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import SidebarSecond from '../../components/SidebarSecond';
-import { useDispatch } from 'react-redux';
-import { saveSchedule } from '../../redux/actions/conselorAction'
-import { data } from 'autoprefixer';
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import SidebarSecond from "../../components/SidebarSecond";
+import { useDispatch } from "react-redux";
+import { saveSchedule } from "../../redux/actions/conselorAction";
+import { data } from "autoprefixer";
 
 const ScheduleTable = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [schedules, setSchedules] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
 
@@ -31,13 +31,13 @@ const ScheduleTable = () => {
     const combinedEndDate = new Date(selectedDate);
 
     if (startTime) {
-      const timeSplit = startTime.split(':');
+      const timeSplit = startTime.split(":");
       combinedStartDate.setHours(parseInt(timeSplit[0], 10));
       combinedStartDate.setMinutes(parseInt(timeSplit[1], 10));
     }
 
     if (endTime) {
-      const timeSplit = endTime.split(':');
+      const timeSplit = endTime.split(":");
       combinedEndDate.setHours(parseInt(timeSplit[0], 10));
       combinedEndDate.setMinutes(parseInt(timeSplit[1], 10));
     }
@@ -54,17 +54,17 @@ const ScheduleTable = () => {
       setSchedules([...schedules, newSchedule]);
     }
 
-    dispatch(saveSchedule(newSchedule))
+    dispatch(saveSchedule(newSchedule));
     setSelectedDate(new Date());
-    setStartTime('');
-    setEndTime('');
+    setStartTime("");
+    setEndTime("");
   };
 
   const handleEditSchedule = (index) => {
     const schedule = schedules[index];
     setSelectedDate(new Date(schedule.date));
 
-    const times = schedule.time.split(' - ');
+    const times = schedule.time.split(" - ");
     setStartTime(times[0]);
     setEndTime(times[1]);
 
@@ -78,12 +78,19 @@ const ScheduleTable = () => {
   };
 
   return (
-    <div className='bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6'>
+    <div className="bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6">
       <SidebarSecond />
       <div className="w-11/12 mx-auto bg-white p-6 rounded-xl shadow-xl">
         <div className="mb-4">
-          <h1 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">Pilih Jadwal</h1>
-          <label htmlFor="date" className="block text-sm font-medium text-gray-700">Tanggal</label>
+          <h1 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">
+            Pilih Jadwal
+          </h1>
+          <label
+            htmlFor="date"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Tanggal
+          </label>
           <DatePicker
             id="date"
             selected={selectedDate}
@@ -92,7 +99,12 @@ const ScheduleTable = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="startTime" className="block text-sm font-medium text-gray-700">Waktu Mulai (HH:MM)</label>
+          <label
+            htmlFor="startTime"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Waktu Mulai (HH:MM)
+          </label>
           <input
             type="text"
             id="startTime"
@@ -103,7 +115,12 @@ const ScheduleTable = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="endTime" className="block text-sm font-medium text-gray-700">Waktu Berakhir (HH:MM)</label>
+          <label
+            htmlFor="endTime"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Waktu Berakhir (HH:MM)
+          </label>
           <input
             type="text"
             id="endTime"
@@ -117,10 +134,12 @@ const ScheduleTable = () => {
           onClick={handleSaveSchedule}
           className="w-52 bg-[#435EBE] text-white px-4 py-2 place-self-end rounded hover:bg-[#3d55ab]"
         >
-          {editIndex === -1 ? 'Simpan Jadwal' : 'Edit Jadwal'}
+          {editIndex === -1 ? "Simpan Jadwal" : "Edit Jadwal"}
         </button>
         <div>
-          <h2 className="text-2xl font-bold mt-6 mb-4 text-center text-[#435EBE]">Jadwal Tersimpan</h2>
+          <h2 className="text-2xl font-bold mt-6 mb-4 text-center text-[#435EBE]">
+            Jadwal Tersimpan
+          </h2>
           <table className="w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-gray-100">
@@ -132,11 +151,25 @@ const ScheduleTable = () => {
             <tbody>
               {schedules.map((schedule, index) => (
                 <tr key={index} className="bg-white">
-                  <td className="border border-gray-300 p-2">{schedule.date}</td>
-                  <td className="border border-gray-300 p-2">{schedule.time}</td>
                   <td className="border border-gray-300 p-2">
-                    <button onClick={() => handleEditSchedule(index)} className="text-[#435EBE] hover:text-[#3d55ab]">Edit</button>
-                    <button onClick={() => handleDeleteSchedule(index)} className="text-[#435EBE] hover:text-[#3d55ab] ml-2">Hapus</button>
+                    {schedule.date}
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    {schedule.time}
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    <button
+                      onClick={() => handleEditSchedule(index)}
+                      className="text-[#435EBE] hover:text-[#3d55ab]"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSchedule(index)}
+                      className="text-[#435EBE] hover:text-[#3d55ab] ml-2"
+                    >
+                      Hapus
+                    </button>
                   </td>
                 </tr>
               ))}
