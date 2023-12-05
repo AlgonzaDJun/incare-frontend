@@ -53,6 +53,7 @@ const PemesananPage = () => {
                     namaKonselor={item.user_id.fullname}
                     hargaKonselor={item.price ? item.price : 0}
                     ratingKonselor={Math.round(rate)}
+                    imgKonselor={`https://ik.imagekit.io/5dphfg/${item.user_id.image_url}`}
                   />
                 </Link>
               );

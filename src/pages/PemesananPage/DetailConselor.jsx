@@ -126,7 +126,9 @@ const DetailConselor = () => {
             Kembali Pilih Konselor
           </Link>
           <img
-            src="https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg"
+            src={`https://ik.imagekit.io/5dphfg/${
+              detailKonselor && detailKonselor.user_id.image_url
+            }`}
             alt=""
             className="w-full md:w-[420px] h-[458px] object-fill rounded-lg"
           />
@@ -199,7 +201,7 @@ const DetailConselor = () => {
                         minggu: 0,
                       };
 
-                      console.log(item.day)
+                      console.log(item.day);
                       const itemDay = item.day.toLowerCase();
                       const dayOffset = dayOffsets[itemDay];
 
