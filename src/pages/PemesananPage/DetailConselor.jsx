@@ -190,20 +190,32 @@ const DetailConselor = () => {
                       const today = new Date();
 
                       const dayOffsets = {
-                        senin: 0,
-                        selasa: 1,
-                        rabu: 2,
-                        kamis: 3,
-                        jumat: 4,
-                        sabtu: 5,
-                        minggu: 6,
+                        senin: 1,
+                        selasa: 2,
+                        rabu: 3,
+                        kamis: 4,
+                        jumat: 5,
+                        sabtu: 6,
+                        minggu: 0,
                       };
 
                       const itemDay = item.day.toLowerCase();
                       const dayOffset = dayOffsets[itemDay];
 
+                      // Mendapatkan hari dalam minggu untuk hari ini
+                      const currentDay = today.getDay();
+
+                      // Menghitung selisih antara hari saat ini dan hari yang diinginkan
+                      let difference = dayOffset - currentDay;
+
+                      // Jika perbedaannya negatif, tambahkan 7 untuk mendapatkan hari yang tepat
+                      if (difference < 0) {
+                        difference += 7;
+                      }
+
+                      // Tambahkan selisih hari ke tanggal hari ini
                       const dateForItem = new Date(today);
-                      dateForItem.setDate(today.getDate() + dayOffset);
+                      dateForItem.setDate(today.getDate() + difference);
 
                       const options = {
                         weekday: "long",

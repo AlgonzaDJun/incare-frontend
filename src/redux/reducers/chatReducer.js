@@ -47,7 +47,7 @@ export function handleSendMessage(message) {
         `${import.meta.env.VITE_SERVER_URL}/pusher`,
         message
       );
-      dispatch(sendMessage(message));
+      // dispatch(sendMessage(message));
     } catch (error) {
       console.log(error);
     }

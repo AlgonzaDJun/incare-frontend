@@ -165,7 +165,7 @@ const ChatPage = () => {
                     return (
                       <Link to={`/chat/${item.conselor_id._id}`} key={id}>
                         <NamaKonselor
-                          nama={item.conselor_id.user_id.fullname}
+                          nama={`${item.conselor_id.user_id.fullname} - ${id+1}`}
                         />
                       </Link>
                     );

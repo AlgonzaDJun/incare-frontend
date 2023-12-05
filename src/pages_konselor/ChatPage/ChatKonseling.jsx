@@ -188,7 +188,9 @@ const ChatKonseling = () => {
                   chatNow.map((item, id) => {
                     return (
                       <Link to={`/chat-konseling/${item.user_id._id}`} key={id}>
-                        <NamaKonselor nama={item.user_id.fullname} />
+                        <NamaKonselor
+                          nama={item.user_id.fullname + " - " + (id + 1)}
+                        />
                       </Link>
                     );
                   })

@@ -75,7 +75,12 @@ export function getKonselor() {
     dispatch(getKonselorPending());
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/conselors/getconselor`
+        `${import.meta.env.VITE_SERVER_URL}/conselors/getconselor`, 
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+        }
       );
       dispatch(getKonselorFulfilled(data));
     } catch (error) {

@@ -23,7 +23,7 @@ const SidebarKonselor = ({ children }) => {
 
   const menus = [
     { name: "Home", link: "/", icon: MdHome },
-    { name: "Pertemuan", link: "#", icon: MdPhotoCamera },
+    { name: "Pertemuan", link: "/history-konselor", icon: MdPhotoCamera },
     { name: "Chat", link: "/chat-konseling", icon: FiMessageSquare },
     // logout
     { name: "Logout", link: "/", icon: MdLogout, margin: true },
