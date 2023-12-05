@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Login from "./pages/Authentikasi/Login";
+import Register from "./pages/Authentikasi/Register";
+import PageKuis from "./pages/MiniKuis/PageKuis";
+import Quiz from "./pages/MiniKuis/Quiz";
+import FormConselor from "./pages/Conselor/FormConselor";
+import ScheduleTable from "./pages/Conselor/ScheduleTable";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HistoryPage from "./pages/HistoryPage/HistoryPage";
+import PemesananPage from "./pages/PemesananPage/PemesananPage";
+import DetailConselor from "./pages/PemesananPage/DetailConselor";
+import CheckoutPage from "./pages/PemesananPage/CheckoutPage";
+
+import LandingPage from "./pages/LandingPage/LandingPage";
+import PrivateRoute from "./pages/PrivateRoute";
+import NotFoundPage from "./pages/NotFoundPage";
+import PertemuanKonselor from "./pages/PertemuanKonselor/PertemuanKonselor";
+import Community from "./pages/Community/community";
+import Profile from "./pages/Profile/Profile";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import ChatKonseling from "./pages_konselor/ChatPage/ChatKonseling";
+import HistoryKonselorPage from "./pages_konselor/HistoryPage/HistoryKonselorPage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/history/:kodeBooking" element={<HistoryPage />} />
+          <Route path="/booking" element={<PemesananPage />} />
+          <Route path="/booking/:idKonselor" element={<DetailConselor />} />
+          <Route path="/payment/:idbooking" element={<CheckoutPage />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/meet-conselor" element={<PertemuanKonselor />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/quizpage" element={<PageKuis />} />
+          <Route path="/quiz" element={<Quiz />} />
+        </Route>
+        <Route exact path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/conselor" element={<FormConselor />} />
+        <Route path="/schedule" element={<ScheduleTable />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:idKonselor" element={<ChatPage />} />
+
+        {/* KONSELOR PAGE */}
+        <Route path="/chat-konseling" element={<ChatKonseling />} />
+        <Route path="/chat-konseling/:idUser" element={<ChatKonseling />} />
+        <Route path="/history-konselor" element={<HistoryKonselorPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
