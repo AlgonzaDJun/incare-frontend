@@ -14,7 +14,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import PertemuanKonselor from "./pages/PertemuanKonselor/PertemuanKonselor";
-import Community from "./pages/Community/community";
+import Community from "./pages/Community/Community";
 import Profile from "./pages/Profile/Profile";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import ChatKonseling from "./pages_konselor/ChatPage/ChatKonseling";
