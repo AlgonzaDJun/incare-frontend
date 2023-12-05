@@ -1,12 +1,13 @@
 import SidebarSecond from "../../components/SidebarSecond";
-import Doctor from "../../assets/male_doktor1.jpg";
+import DefaultAvatar from "../../assets/defautl.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { useState } from "react";
-import { Button, Modal, Checkbox, Label, TextInput } from "flowbite-react";
+import { Button, Modal, Label, TextInput, FileInput } from "flowbite-react";
 import { getProfilUser } from "../../redux/reducers/userReducers";
 import StoryList from "../../components/storyList";
+import axios from "axios";
 export default function Profile() {
   const dispatch = useDispatch();
 
@@ -15,6 +16,38 @@ export default function Profile() {
   useEffect(() => {
     dispatch(getProfilUser());
   }, [dispatch]);
+  const [bio, setBio] = useState();
+  const [fullname, setFullname] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const handleBioValue = (e) => {
+    setBio(e.target.value);
+  };
+  const handleFullnameValue = (e) => {
+    setFullname(e.target.value);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("profile", selectedFile);
+    formData.append("bio", bio);
+    formData.append("fullname", fullname);
+    const token = localStorage.getItem("token");
+    await axios.put(
+      `${import.meta.env.VITE_SERVER_URL}/users/profile`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setOpenModal(false);
+    dispatch(getProfilUser());
+  };
 
   return (
     <>
@@ -23,12 +56,19 @@ export default function Profile() {
           {profile.user_id ? (
             <div className="flex  gap-10 flex-row justify-end items-center ">
               <div>
-                <img
-                  src={Doctor}
-                  alt=""
-                  style={{ borderRadius: "100%" }}
-                  className="inline-block w-[200px] h-[200px]"
-                />
+                {profile.user_id.image_url ? (
+                  <img
+                    src={`https://ik.imagekit.io/5dphfg/${profile.user_id.image_url}`}
+                    alt=""
+                    style={{ borderRadius: "100%" }}
+                    className="inline-block w-[200px] h-[200px]"
+                  />
+                ) : (
+                  <img
+                    src={DefaultAvatar}
+                    className="inline-block w-[200px] h-[200px]"
+                  />
+                )}
               </div>
               <div>
                 <h1 className="font-nunito font-semibold text-xl">
@@ -56,16 +96,20 @@ export default function Profile() {
                 <Modal show={openModal} onClose={() => setOpenModal(false)}>
                   <Modal.Header>Edit Profile</Modal.Header>
                   <Modal.Body>
-                    <div className="space-y-6">
-                      <form className="flex max-w-md flex-col gap-4">
+                    <form
+                      className="flex max-w-md flex-col gap-4"
+                      onSubmit={handleSubmit}
+                    >
+                      <div className="space-y-6">
                         <div>
                           <div className="mb-2 block">
                             <Label htmlFor="email1" value="Fullname" />
                           </div>
                           <TextInput
                             id="email1"
-                            type="email"
-                            placeholder="name@flowbite.com"
+                            type="text"
+                            value={fullname}
+                            onChange={handleFullnameValue}
                             required
                           />
                         </div>
@@ -73,22 +117,37 @@ export default function Profile() {
                           <div className="mb-2 block">
                             <Label htmlFor="password1" value="Bio" />
                           </div>
-                          <TextInput id="password1" type="password" required />
+                          <TextInput
+                            id="password1"
+                            value={bio}
+                            onChange={handleBioValue}
+                            type="text"
+                            required
+                          />
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Checkbox id="remember" />
-                          <Label htmlFor="remember">Remember me</Label>
+                        <div>
+                          <div className="mb-2 block">
+                            <Label htmlFor="profile" value="Bio" />
+                          </div>
+                          <FileInput
+                            onChange={handleFileChange}
+                            id="profile"
+                            type="file"
+                            required
+                          />
                         </div>
-                      </form>
-                    </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <Button type="submit">Save</Button>
+                        <Button
+                          color="gray"
+                          onClick={() => setOpenModal(false)}
+                        >
+                          Decline
+                        </Button>
+                      </div>
+                    </form>
                   </Modal.Body>
-                  <Modal.Footer>
-                    <Button onClick={() => setOpenModal(false)}>Save</Button>
-                    <Button>Lupa Password</Button>
-                    <Button color="gray" onClick={() => setOpenModal(false)}>
-                      Decline
-                    </Button>
-                  </Modal.Footer>
                 </Modal>
               </div>
             </div>
