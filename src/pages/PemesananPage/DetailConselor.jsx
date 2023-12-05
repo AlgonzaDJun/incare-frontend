@@ -199,6 +199,7 @@ const DetailConselor = () => {
                         minggu: 0,
                       };
 
+                      console.log(item.day)
                       const itemDay = item.day.toLowerCase();
                       const dayOffset = dayOffsets[itemDay];
 

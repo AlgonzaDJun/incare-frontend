@@ -98,6 +98,24 @@ const ChatKonseling = () => {
     //   dispatch(getChatBySenderReceiver(idKonselor, idUser));
     // }
 
+    console.log(pesan);
+  }, []);
+
+  useEffect(() => {
+    const idKonselor = konselorDetail.data && konselorDetail.data._id;
+    if (idKonselor) {
+      dispatch(getBookingByConselor(idKonselor));
+      dispatch(getChatBySenderReceiver(idKonselor, idUser));
+    }
+  }, [konselorDetail]);
+
+  useEffect(() => {
+    const idKonselor = konselorDetail.data && konselorDetail.data._id;
+
+    if (idKonselor && idUser) {
+      dispatch(getChatBySenderReceiver(idKonselor, idUser));
+    }
+
     if (idUser) {
       const pusher = new Pusher("c9ce2e95cbf7337b0b48", {
         cluster: "ap1",
@@ -116,23 +134,6 @@ const ChatKonseling = () => {
         ]);
         // console.log(data)
       });
-    }
-    console.log(pesan);
-  }, []);
-
-  useEffect(() => {
-    const idKonselor = konselorDetail.data && konselorDetail.data._id;
-    if (idKonselor) {
-      dispatch(getBookingByConselor(idKonselor));
-      dispatch(getChatBySenderReceiver(idKonselor, idUser));
-    }
-  }, [konselorDetail]);
-
-  useEffect(() => {
-    const idKonselor = konselorDetail.data && konselorDetail.data._id;
-
-    if (idKonselor && idUser) {
-      dispatch(getChatBySenderReceiver(idKonselor, idUser));
     }
   }, [idUser]);
 
@@ -179,32 +180,34 @@ const ChatKonseling = () => {
             <div className="flex flex-col mt-8">
               <div className="flex flex-row items-center justify-between text-xs">
                 <span className="font-bold">Active Conversations</span>
-                <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
-                  
-                </span>
+                <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"></span>
               </div>
               <div className="flex flex-col space-y-1 mt-4 -mx-2 h-72 overflow-y-auto">
                 {chatNow && chatNow.length > 0 ? (
-                  chatNow.reduce((acc, currentItem) => {
-                    // Cek apakah item.user_id._id sudah ada dalam array hasil (acc)
-                    const existingItem = acc.find(item => item.user_id._id === currentItem.user_id._id);
-                  
-                    // Jika belum ada, tambahkan ke array hasil (acc)
-                    if (!existingItem) {
-                      acc.push(currentItem);
-                    }
-                  
-                    return acc;
-                  }, [])
-                  .map((item, id) => {
-                    return (
-                      <Link to={`/chat-konseling/${item.user_id._id}`} key={id}>
-                        <NamaKonselor
-                          nama={item.user_id.fullname}
-                        />
-                      </Link>
-                    );
-                  })
+                  chatNow
+                    .reduce((acc, currentItem) => {
+                      // Cek apakah item.user_id._id sudah ada dalam array hasil (acc)
+                      const existingItem = acc.find(
+                        (item) => item.user_id._id === currentItem.user_id._id
+                      );
+
+                      // Jika belum ada, tambahkan ke array hasil (acc)
+                      if (!existingItem) {
+                        acc.push(currentItem);
+                      }
+
+                      return acc;
+                    }, [])
+                    .map((item, id) => {
+                      return (
+                        <Link
+                          to={`/chat-konseling/${item.user_id._id}`}
+                          key={id}
+                        >
+                          <NamaKonselor nama={item.user_id.fullname} />
+                        </Link>
+                      );
+                    })
                 ) : (
                   <div className="w-full flex flex-row items-center rounded-xl p-2 font-bold bg-incare-primary text-white">
                     Belum ada konseling via chat di jam ini

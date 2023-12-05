@@ -294,7 +294,10 @@ const HistoryPage = () => {
                                 {index + 1}
                               </th>
                               <td className="px-6 py-4">
-                                Dr. {item.conselor_id.user_id.fullname}
+                                Dr.{" "}
+                                {item.conselor_id &&
+                                  item.conselor_id.user_id &&
+                                  item.conselor_id.user_id.fullname}
                               </td>
                               <td className="px-6 py-4">{date}</td>
                               <td className="px-6 py-4">

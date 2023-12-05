@@ -23,7 +23,6 @@ const HistoryKonselorPage = () => {
 
   const updateBooking = useSelector((state) => state.booking);
   const invoices = useSelector((state) => state.invoice);
-  
 
   const { allBooking, isLoading, isFulfilled, isErrored, booking } =
     updateBooking;
@@ -37,7 +36,7 @@ const HistoryKonselorPage = () => {
   } = invoices;
 
   const dataInvoice = allInvoice.data;
-  
+
   const dataKonselor = useSelector((state) => state.konselor);
   const { konselorDetail } = dataKonselor;
 
@@ -305,7 +304,7 @@ const HistoryKonselorPage = () => {
                                 {index + 1}
                               </th>
                               <td className="px-6 py-4">
-                                {item.user_id.fullname}
+                                {item.user_id && item.user_id.fullname}
                               </td>
                               <td className="px-6 py-4">{date}</td>
                               <td className="px-6 py-4">
