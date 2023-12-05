@@ -31,9 +31,9 @@ const SidebarSecond = ({ children }) => {
       icon: MdQuestionAnswer,
       margin: true,
     },
-    { name: "Quiz Incare", link: "#", icon: TbReportAnalytics },
+    { name: "Quiz Incare", link: "/quizpage", icon: TbReportAnalytics },
     { name: "Profile", link: "#", icon: MdPerson },
-    { name: "Daftar Konselor", link: "#", icon: FiUserPlus, margin: true },
+    { name: "Daftar Konselor", link: "/conselor", icon: FiUserPlus, margin: true },
     { name: "FAQ", link: "/faq", icon: RiQuestionFill },
     // logout
     { name: "Logout", link: "/", icon: MdLogout, margin: true },

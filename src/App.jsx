@@ -1,3 +1,9 @@
+import Login from "./pages/Authentikasi/Login";
+import Register from "./pages/Authentikasi/Register";
+import PageKuis from "./pages/MiniKuis/PageKuis";
+import Quiz from "./pages/MiniKuis/Quiz";
+import FormConselor from "./pages/Conselor/FormConselor";
+import ScheduleTable from "./pages/Conselor/ScheduleTable";
 import Community from "./page/Community";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
@@ -27,7 +33,15 @@ function App() {
           <Route path="/payment/:idbooking" element={<CheckoutPage />} />
           <Route path="/community" element={<Community />} />
           <Route path="/faq" element={<Faq />} />
+          <Route path="/quizpage" element={<PageKuis />} />
+          <Route path="/quiz" element={<Quiz />} />
         </Route>
+        <Route exact path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+
+        <Route path="/conselor" element={<FormConselor />} />
+        <Route path="/schedule" element={<ScheduleTable />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chat/:idKonselor" element={<ChatPage />} />
 
@@ -40,5 +54,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;
