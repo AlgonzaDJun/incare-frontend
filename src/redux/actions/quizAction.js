@@ -12,10 +12,11 @@ export function quizAnswers(userId, userResults) {
     try {
       const response = await axios.post(
         `https://incare-backend-production.up.railway.app/hasilquizzes/quiz`,
-       userResults,
+       JSON.stringify(userResults),
         {
           headers: {
             "Content-Type": "application/json",
+           "Authorization" : "bearer " + localStorage.getItem("token")
           },
         }
       );

@@ -16,14 +16,6 @@ function Quiz(){
         question4: null,
         question5: null,
     })
-
-    // useEffect(() => {
-    //   const userIdFromLocalStorage = localStorage.getItem("userId");
-    //   // console.log(userIdFromLocalStorage)
-    //   if (userIdFromLocalStorage && !loggedInUserId) {
-    //     dispatch(userLogin(userIdFromLocalStorage));
-    //   }
-    // }, []);
     
     const [error, setError] = useState('');
     const [showResult, setShowResult] = useState(false);
@@ -96,6 +88,23 @@ function Quiz(){
      },
   ];
 
+  // useEffect(() => {
+  //   const quizAnswers = async () => {
+  //     try {
+  //       const userId = localStorage.getItem("userId");
+  //       if (userId) {
+  //         const response = await axios.post(`https://incare-backend-production.up.railway.app/hasilquizzes/quiz`);
+  //         const userData = response.data;
+  //         setUserData(userData); 
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+
+  //   userData();
+  // }, []); 
+
   const handleAnswersSelection = (questionId, selectedValue) => {
     setAnswers({
         ...answers,
@@ -131,7 +140,7 @@ function Quiz(){
         score: score,
         mood: calculateMood
     };
-    await dispatch(quizAnswers(user_id, userResults));
+    await dispatch(quizAnswers(userResults));
     console.log("New quiz result:", userResults);
     // console.log(userId)
   }
