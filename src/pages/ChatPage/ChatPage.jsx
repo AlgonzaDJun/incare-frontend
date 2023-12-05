@@ -160,17 +160,21 @@ const ChatPage = () => {
                 <NamaKonselor nama={"Dr. Melati"} />
                 <NamaKonselor nama={"Dr. Arjun"} /> */}
 
-                {chatNow
-                  ? chatNow.map((item, id) => {
-                      return (
-                        <Link to={`/chat/${item.conselor_id._id}`} key={id}>
-                          <NamaKonselor
-                            nama={item.conselor_id.user_id.fullname}
-                          />
-                        </Link>
-                      );
-                    })
-                  : null}
+                {chatNow && chatNow.length > 0 ? (
+                  chatNow.map((item, id) => {
+                    return (
+                      <Link to={`/chat/${item.conselor_id._id}`} key={id}>
+                        <NamaKonselor
+                          nama={item.conselor_id.user_id.fullname}
+                        />
+                      </Link>
+                    );
+                  })
+                ) : (
+                  <div className="w-full flex flex-row items-center rounded-xl p-2 font-bold bg-incare-primary text-white">
+                    Belum ada konseling via chat di jam ini
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -209,7 +213,9 @@ const ChatPage = () => {
                         item.conselingTime == true
                       );
                     }) == false ? (
-                      <div className="font-bold text-center mx-auto">waktu konseling habis</div>
+                      <div className="font-bold text-center mx-auto">
+                        waktu konseling habis
+                      </div>
                     ) : (
                       <>
                         <div>

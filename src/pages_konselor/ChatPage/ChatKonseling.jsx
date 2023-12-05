@@ -184,18 +184,19 @@ const ChatKonseling = () => {
                 </span>
               </div>
               <div className="flex flex-col space-y-1 mt-4 -mx-2 h-72 overflow-y-auto">
-                {chatNow
-                  ? chatNow.map((item, id) => {
-                      return (
-                        <Link
-                          to={`/chat-konseling/${item.user_id._id}`}
-                          key={id}
-                        >
-                          <NamaKonselor nama={item.user_id.fullname} />
-                        </Link>
-                      );
-                    })
-                  : null}
+                {chatNow && chatNow.length > 0 ? (
+                  chatNow.map((item, id) => {
+                    return (
+                      <Link to={`/chat-konseling/${item.user_id._id}`} key={id}>
+                        <NamaKonselor nama={item.user_id.fullname} />
+                      </Link>
+                    );
+                  })
+                ) : (
+                  <div className="w-full flex flex-row items-center rounded-xl p-2 font-bold bg-incare-primary text-white">
+                    Belum ada konseling via chat di jam ini
+                  </div>
+                )}
                 {/* <NamaKonselor nama={"Agus"} />
                 <NamaKonselor nama={"Melati"} />
                 <NamaKonselor nama={"Arjun"} /> */}
