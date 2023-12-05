@@ -181,4 +181,19 @@ export function getAllBooking(token) {
   };
 }
 
+export function getBookingByConselor(id) {
+  return async function (dispatch) {
+    dispatch(getBookingPending());
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/booking/konselor/${id}`
+      );
+
+      dispatch(getAllBookingFulfilled(data));
+    } catch (error) {
+      dispatch(getBookingRejected(error));
+    }
+  };
+}
+
 export default bookingReducer;

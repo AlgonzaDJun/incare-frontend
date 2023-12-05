@@ -8,6 +8,9 @@ import Faq from "./pages/Faq/Faq";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import NotFoundPage from "./pages/NotFoundPage";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import ChatKonseling from "./pages_konselor/ChatPage/ChatKonseling";
+import HistoryKonselorPage from "./pages_konselor/HistoryPage/HistoryKonselorPage";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -25,6 +28,13 @@ function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/faq" element={<Faq />} />
         </Route>
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:idKonselor" element={<ChatPage />} />
+
+        {/* KONSELOR PAGE */}
+        <Route path="/chat-konseling" element={<ChatKonseling />} />
+        <Route path="/chat-konseling/:idUser" element={<ChatKonseling />} />
+        <Route path="/history-konselor" element={<HistoryKonselorPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

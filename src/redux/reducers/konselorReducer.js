@@ -75,7 +75,12 @@ export function getKonselor() {
     dispatch(getKonselorPending());
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/conselors/getconselor`
+        `${import.meta.env.VITE_SERVER_URL}/conselors/getconselor`, 
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
+        }
       );
       dispatch(getKonselorFulfilled(data));
     } catch (error) {
@@ -90,6 +95,20 @@ export function getKonselorById(id) {
     try {
       const { data } = await axios.get(
         `${import.meta.env.VITE_SERVER_URL}/conselors/` + id
+      );
+      dispatch(getKonselorByIdFulfilled(data));
+    } catch (error) {
+      dispatch(getKonselorRejected(error.message));
+    }
+  };
+}
+
+export function getkonselorByUserId(id) {
+  return async function (dispatch) {
+    // dispatch(getKonselorPending());
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/pusher/konselor/` + id
       );
       dispatch(getKonselorByIdFulfilled(data));
     } catch (error) {
