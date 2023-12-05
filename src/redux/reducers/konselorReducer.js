@@ -98,4 +98,18 @@ export function getKonselorById(id) {
   };
 }
 
+export function getkonselorByUserId(id) {
+  return async function (dispatch) {
+    // dispatch(getKonselorPending());
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/pusher/konselor/` + id
+      );
+      dispatch(getKonselorByIdFulfilled(data));
+    } catch (error) {
+      dispatch(getKonselorRejected(error.message));
+    }
+  };
+}
+
 export default konselorReducer;

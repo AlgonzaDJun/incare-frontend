@@ -3,15 +3,76 @@
 // import React from 'react'
 
 import Pusher from "pusher-js";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import SidebarSecond from "../../components/SidebarSecond";
 import BubbleKonselor from "./BubbleKonselor";
 import BubbleUser from "./BubbleUser";
 import NamaKonselor from "./NamaKonselor";
 import SidebarKonselor from "../../components/SidebarKonselor";
+import { getAllBooking } from "../../redux/reducers/bookingReducer";
+import { getKonselor } from "../../redux/reducers/konselorReducer";
+import {
+  getChatBySenderReceiver,
+  handleSendMessage,
+} from "../../redux/reducers/chatReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 
 const ChatKonseling = () => {
+  const { idUser } = useParams();
   const userId = localStorage.getItem("userId");
+
+  const [pesan, setPesan] = useState([]);
+  const [isiChat, setIsiChat] = useState("");
+
+  const chat = useSelector((state) => state.chat);
+  const bookingData = useSelector((state) => state.booking);
+  const { allBooking, isErrored, isFulfilled, isLoading } = bookingData;
+  const konselor = useSelector((state) => state.konselor);
+  const { konselor: dataKonselor } = konselor;
+
+  const { messages } = chat;
+
+  // console.log(allBooking.data);
+
+  const chatNow =
+    allBooking.data &&
+    allBooking.data.filter((item) => {
+      const currentTime = new Date();
+      const conselingTime = new Date(item.tanggal_konseling);
+      conselingTime.setHours(conselingTime.getHours() - 7);
+      const conselingTimeOut = new Date(item.tanggal_konseling);
+      conselingTimeOut.setHours(conselingTimeOut.getHours() - 6);
+
+      if (currentTime >= conselingTime && item.status === "success") {
+        return item;
+      }
+    });
+
+  const handleKirimPesan = () => {
+    const data = {
+      sender_id: userId,
+      receiver_id: idUser,
+      message: isiChat,
+    };
+    // console.log(data)
+    dispatch(handleSendMessage(data));
+    setIsiChat("");
+  };
+
+  // console.log(chatNow);
+
+  // console.log(dataKonselor.counselors);
+
+  // Ambil _id dari semua conselor yang ada di jadwal
+
+  // conselorCocok akan berisi data objek konselor yang memiliki _id yang cocok dengan jadwal
+
+  // console.log(chat)
+
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const pusher = new Pusher("c9ce2e95cbf7337b0b48", {
       cluster: "ap1",
@@ -20,9 +81,40 @@ const ChatKonseling = () => {
     const channel1 = pusher.subscribe(userId);
 
     channel1.bind("chat", (data) => {
-      console.log(data);
+      setPesan((old) => [
+        ...old,
+        {
+          message: data.message,
+          sender_id: data.sender_id,
+          receiver_id: data.receiver_id,
+        },
+      ]);
+      // console.log(data)
     });
+
+    if (idUser) {
+      dispatch(getChatBySenderReceiver(userId, idUser));
+    }
+    dispatch(getAllBooking(token));
+    dispatch(getKonselor());
+
+    console.log(pesan);
   }, []);
+
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    // Lakukan scroll ke bagian bawah saat pesan berubah
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
+  }, [pesan]);
+
+  console.log(chatNow);
 
   return (
     <SidebarKonselor>
@@ -57,9 +149,18 @@ const ChatKonseling = () => {
                 </span>
               </div>
               <div className="flex flex-col space-y-1 mt-4 -mx-2 h-72 overflow-y-auto">
-                <NamaKonselor nama={"Agus"} />
+                {chatNow
+                  ? chatNow.map((item, id) => {
+                      return (
+                        <Link to={`/chat-konseling/${item.user_id._id}`} key={id}>
+                          <NamaKonselor nama={item.user_id.fullname} />
+                        </Link>
+                      );
+                    })
+                  : null}
+                {/* <NamaKonselor nama={"Agus"} />
                 <NamaKonselor nama={"Melati"} />
-                <NamaKonselor nama={"Arjun"} />
+                <NamaKonselor nama={"Arjun"} /> */}
               </div>
             </div>
           </div>

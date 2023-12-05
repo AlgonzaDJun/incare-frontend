@@ -30,6 +30,7 @@ function App() {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chat/:idKonselor" element={<ChatPage />} />
         <Route path="/chat-konseling" element={<ChatKonseling />} />
+        <Route path="/chat-konseling/:idUser" element={<ChatKonseling />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

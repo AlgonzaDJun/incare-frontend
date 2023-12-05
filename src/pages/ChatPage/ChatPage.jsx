@@ -10,22 +10,71 @@ import BubbleUser from "./BubbleUser";
 import NamaKonselor from "./NamaKonselor";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getChatBySenderReceiver } from "../../redux/reducers/chatReducer";
+import {
+  getChatBySenderReceiver,
+  handleSendMessage,
+} from "../../redux/reducers/chatReducer";
 import LoadingFullPage from "../../components/LoadingFullPage";
+import {
+  getAllBooking,
+  getBookingById,
+} from "../../redux/reducers/bookingReducer";
+import { getKonselor } from "../../redux/reducers/konselorReducer";
 
 const ChatPage = () => {
   const { idKonselor } = useParams();
   const userId = localStorage.getItem("userId");
 
   const [pesan, setPesan] = useState([]);
+  const [isiChat, setIsiChat] = useState("");
 
   const chat = useSelector((state) => state.chat);
+  const bookingData = useSelector((state) => state.booking);
+  const { allBooking, isErrored, isFulfilled, isLoading } = bookingData;
+  const konselor = useSelector((state) => state.konselor);
+  const { konselor: dataKonselor } = konselor;
+
   const { messages } = chat;
-  console.log(messages.data);
+
+  // console.log(allBooking.data);
+
+  const chatNow =
+    allBooking.data &&
+    allBooking.data.filter((item) => {
+      const currentTime = new Date();
+      const conselingTime = new Date(item.tanggal_konseling);
+      conselingTime.setHours(conselingTime.getHours() - 7);
+      const conselingTimeOut = new Date(item.tanggal_konseling);
+      conselingTimeOut.setHours(conselingTimeOut.getHours() - 6);
+
+      if (currentTime >= conselingTime && item.status === "success") {
+        return item;
+      }
+    });
+
+  const handleKirimPesan = () => {
+    const data = {
+      sender_id: userId,
+      receiver_id: idKonselor,
+      message: isiChat,
+    };
+    // console.log(data)
+    dispatch(handleSendMessage(data));
+    setIsiChat("");
+  };
+
+  // console.log(chatNow);
+
+  // console.log(dataKonselor.counselors);
+
+  // Ambil _id dari semua conselor yang ada di jadwal
+
+  // conselorCocok akan berisi data objek konselor yang memiliki _id yang cocok dengan jadwal
 
   // console.log(chat)
 
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const pusher = new Pusher("c9ce2e95cbf7337b0b48", {
@@ -46,7 +95,11 @@ const ChatPage = () => {
       // console.log(data)
     });
 
-    dispatch(getChatBySenderReceiver(userId, idKonselor));
+    if (idKonselor) {
+      dispatch(getChatBySenderReceiver(userId, idKonselor));
+    }
+    dispatch(getAllBooking(token));
+    dispatch(getKonselor());
 
     console.log(pesan);
   }, []);
@@ -95,11 +148,25 @@ const ChatPage = () => {
                 <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"></span>
               </div>
               <div className="flex flex-col space-y-1 mt-4 -mx-2 h-72 overflow-y-auto">
-                <Link to={"/chat/6560731aeeb6528b4fbd8bb2"}>
+                {/* <Link to={"/chat/6560731aeeb6528b4fbd8bb2"}>
                   <NamaKonselor nama={"Dr. Agus"} />
                 </Link>
                 <NamaKonselor nama={"Dr. Melati"} />
-                <NamaKonselor nama={"Dr. Arjun"} />
+                <NamaKonselor nama={"Dr. Arjun"} /> */}
+
+                {chatNow ? (
+                  chatNow.map((item, id) => {
+                    return (
+                      <Link to={`/chat/${item.conselor_id._id}`} key={id}>
+                        <NamaKonselor
+                          nama={item.conselor_id.user_id.fullname}
+                        />
+                      </Link>
+                    );
+                  })
+                ) : (
+                  null
+                )}
               </div>
             </div>
           </div>
@@ -118,10 +185,10 @@ const ChatPage = () => {
                           );
                         })
                       ) : (
-                        <LoadingFullPage />
+                        null
                       )}
-                      <BubbleKonselor pesan={"helo"} />
-                      <BubbleUser pesan={"hi"} />
+                      {/* <BubbleKonselor pesan={"helo"} />
+                      <BubbleUser pesan={"hi"} /> */}
                       {pesan.map((item, id) =>
                         item.sender_id === userId ? (
                           <BubbleUser key={id} pesan={item.message} />
@@ -154,6 +221,13 @@ const ChatPage = () => {
                   <div className="flex-grow ml-4">
                     <div className="relative w-full">
                       <input
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleKirimPesan();
+                          }
+                        }}
+                        value={isiChat}
+                        onChange={(e) => setIsiChat(e.target.value)}
                         type="text"
                         className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                       />
@@ -176,7 +250,10 @@ const ChatPage = () => {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <button className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0">
+                    <button
+                      className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                      onClick={handleKirimPesan}
+                    >
                       <span>Send</span>
                       <span className="ml-2">
                         <svg

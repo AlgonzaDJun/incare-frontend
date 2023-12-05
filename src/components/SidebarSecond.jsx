@@ -24,7 +24,7 @@ const SidebarSecond = ({ children }) => {
     { name: "Home", link: "/", icon: MdHome },
     { name: "Konseling", link: "/booking", icon: MdDateRange },
     { name: "Pertemuan", link: "/history", icon: MdPhotoCamera },
-    { name: "Chat", link: "#", icon: FiMessageSquare },
+    { name: "Chat", link: "/chat", icon: FiMessageSquare },
     {
       name: "Ceritaku",
       link: "/community",
