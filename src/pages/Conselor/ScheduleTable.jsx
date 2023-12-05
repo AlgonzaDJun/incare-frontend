@@ -1,13 +1,10 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SidebarSecond from "../../components/SidebarSecond";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { saveSchedule } from "../../redux/actions/conselorAction";
 import { data } from "autoprefixer";
-import SidebarKonselor from "../../components/SidebarKonselor";
-import { getkonselorByUserId } from "../../redux/reducers/konselorReducer";
 
 const ScheduleTable = () => {
   const dispatch = useDispatch();
@@ -72,12 +69,7 @@ const ScheduleTable = () => {
       setSchedules([...schedules, newSchedule]);
     }
 
-    const konselor_id = konselorDetail.data && konselorDetail.data._id;
-
-    dispatch(saveSchedule(newSchedule, konselor_id))
-
-    // console.log({ newSchedule, konselor_id });
-
+    dispatch(saveSchedule(newSchedule));
     setSelectedDate(new Date());
     setStartTime("");
     setEndTime("");
@@ -110,7 +102,7 @@ const ScheduleTable = () => {
 
   return (
     <div className="bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6">
-      <SidebarKonselor />
+      <SidebarSecond />
       <div className="w-11/12 mx-auto bg-white p-6 rounded-xl shadow-xl">
         <div className="mb-4">
           <h1 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">

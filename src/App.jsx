@@ -4,16 +4,18 @@ import PageKuis from "./pages/MiniKuis/PageKuis";
 import Quiz from "./pages/MiniKuis/Quiz";
 import FormConselor from "./pages/Conselor/FormConselor";
 import ScheduleTable from "./pages/Conselor/ScheduleTable";
-import Community from "./page/Community";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PemesananPage from "./pages/PemesananPage/PemesananPage";
 import DetailConselor from "./pages/PemesananPage/DetailConselor";
 import CheckoutPage from "./pages/PemesananPage/CheckoutPage";
-import Faq from "./pages/Faq/Faq";
+
 import LandingPage from "./pages/LandingPage/LandingPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import NotFoundPage from "./pages/NotFoundPage";
+import PertemuanKonselor from "./pages/PertemuanKonselor/PertemuanKonselor";
+import Community from "./pages/Community/community";
+import Profile from "./pages/Profile/Profile";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import ChatKonseling from "./pages_konselor/ChatPage/ChatKonseling";
 import HistoryKonselorPage from "./pages_konselor/HistoryPage/HistoryKonselorPage";
@@ -32,13 +34,13 @@ function App() {
           <Route path="/booking/:idKonselor" element={<DetailConselor />} />
           <Route path="/payment/:idbooking" element={<CheckoutPage />} />
           <Route path="/community" element={<Community />} />
-          <Route path="/faq" element={<Faq />} />
+          <Route path="/meet-conselor" element={<PertemuanKonselor />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/quizpage" element={<PageKuis />} />
           <Route path="/quiz" element={<Quiz />} />
         </Route>
         <Route exact path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
 
         <Route path="/conselor" element={<FormConselor />} />
         <Route path="/schedule" element={<ScheduleTable />} />
@@ -54,6 +56,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
 
 export default App;

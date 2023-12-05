@@ -11,7 +11,6 @@ import {
   MdPhotoCamera,
   MdQuestionAnswer,
 } from "react-icons/md";
-import { RiQuestionFill } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FiMessageSquare, FiUserPlus } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
@@ -33,14 +32,13 @@ const SidebarSecond = ({ children }) => {
       margin: true,
     },
     { name: "Quiz Incare", link: "/quizpage", icon: TbReportAnalytics },
-    { name: "Profile", link: "#", icon: MdPerson },
+    { name: "Profile", link: "/profile", icon: MdPerson },
     {
       name: "Daftar Konselor",
       link: "/conselor",
       icon: FiUserPlus,
       margin: true,
     },
-    { name: "FAQ", link: "/faq", icon: RiQuestionFill },
     // logout
     {
       name: "Logout",
