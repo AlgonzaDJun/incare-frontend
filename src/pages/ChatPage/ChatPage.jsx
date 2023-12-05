@@ -34,7 +34,9 @@ const ChatPage = () => {
   const konselor = useSelector((state) => state.konselor);
   const { konselor: dataKonselor } = konselor;
 
-  const { messages } = chat;
+  // const { messages } = chat;
+
+  const messages = chat ? chat : { data: { message: [] } };
 
   // console.log(allBooking.data);
 

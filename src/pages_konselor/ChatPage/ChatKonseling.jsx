@@ -37,7 +37,8 @@ const ChatKonseling = () => {
   const konselor = useSelector((state) => state.konselor);
   const { konselorDetail } = konselor;
 
-  const { messages } = chat;
+  const messages = chat ? chat.messages : { data: { message: [] } };
+
 
   console.log({
     chat: messages,
