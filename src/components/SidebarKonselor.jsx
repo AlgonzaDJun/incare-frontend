@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react";
 import { useState } from "react";
@@ -10,34 +11,20 @@ import {
   MdPhotoCamera,
   MdQuestionAnswer,
 } from "react-icons/md";
+import { RiQuestionFill } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FiMessageSquare, FiUserPlus } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 
-const SidebarSecond = ({ children }) => {
+const SidebarKonselor = ({ children }) => {
   const location = useLocation().pathname;
 
   // console.log(location.pathname)
 
   const menus = [
     { name: "Home", link: "/", icon: MdHome },
-    { name: "Konseling", link: "/booking", icon: MdDateRange },
-    { name: "Pertemuan", link: "/history", icon: MdPhotoCamera },
-    { name: "Chat", link: "/chat", icon: FiMessageSquare },
-    {
-      name: "Ceritaku",
-      link: "/community",
-      icon: MdQuestionAnswer,
-      margin: true,
-    },
-    { name: "Quiz Incare", link: "/quizpage", icon: TbReportAnalytics },
-    { name: "Profile", link: "#", icon: MdPerson },
-    {
-      name: "Daftar Konselor",
-      link: "/conselor",
-      icon: FiUserPlus,
-      margin: true,
-    },
+    { name: "Pertemuan", link: "/history-konselor", icon: MdPhotoCamera },
+    { name: "Chat", link: "/chat-konseling", icon: FiMessageSquare },
     // logout
     { name: "Logout", link: "/", icon: MdLogout, margin: true },
   ];
@@ -102,4 +89,4 @@ const SidebarSecond = ({ children }) => {
   );
 };
 
-export default SidebarSecond;
+export default SidebarKonselor;

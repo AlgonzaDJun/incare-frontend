@@ -1,3 +1,9 @@
+import Login from "./pages/Authentikasi/Login";
+import Register from "./pages/Authentikasi/Register";
+import PageKuis from "./pages/MiniKuis/PageKuis";
+import Quiz from "./pages/MiniKuis/Quiz";
+import FormConselor from "./pages/Conselor/FormConselor";
+import ScheduleTable from "./pages/Conselor/ScheduleTable";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PemesananPage from "./pages/PemesananPage/PemesananPage";
@@ -10,6 +16,9 @@ import NotFoundPage from "./pages/NotFoundPage";
 import PertemuanKonselor from "./pages/PertemuanKonselor/PertemuanKonselor";
 import Community from "./pages/Community/community";
 import Profile from "./pages/Profile/Profile";
+import ChatPage from "./pages/ChatPage/ChatPage";
+import ChatKonseling from "./pages_konselor/ChatPage/ChatKonseling";
+import HistoryKonselorPage from "./pages_konselor/HistoryPage/HistoryKonselorPage";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -27,7 +36,21 @@ function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/meet-conselor" element={<PertemuanKonselor />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/quizpage" element={<PageKuis />} />
+          <Route path="/quiz" element={<Quiz />} />
         </Route>
+        <Route exact path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/conselor" element={<FormConselor />} />
+        <Route path="/schedule" element={<ScheduleTable />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:idKonselor" element={<ChatPage />} />
+
+        {/* KONSELOR PAGE */}
+        <Route path="/chat-konseling" element={<ChatKonseling />} />
+        <Route path="/chat-konseling/:idUser" element={<ChatKonseling />} />
+        <Route path="/history-konselor" element={<HistoryKonselorPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

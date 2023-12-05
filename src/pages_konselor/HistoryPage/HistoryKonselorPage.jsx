@@ -5,6 +5,7 @@ import SidebarSecond from "../../components/SidebarSecond";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllBooking,
+  getBookingByConselor,
   updateStatusByidBooking,
 } from "../../redux/reducers/bookingReducer";
 import { useEffect, useState } from "react";
@@ -13,8 +14,10 @@ import LoadingFullPage from "../../components/LoadingFullPage";
 import { getAllInvoice } from "../../redux/reducers/invoiceReducer";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { postReview } from "../../redux/reducers/reviewReducer";
+import { getkonselorByUserId } from "../../redux/reducers/konselorReducer";
+import SidebarKonselor from "../../components/SidebarKonselor";
 
-const HistoryPage = () => {
+const HistoryKonselorPage = () => {
   const dispatch = useDispatch();
   const { kodeBooking } = useParams();
 
@@ -34,11 +37,10 @@ const HistoryPage = () => {
 
   const dataInvoice = allInvoice.data;
 
-  console.log(allBooking);
+  const dataKonselor = useSelector((state) => state.konselor);
+  const { konselorDetail } = dataKonselor;
 
-  const token = localStorage.getItem("token")
-    ? localStorage.getItem("token")
-    : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxMzkyMDkxfQ.M25J0ZPCcrcNWq50xuI3-YW4H2mtkyCrcQ7-7Si6y-0";
+  console.log(allBooking);
   // console.log(updateBooking);
 
   useEffect(() => {
@@ -46,8 +48,9 @@ const HistoryPage = () => {
       // console.log(kodeBooking)
       dispatch(updateStatusByidBooking(kodeBooking, { status: "success" }));
     }
-    dispatch(getAllBooking(token));
-    dispatch(getAllInvoice());
+
+    const userId = localStorage.getItem("userId");
+    dispatch(getkonselorByUserId(userId));
 
     // localStorage.setItem(
     //   "token",
@@ -57,6 +60,13 @@ const HistoryPage = () => {
     // localStorage.setItem("userId", "6568918ede239710c30ee578");
   }, []);
 
+  useEffect(() => {
+    const idKonselor = konselorDetail.data && konselorDetail.data._id;
+    if (idKonselor) {
+      dispatch(getBookingByConselor(idKonselor));
+    }
+  }, [konselorDetail]);
+
   const disabledRatingClass =
     "text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center";
   const enabledRatingClass =
@@ -64,7 +74,7 @@ const HistoryPage = () => {
 
   const handleAksiMulai = (item) => {
     if (item.media_konseling === "chat") {
-      window.location.href = "/chat/";
+      window.location.href = "/chat-konseling/";
       // window.open(
       //   `https://api.whatsapp.com/send?phone=6281243367761&text=Id%20Booking%20%3A%20${item._id}%0AHalo%20Dokter%20${item.conselor_id.user_id.fullname}%2C%20saya%20ingin%20melakukan%20konseling%F0%9F%98%87`
       // );
@@ -166,7 +176,7 @@ const HistoryPage = () => {
   }
 
   return (
-    <SidebarSecond>
+    <SidebarKonselor>
       {!isFulfilled ? (
         <LoadingFullPage />
       ) : (
@@ -224,7 +234,7 @@ const HistoryPage = () => {
                       No
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Nama Konselor
+                      Nama Pelanggan
                     </th>
                     <th scope="col" className="px-6 py-3">
                       Tanggal Konseling
@@ -241,9 +251,9 @@ const HistoryPage = () => {
                     <th scope="col" className="px-6 py-3">
                       Aksi
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    {/* <th scope="col" className="px-6 py-3">
                       Rating
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -294,10 +304,7 @@ const HistoryPage = () => {
                                 {index + 1}
                               </th>
                               <td className="px-6 py-4">
-                                Dr.{" "}
-                                {item.conselor_id &&
-                                  item.conselor_id.user_id &&
-                                  item.conselor_id.user_id.fullname}
+                                {item.user_id && item.user_id.fullname}
                               </td>
                               <td className="px-6 py-4">{date}</td>
                               <td className="px-6 py-4">
@@ -369,11 +376,11 @@ const HistoryPage = () => {
                                   }
                                 >
                                   {item.status === "pending"
-                                    ? "Bayar"
+                                    ? "Tunggu"
                                     : "Mulai"}
                                 </button>
                               </td>
-                              <td className="px-6 py-4 text-right">
+                              {/* <td className="px-6 py-4 text-right">
                                 <button
                                   onClick={() => {
                                     item.conselor_id.user_id._id
@@ -392,7 +399,7 @@ const HistoryPage = () => {
                                 >
                                   Rating
                                 </button>
-                              </td>
+                              </td> */}
                             </tr>
                           </>
                         );
@@ -406,8 +413,8 @@ const HistoryPage = () => {
           </div>
         </div>
       )}
-    </SidebarSecond>
+    </SidebarKonselor>
   );
 };
 
-export default HistoryPage;
+export default HistoryKonselorPage;
