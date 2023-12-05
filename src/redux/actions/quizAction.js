@@ -11,7 +11,7 @@ export function quizAnswers(userId, userResults) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `https://incare-backend-production.up.railway.app/hasilquizzes/quiz`,
+        `${import.meta.env.VITE_SERVER_URL}/hasilquizzes/quiz`,
       userResults,
         {
           headers: {
@@ -38,7 +38,7 @@ export function fetchAllResults(quizResults) {
 
 export function allResults () {
     return async function(dispatch) {
-        const response = await axios.get(`https://incare-backend-production.up.railway.app/hasilquizzes`)
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/hasilquizzes`)
         const quizResults = response.data;
         dispatch(fetchAllResults(quizResults))
     }
@@ -53,7 +53,7 @@ export function fetchUserResults(userResults) {
 
 export function userQuizResults(userId) {
    return async function(dispatch) {
-    const response = await axios.get(`https://incare-backend-production.up.railway.app/hasilquizzes/${userId}`);
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/hasilquizzes/${userId}`);
     const userResults = response.data;
     dispatch(fetchAllResults(userResults));
    }

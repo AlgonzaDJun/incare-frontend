@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React from "react";
 import { useState } from "react";
@@ -39,8 +40,21 @@ const SidebarSecond = ({ children }) => {
       margin: true,
     },
     // logout
-    { name: "Logout", link: "/", icon: MdLogout, margin: true },
+    {
+      name: "Logout",
+      link: () => {
+        localStorage.clear();
+        window.location.replace("/");
+      },
+      icon: MdLogout,
+      margin: true,
+    },
   ];
+
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.replace("/");
+  };
 
   const [open, setOpen] = useState(true);
   return (
@@ -58,39 +72,74 @@ const SidebarSecond = ({ children }) => {
           />
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
-          {menus?.map((menu, i) => (
-            <Link
-              to={menu?.link}
-              key={i}
-              className={` ${
-                menu?.margin && "mt-5"
-              } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-incare-darker ${
-                location == (menu.link || menu.link + "/") &&
-                "bg-incare-darker text-white"
-              } hover:text-white rounded-md`}
-            >
-              <div>{React.createElement(menu?.icon, { size: "20" })}</div>
-              <h2
-                style={
-                  {
-                    //   transitionDelay: `${i + 3}00ms`,
+          {menus?.map((menu, i) =>
+            menu.name == "Logout" ? (
+              <Link
+                to={menu?.link}
+                onClick={handleLogout}
+                key={i}
+                className={` ${
+                  menu?.margin && "mt-5"
+                } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-incare-darker ${
+                  location == (menu.link || menu.link + "/") &&
+                  "bg-incare-darker text-white"
+                } hover:text-white rounded-md`}
+              >
+                <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                <h2
+                  style={
+                    {
+                      //   transitionDelay: `${i + 3}00ms`,
+                    }
                   }
-                }
-                className={`whitespace-pre duration-500 ${
-                  !open && "opacity-0 translate-x-28 overflow-hidden"
-                }`}
+                  className={`whitespace-pre duration-500 ${
+                    !open && "opacity-0 translate-x-28 overflow-hidden"
+                  }`}
+                >
+                  {menu?.name}
+                </h2>
+                <h2
+                  className={`${
+                    open && "hidden"
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-incare-primary rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
+                >
+                  {menu?.name}
+                </h2>
+              </Link>
+            ) : (
+              <Link
+                to={menu?.link}
+                key={i}
+                className={` ${
+                  menu?.margin && "mt-5"
+                } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-incare-darker ${
+                  location == (menu.link || menu.link + "/") &&
+                  "bg-incare-darker text-white"
+                } hover:text-white rounded-md`}
               >
-                {menu?.name}
-              </h2>
-              <h2
-                className={`${
-                  open && "hidden"
-                } absolute left-48 bg-white font-semibold whitespace-pre text-incare-primary rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
-              >
-                {menu?.name}
-              </h2>
-            </Link>
-          ))}
+                <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+                <h2
+                  style={
+                    {
+                      //   transitionDelay: `${i + 3}00ms`,
+                    }
+                  }
+                  className={`whitespace-pre duration-500 ${
+                    !open && "opacity-0 translate-x-28 overflow-hidden"
+                  }`}
+                >
+                  {menu?.name}
+                </h2>
+                <h2
+                  className={`${
+                    open && "hidden"
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-incare-primary rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit  `}
+                >
+                  {menu?.name}
+                </h2>
+              </Link>
+            )
+          )}
         </div>
       </div>
       {/* <div className="m-3 text-xl text-gray-900 font-semibold">

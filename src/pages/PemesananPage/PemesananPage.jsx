@@ -51,7 +51,7 @@ const PemesananPage = () => {
                 >
                   <CardConselor
                     namaKonselor={item.user_id.fullname}
-                    hargaKonselor={item.price}
+                    hargaKonselor={item.price ? item.price : 0}
                     ratingKonselor={Math.round(rate)}
                   />
                 </Link>

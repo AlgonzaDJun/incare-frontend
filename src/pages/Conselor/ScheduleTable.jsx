@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SidebarSecond from "../../components/SidebarSecond";
@@ -26,6 +26,9 @@ const ScheduleTable = () => {
     setEndTime(e.target.value);
   };
 
+  const dataKonselor = useSelector((state) => state.konselor);
+  const { konselorDetail } = dataKonselor;
+
   const handleSaveSchedule = () => {
     const combinedStartDate = new Date(selectedDate);
     const combinedEndDate = new Date(selectedDate);
@@ -42,9 +45,21 @@ const ScheduleTable = () => {
       combinedEndDate.setMinutes(parseInt(timeSplit[1], 10));
     }
 
+    const days = [
+      "minggu",
+      "senin",
+      "selasa",
+      "rabu",
+      "kamis",
+      "jumat",
+      "sabtu",
+    ];
+
+    const dayName = days[selectedDate.getDay()];
+
     const newSchedule = {
-      day: selectedDate.toLocaleDateString(),
-      time: `${combinedStartDate.toLocaleTimeString()} - ${combinedEndDate.toLocaleTimeString()}`,
+      day: dayName,
+      time: `${startTime}-${endTime}`,
     };
 
     if (editIndex !== -1) {
@@ -76,6 +91,14 @@ const ScheduleTable = () => {
     updatedSchedules.splice(index, 1);
     setSchedules(updatedSchedules);
   };
+
+  const userId = localStorage.getItem("userId");
+
+  console.log(konselorDetail);
+
+  useEffect(() => {
+    dispatch(getkonselorByUserId(userId));
+  }, []);
 
   return (
     <div className="bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6">
