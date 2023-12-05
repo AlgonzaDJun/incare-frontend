@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveSchedule } from "../../redux/actions/conselorAction";
 import { data } from "autoprefixer";
 import { getkonselorByUserId } from "../../redux/reducers/konselorReducer";
+import SidebarKonselor from "../../components/SidebarKonselor";
 
 const ScheduleTable = () => {
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ const ScheduleTable = () => {
 
   return (
     <div className="bg-[#F2F7FF] min-h-screen flex items-center justify-center px-6">
-      <SidebarSecond />
+      <SidebarKonselor />
       <div className="w-11/12 mx-auto bg-white p-6 rounded-xl shadow-xl">
         <div className="mb-4">
           <h1 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">
