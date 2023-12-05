@@ -8,8 +8,8 @@ export function loginRequest(data) {
 };
 
 export function loginSuccess(user) {
-    localStorage.setItem('userId', JSON.stringify(user.userId));
-    localStorage.setItem('token', JSON.stringify(user.token));
+    localStorage.setItem('userId', user.userId);
+    localStorage.setItem('token', user.token);
     return {
         type: "LOGIN_SUCCESS",
         payload: user,

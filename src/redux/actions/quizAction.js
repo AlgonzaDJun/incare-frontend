@@ -12,7 +12,7 @@ export function quizAnswers(userId, userResults) {
     try {
       const response = await axios.post(
         `https://incare-backend-production.up.railway.app/hasilquizzes/quiz`,
-       JSON.stringify(userResults),
+      userResults,
         {
           headers: {
             "Content-Type": "application/json",

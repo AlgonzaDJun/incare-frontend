@@ -140,7 +140,7 @@ function Quiz(){
         score: score,
         mood: calculateMood
     };
-    await dispatch(quizAnswers(userResults));
+    dispatch(quizAnswers(user_id, JSON.stringify(userResults)));
     console.log("New quiz result:", userResults);
     // console.log(userId)
   }

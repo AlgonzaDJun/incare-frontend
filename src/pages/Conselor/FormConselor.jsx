@@ -32,10 +32,10 @@ const FormConselor = () => {
     })
   };
 
-  // const handleSpesialisasiChange = (e) => {
-  //   const { value } = e.target;
-  //   setUserData({ ...userData, spesialisasi: value });
-  // };
+  const handleSpesialisasiChange = (e) => {
+    const { value } = e.target;
+    setUserData({ ...userData, spesialisasi: value });
+  };
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -59,7 +59,7 @@ const FormConselor = () => {
       }
 
     try {
-      const data = { user: userData, userId }; 
+      const data = { ...userData, user_id: userId }; 
       // Dispatch action to register counselor
       await dispatch(registerConselor(data));
       setError("");
@@ -73,13 +73,13 @@ const FormConselor = () => {
     }
   };
 
-  // const spesialisasiOptions = [
-  //   { label: "Relationship", value: "Relationship" },
-  //   { label: "Family Issues", value: "Family Issues" },
-  //   { label: "Emotional Problems", value: "Emotional Problems" },
-  //   { label: "Social Relation", value: "Social Relation" },
-  //   { label: "Education Issues", value: "Education Issues" },
-  // ];
+  const spesialisasiOptions = [
+    { label: "Relationship", value: "Relationship" },
+    { label: "Family Issues", value: "Family Issues" },
+    { label: "Emotional Problems", value: "Emotional Problems" },
+    { label: "Social Relation", value: "Social Relation" },
+    { label: "Education Issues", value: "Education Issues" },
+  ];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F2F7FF] px-4">
@@ -91,31 +91,21 @@ const FormConselor = () => {
         <label htmlFor="spesialisasi" className="block text-md font-medium text-gray-700">
           Spesialisasi:
         </label><br />
-        <input
-          type="text"
+        <select
           id="spesialisasi"
           name="spesialisasi"
           value={userData.spesialisasi}
-          onChange={handleInput}
-          required
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-          placeholder="Masukkan Spesialisasi"
-        />
-        {/* <select
-          id="spesialisasi"
-          name="spesialisasi"
-          value={spesialisasi}
           onChange={handleSpesialisasiChange}
           required
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
         >
           <option value="">Pilih Spesialisasi</option>
           {spesialisasiOptions.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option value={option.value}>
               {option.label}
             </option>
           ))}
-        </select> */}
+        </select>
       </div>
 
       <div className="mb-4">

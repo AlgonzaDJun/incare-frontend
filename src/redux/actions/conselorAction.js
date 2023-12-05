@@ -43,7 +43,7 @@ export function registerConselor(data) {
       dispatch({ type: "SAVE_SCHEDULE_REQUEST" });
       try {
         // Make API call to save schedule
-        await axios.post(`https://incare-backend-production.up.railway.app/conselors/save`, data);
+        await axios.post(`https://incare-backend-production.up.railway.app/conselors`, data);
         dispatch({ type: "SAVE_SCHEDULE_SUCCESS", payload:schedule});
       } catch (error) {
         dispatch({ type: "SAVE_SCHEDULE_FAILURE", payload: error.message });
@@ -51,7 +51,7 @@ export function registerConselor(data) {
     };
   };
   
-  export const updateSchedule = (scheduleData) => {
+  export const updateSchedule = (scheduleData, id) => {
     // Logic to update schedule
     return async (dispatch) => {
       dispatch({ type: "UPDATE_SCHEDULE_REQUEST" });
@@ -64,9 +64,3 @@ export function registerConselor(data) {
       }
     };
   };
-
-  export default {
-    registerConselor,
-    saveSchedule,
-    updateSchedule
-  }

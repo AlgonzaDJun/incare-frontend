@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SidebarSecond from '../../components/SidebarSecond';
+import { useDispatch } from 'react-redux';
+import { saveSchedule } from '../../redux/actions/conselorAction'
+import { data } from 'autoprefixer';
 
 const ScheduleTable = () => {
+  const dispatch = useDispatch()
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -39,7 +43,7 @@ const ScheduleTable = () => {
     }
 
     const newSchedule = {
-      date: selectedDate.toLocaleDateString(),
+      day: selectedDate.toLocaleDateString(),
       time: `${combinedStartDate.toLocaleTimeString()} - ${combinedEndDate.toLocaleTimeString()}`,
     };
 
@@ -50,6 +54,7 @@ const ScheduleTable = () => {
       setSchedules([...schedules, newSchedule]);
     }
 
+    dispatch(saveSchedule(newSchedule))
     setSelectedDate(new Date());
     setStartTime('');
     setEndTime('');
