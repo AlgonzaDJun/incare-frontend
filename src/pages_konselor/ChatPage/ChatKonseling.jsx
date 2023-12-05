@@ -97,7 +97,27 @@ const ChatKonseling = () => {
     // if (idKonselor && idUser) {
     //   dispatch(getChatBySenderReceiver(idKonselor, idUser));
     // }
-    // console.log(pesan);
+
+    if (idUser) {
+      const pusher = new Pusher("c9ce2e95cbf7337b0b48", {
+        cluster: "ap1",
+      });
+
+      const channel1 = pusher.subscribe(idUser);
+
+      channel1.bind("chat", (data) => {
+        setPesan((old) => [
+          ...old,
+          {
+            message: data.message,
+            sender_id: data.sender_id,
+            receiver_id: data.receiver_id,
+          },
+        ]);
+        // console.log(data)
+      });
+    }
+    console.log(pesan);
   }, []);
 
   useEffect(() => {
@@ -113,24 +133,6 @@ const ChatKonseling = () => {
 
     if (idKonselor && idUser) {
       dispatch(getChatBySenderReceiver(idKonselor, idUser));
-
-      const pusher = new Pusher("c9ce2e95cbf7337b0b48", {
-        cluster: "ap1",
-      });
-
-      const channel1 = pusher.subscribe(idKonselor);
-
-      channel1.bind("chat", (data) => {
-        setPesan((old) => [
-          ...old,
-          {
-            message: data.message,
-            sender_id: data.sender_id,
-            receiver_id: data.receiver_id,
-          },
-        ]);
-        // console.log(data)
-      });
     }
   }, [idUser]);
 
@@ -205,7 +207,7 @@ const ChatKonseling = () => {
               <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
                 <div className="flex flex-col h-full overflow-x-auto mb-4">
                   <div className="flex flex-col h-full">
-                    <div className="grid grid-cols-12 gap-y-2">
+                    <div className="grid grid-cols-12 gap-y-2" ref={scrollRef}>
                       {messages.data
                         ? messages.data.message.map((item, id) => {
                             return item.sender === idUser ? (
