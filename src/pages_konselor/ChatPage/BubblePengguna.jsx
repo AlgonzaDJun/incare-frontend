@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-const BubbleKonselor = ({pesan}) => {
+const BubblePengguna = ({pesan}) => {
   return (
     <div className="col-start-1 col-end-8 p-3 rounded-lg">
       <div className="flex flex-row items-center">
@@ -14,4 +14,4 @@ const BubbleKonselor = ({pesan}) => {
   );
 };
 
-export default BubbleKonselor;
+export default BubblePengguna;
