@@ -1,4 +1,3 @@
-import Community from "./pages/Community/Community";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HistoryPage from "./pages/HistoryPage/HistoryPage";
 import PemesananPage from "./pages/PemesananPage/PemesananPage";
@@ -9,6 +8,8 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import PertemuanKonselor from "./pages/PertemuanKonselor/PertemuanKonselor";
+import Community from "./pages/Community/community";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -25,6 +26,7 @@ function App() {
           <Route path="/payment/:idbooking" element={<CheckoutPage />} />
           <Route path="/community" element={<Community />} />
           <Route path="/meet-conselor" element={<PertemuanKonselor />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

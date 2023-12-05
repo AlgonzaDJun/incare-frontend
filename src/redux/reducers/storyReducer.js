@@ -97,6 +97,23 @@ const storyReducer = (state = initailState, action) => {
         ...state,
         loading: false,
       };
+    case "DELETE_STORY_PENDING":
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case "DELETE_STORY_REJECTED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case "DELETE_STORY_FULFILLED":
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }
@@ -191,13 +208,35 @@ function addCommentFullFilled() {
     type: "ADD_COMMENT_FULFILLED",
   };
 }
-export function getStories() {
+
+function deleteStoryRejected(error) {
+  return {
+    type: "DELETE_STORY_REJECTED",
+    payload: error,
+  };
+}
+
+function deleteStoryPending() {
+  return {
+    type: "DELETE_STORY_PENDING",
+  };
+}
+function deleteStoryFullFilled() {
+  return {
+    type: "DELETE_STORY_FULFILLED",
+  };
+}
+
+export function getStories(profile) {
   return async function (dispatch) {
     dispatch(getStoriesPending());
     try {
       const token = localStorage.getItem("token");
+
       const response = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/stories`,
+        profile
+          ? `${import.meta.env.VITE_SERVER_URL}/stories?category=profile`
+          : `${import.meta.env.VITE_SERVER_URL}/stories`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -299,4 +338,23 @@ export function addComment(data, id) {
     }
   };
 }
+
+export function deleteStory(id) {
+  return async function (dispatch) {
+    dispatch(deleteStoryPending());
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`${import.meta.env.VITE_SERVER_URL}/stories/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(deleteStoryFullFilled());
+    } catch (error) {
+      dispatch(deleteStoryRejected(error.message));
+    }
+  };
+}
+
 export default storyReducer;

@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Modal from "./ModalComment";
 import { getStories } from "../redux/reducers/storyReducer";
 import { Spinner } from "flowbite-react";
-export default function StoryList() {
+// eslint-disable-next-line react/prop-types
+export default function StoryList({ profile }) {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -12,8 +13,12 @@ export default function StoryList() {
   const { stories, loading, error } = useSelector((state) => state.story);
 
   useEffect(() => {
-    dispatch(getStories());
-  }, [dispatch]);
+    if (profile === true) {
+      dispatch(getStories(true));
+    } else {
+      dispatch(getStories(false));
+    }
+  }, [dispatch, profile]);
   if (loading === true) {
     return (
       <div className="text-center">
@@ -46,6 +51,7 @@ export default function StoryList() {
             likes={item.likes.length}
             comments={item.comments.length}
             onCardClick={handleCardClick}
+            profile={profile}
           />
         ))}
         <Modal id={selectedCardId} isOpen={modalOpen} onClose={closeModal} />

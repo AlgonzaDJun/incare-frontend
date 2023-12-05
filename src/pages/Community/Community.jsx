@@ -11,7 +11,7 @@ export default function Community() {
             Mari Berbagi Cerita Dengan Lainnya
           </h1>
           <Newpost />
-          <StoryList />
+          <StoryList profile={false} />
         </div>
       </SidebarSecond>
     </>
