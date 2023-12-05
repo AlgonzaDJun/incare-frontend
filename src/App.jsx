@@ -1,5 +1,3 @@
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Login from "./pages/Authentikasi/Login";
 import Register from "./pages/Authentikasi/Register";
 import PageKuis from "./pages/MiniKuis/PageKuis";
