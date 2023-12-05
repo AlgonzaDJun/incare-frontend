@@ -63,18 +63,42 @@ const LandingPage = () => {
             </Link>
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <div className="flex space-x-4">
-                <button
-                  type="button"
-                  className="text-incare-primary bg-white hover:bg-slate-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
-                >
-                  Masuk
-                </button>
-                <button
-                  type="button"
-                  className="text-white bg-yellow-400 hover:bg-yellow-500  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
-                >
-                  Daftar
-                </button>
+                {localStorage.getItem("userId") ? (
+                  localStorage.getItem("role") === "user" ? (
+                    <button
+                      type="button"
+                      className="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center bg-yellow-400 hover:bg-yellow-500"
+                      onClick={() => window.location.replace("/booking")}
+                    >
+                      Konsultasi Sekarang
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center bg-yellow-400 hover:bg-yellow-500"
+                      onClick={() => window.location.replace("/history-konselor")}
+                    >
+                      Dashboard Konselor
+                    </button>
+                  )
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      className="text-incare-primary bg-white hover:bg-slate-100 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
+                      onClick={() => window.location.replace("/login")}
+                    >
+                      Masuk
+                    </button>
+                    <button
+                      type="button"
+                      className="text-white bg-yellow-400 hover:bg-yellow-500  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
+                      onClick={() => window.location.replace("/register")}
+                    >
+                      Daftar
+                    </button>
+                  </>
+                )}
               </div>
               <button
                 data-collapse-toggle="navbar-sticky"
@@ -175,6 +199,7 @@ const LandingPage = () => {
               <button
                 type="button"
                 className="text-white bg-yellow-400 hover:bg-yellow-500  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
+                onClick={() => window.location.replace("/login")}
               >
                 Coba Sekarang <FaArrowRight className="inline-block" />
               </button>
