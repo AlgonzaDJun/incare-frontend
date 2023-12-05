@@ -93,7 +93,7 @@ function Quiz(){
   //     try {
   //       const userId = localStorage.getItem("userId");
   //       if (userId) {
-  //         const response = await axios.post(`https://incare-backend-production.up.railway.app/hasilquizzes/quiz`);
+  //         const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/hasilquizzes/quiz`);
   //         const userData = response.data;
   //         setUserData(userData); 
   //       }

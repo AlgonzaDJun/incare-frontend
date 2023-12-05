@@ -71,7 +71,7 @@ export function userLogin(data) {
     dispatch(loginRequest(data));
 
     axios
-      .post(`https://incare-backend-production.up.railway.app/auth/login`, data)
+      .post(`${import.meta.env.VITE_SERVER_URL}/auth/login`, data)
       .then((response) => {
         const user = response.data;
         dispatch(loginSuccess(user));
@@ -91,7 +91,7 @@ export function userRegister(data) {
 
     axios
       .post(
-        `https://incare-backend-production.up.railway.app/auth/register`,
+        `${import.meta.env.VITE_SERVER_URL}/auth/register`,
         data
       )
       .then((response) => {
@@ -113,7 +113,7 @@ export function sendOTP(data) {
 
     return axios
       .post(
-        `https://incare-backend-production.up.railway.app/auth/send-otp`,
+        `${import.meta.env.VITE_SERVER_URL}/auth/send-otp`,
         data
       )
       .then((response) => {
