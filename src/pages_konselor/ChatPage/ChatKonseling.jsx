@@ -180,16 +180,27 @@ const ChatKonseling = () => {
               <div className="flex flex-row items-center justify-between text-xs">
                 <span className="font-bold">Active Conversations</span>
                 <span className="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full">
-                  4
+                  
                 </span>
               </div>
               <div className="flex flex-col space-y-1 mt-4 -mx-2 h-72 overflow-y-auto">
                 {chatNow && chatNow.length > 0 ? (
-                  chatNow.map((item, id) => {
+                  chatNow.reduce((acc, currentItem) => {
+                    // Cek apakah item.user_id._id sudah ada dalam array hasil (acc)
+                    const existingItem = acc.find(item => item.user_id._id === currentItem.user_id._id);
+                  
+                    // Jika belum ada, tambahkan ke array hasil (acc)
+                    if (!existingItem) {
+                      acc.push(currentItem);
+                    }
+                  
+                    return acc;
+                  }, [])
+                  .map((item, id) => {
                     return (
                       <Link to={`/chat-konseling/${item.user_id._id}`} key={id}>
                         <NamaKonselor
-                          nama={item.user_id.fullname + " - " + (id + 1)}
+                          nama={item.user_id.fullname}
                         />
                       </Link>
                     );

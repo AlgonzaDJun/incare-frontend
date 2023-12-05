@@ -161,11 +161,22 @@ const ChatPage = () => {
                 <NamaKonselor nama={"Dr. Arjun"} /> */}
 
                 {chatNow && chatNow.length > 0 ? (
-                  chatNow.map((item, id) => {
+                  chatNow.reduce((acc, currentItem) => {
+                    // Cek apakah item.user_id._id sudah ada dalam array hasil (acc)
+                    const existingItem = acc.find(item => item.conselor_id._id === currentItem.conselor_id._id);
+                  
+                    // Jika belum ada, tambahkan ke array hasil (acc)
+                    if (!existingItem) {
+                      acc.push(currentItem);
+                    }
+                  
+                    return acc;
+                  }, [])
+                  .map((item, id) => {
                     return (
                       <Link to={`/chat/${item.conselor_id._id}`} key={id}>
                         <NamaKonselor
-                          nama={`${item.conselor_id.user_id.fullname} - ${id+1}`}
+                          nama={`${item.conselor_id.user_id.fullname}`}
                         />
                       </Link>
                     );
@@ -214,7 +225,7 @@ const ChatPage = () => {
                       );
                     }) == false ? (
                       <div className="font-bold text-center mx-auto">
-                        waktu konseling habis
+                        waktu konseling habis atau belum mulai
                       </div>
                     ) : (
                       <>
