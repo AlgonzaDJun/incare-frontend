@@ -8,6 +8,7 @@ import { Button, Modal, Label, TextInput, FileInput } from "flowbite-react";
 import { getProfilUser } from "../../redux/reducers/userReducers";
 import StoryList from "../../components/storyList";
 import axios from "axios";
+import SidebarKonselor from "../../components/SidebarKonselor";
 export default function Profile() {
   const dispatch = useDispatch();
 
@@ -19,6 +20,8 @@ export default function Profile() {
   const [bio, setBio] = useState();
   const [fullname, setFullname] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
+
+  console.log(profile)
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -51,7 +54,7 @@ export default function Profile() {
 
   return (
     <>
-      <SidebarSecond>
+      <SidebarKonselor>
         <div className="flex flex-col items-center w-[1000px] mt-7">
           {profile.user_id ? (
             <div className="flex  gap-10 flex-row justify-end items-center ">
@@ -159,7 +162,7 @@ export default function Profile() {
             <StoryList profile={true} />
           </div>
         </div>
-      </SidebarSecond>
+      </SidebarKonselor>
     </>
   );
 }

@@ -5,7 +5,7 @@ import bookingReducer from "./reducers/bookingReducer";
 import invoiceReducer from "./reducers/invoiceReducer";
 import reviewReducer from "./reducers/reviewReducer";
 import chatReducer from "./reducers/chatReducer";
-import userReducer from "./reducers/user-reducer";
+import userReducer from "./reducers/userReducers";
 import authReducer from "./reducers/auth-reducer";
 import quizReducer from "./reducers/quiz-reducer";
 import conselorReducer from "./reducers/conselor-reducer";

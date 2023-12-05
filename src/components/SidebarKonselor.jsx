@@ -25,6 +25,7 @@ const SidebarKonselor = ({ children }) => {
     { name: "Home", link: "/", icon: MdHome },
     { name: "Pertemuan", link: "/history-konselor", icon: MdPhotoCamera },
     { name: "Chat", link: "/chat-konseling", icon: FiMessageSquare },
+    { name: "Profile", link: "/profile", icon: MdPerson },
     { name: "Jadwal Konseling", link: "/schedule", icon: MdDateRange },
     // logout
     { name: "Logout", link: "#", icon: MdLogout, margin: true },
