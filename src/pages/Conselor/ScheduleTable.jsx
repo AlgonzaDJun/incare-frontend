@@ -71,7 +71,8 @@ const ScheduleTable = () => {
       setSchedules([...schedules, newSchedule]);
     }
 
-    dispatch(saveSchedule(newSchedule));
+    const idKonselor = konselorDetail.data && konselorDetail.data._id;
+    dispatch(saveSchedule(newSchedule, idKonselor));
     setSelectedDate(new Date());
     setStartTime("");
     setEndTime("");
