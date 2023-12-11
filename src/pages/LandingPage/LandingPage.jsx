@@ -76,7 +76,9 @@ const LandingPage = () => {
                     <button
                       type="button"
                       className="text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center bg-yellow-400 hover:bg-yellow-500"
-                      onClick={() => window.location.replace("/history-konselor")}
+                      onClick={() =>
+                        window.location.replace("/history-konselor")
+                      }
                     >
                       Dashboard Konselor
                     </button>
@@ -199,7 +201,11 @@ const LandingPage = () => {
               <button
                 type="button"
                 className="text-white bg-yellow-400 hover:bg-yellow-500  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-4 py-2 text-center"
-                onClick={() => window.location.replace("/login")}
+                onClick={() =>
+                  localStorage.getItem("userId")
+                    ? window.location.replace("/booking")
+                    : window.location.replace("/login")
+                }
               >
                 Coba Sekarang <FaArrowRight className="inline-block" />
               </button>

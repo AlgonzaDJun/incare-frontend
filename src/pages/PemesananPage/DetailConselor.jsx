@@ -20,6 +20,7 @@ import {
 import { FormatRupiah } from "@arismun/format-rupiah";
 import { postBooking } from "../../redux/reducers/bookingReducer";
 import LoadingFullPage from "../../components/LoadingFullPage";
+import defaultBg from "../../assets/defautl.webp";
 
 const DetailConselor = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -46,9 +47,6 @@ const DetailConselor = () => {
 
   const { counselors: allKonselor } = konselor;
   const { data: detailKonselor } = konselorDetail;
-
-  // console.log(allKonselor);
-
   const handleOpenModal = (data) => {
     setOpenModal(true);
     setDate(data);
@@ -61,11 +59,6 @@ const DetailConselor = () => {
       return;
     }
     setOpenModal(false);
-    // console.log({
-    //   idKonselor,
-    //   date,
-    //   medKonseling
-    // });
 
     const dataToPost = {
       conselor_id: idKonselor,
@@ -82,22 +75,32 @@ const DetailConselor = () => {
     // console.log(dataBooking);
     // console.log(dataToPost)
   };
+  const parseDate = (datetime) => {
+    const isoDate = new Date(datetime);
+    const formattedDate = isoDate.toLocaleDateString("id-ID", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    return formattedDate;
+  };
+  const parseTime = (dateTime) => {
+    const isoDate = new Date(dateTime);
+    const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
+    const hours = addLeadingZero(isoDate.getHours());
+    const minutes = addLeadingZero(isoDate.getMinutes());
+    const formattedTime = `${hours}:${minutes}`;
+    return formattedTime;
+  };
 
   useEffect(() => {
     dispatch(getKonselor());
     dispatch(getKonselorById(idKonselor));
   }, []);
-
   useEffect(() => {
     if (fullFiledBooking === true) {
       navigate("/payment/" + dataBooking.data._id);
-      // console.log({
-      //   dataBooking,
-      //   loadingBooking,
-      //   errorBoking,
-      //   fullFiledBooking,
-      // });
-      // console.log(`id booking : ${dataBooking.data._id}`)
     }
   }, [fullFiledBooking]);
 
@@ -126,9 +129,13 @@ const DetailConselor = () => {
             Kembali Pilih Konselor
           </Link>
           <img
-            src={`https://ik.imagekit.io/5dphfg/${
+            src={
               detailKonselor && detailKonselor.user_id.image_url
-            }`}
+                ? `https://ik.imagekit.io/5dphfg/${
+                    detailKonselor && detailKonselor.user_id.image_url
+                  }`
+                : defaultBg
+            }
             alt=""
             className="w-full md:w-[420px] h-[458px] object-fill rounded-lg"
           />
@@ -188,63 +195,6 @@ const DetailConselor = () => {
                     <h1>Loading...</h1>
                   ) : (
                     detailKonselor.schedule.map((item, index) => {
-                      // Ambil tanggal hari ini
-                      const today = new Date();
-
-                      const dayOffsets = {
-                        senin: 1,
-                        selasa: 2,
-                        rabu: 3,
-                        kamis: 4,
-                        jumat: 5,
-                        sabtu: 6,
-                        minggu: 0,
-                      };
-
-                      console.log(item.day);
-                      const itemDay = item.day.toLowerCase();
-                      const dayOffset = dayOffsets[itemDay];
-
-                      // Mendapatkan hari dalam minggu untuk hari ini
-                      const currentDay = today.getDay();
-
-                      // Menghitung selisih antara hari saat ini dan hari yang diinginkan
-                      let difference = dayOffset - currentDay;
-
-                      // Jika perbedaannya negatif, tambahkan 7 untuk mendapatkan hari yang tepat
-                      if (difference < 0) {
-                        difference += 7;
-                      }
-
-                      // Tambahkan selisih hari ke tanggal hari ini
-                      const dateForItem = new Date(today);
-                      dateForItem.setDate(today.getDate() + difference);
-
-                      const options = {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      };
-
-                      const formattedDate = dateForItem.toLocaleDateString(
-                        "id-ID",
-                        options
-                      );
-
-                      // const formattedDateForDB = dateForItem.toISOString();
-                      // Format tanggal menjadi 'yyyy-mm-dd' untuk disimpan di database MongoDB
-                      const year = dateForItem.getFullYear();
-                      let month = dateForItem.getMonth() + 1; // Ingat bahwa bulan dimulai dari 0 (Januari) hingga 11 (Desember)
-                      month = month < 10 ? `0${month}` : month; // Tambahkan '0' di depan jika bulan kurang dari 10
-                      const day = dateForItem.getDate();
-
-                      const hour1 = item.time.split("-")[0];
-                      const realHour = hour1.split(".")[0];
-                      const formattedDateForDB = `${year}-${month}-${day} ${realHour}:00:00`;
-
-                      // const formattedDateTimeForDB = dateForItem.toISOString();
-
                       return (
                         <tr
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -256,14 +206,20 @@ const DetailConselor = () => {
                           >
                             {index + 1}
                           </th>
-                          <td className="px-6 py-4">{formattedDate}</td>
-                          <td className="px-6 py-4">{item.time}</td>
+                          <td className="px-6 py-4">
+                            {" "}
+                            {`${parseDate(item.begin)}`}
+                          </td>
+                          <td className="px-6 py-4">
+                            {" "}
+                            {`${parseTime(item.begin)} - ${parseTime(
+                              item.end
+                            )}`}
+                          </td>
                           <td className="px-6 py-4">
                             <button
                               className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
-                              onClick={() =>
-                                handleOpenModal(formattedDateForDB)
-                              }
+                              onClick={() => handleOpenModal(item.begin)}
                             >
                               Pilih
                             </button>
@@ -487,6 +443,11 @@ const DetailConselor = () => {
                         namaKonselor={item.user_id.fullname}
                         hargaKonselor={item.price}
                         ratingKonselor={Math.round(rate)}
+                        imgKonselor={
+                          item.user_id.image_url
+                            ? `https://ik.imagekit.io/5dphfg/${item.user_id.image_url}`
+                            : ""
+                        }
                       />
                     </Link>
                   </SwiperSlide>

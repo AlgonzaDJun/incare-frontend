@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export function registerConselorRequest(data) {
   return {
     type: "REGISTER_CONSELOR_REQUEST",
@@ -21,24 +20,57 @@ export function registerConselorFailure(error) {
   };
 }
 
+function getScheduleRequest() {
+  return {
+    type: "GET_SCHEDULE_REQUEST",
+  };
+}
+
+function getScheduleSuccess(schedule) {
+  return {
+    type: "GET_SCHEDULE_SUCCESS",
+    payload: schedule,
+  };
+}
+
+function getScheduleFailed(error) {
+  return {
+    type: "GET_SCHEDULE_FAILED",
+    payload: error.message,
+  };
+}
+
 export function registerConselor(data) {
   return async function (dispatch) {
     dispatch(registerConselorRequest(data));
 
     axios
-      .post(
-        `${import.meta.env.VITE_SERVER_URL}/conselors/asconselor`,
-        data
-      )
+      .post(`${import.meta.env.VITE_SERVER_URL}/conselors/asconselor`, data)
       .then((response) => {
         const user = response.data;
         dispatch(registerConselorSuccess(user));
       })
       .catch((error) => {
-        dispatch(registerConselorFailure(error.message));
+        dispatch(registerConselorFailure(error));
       });
   };
 }
+
+export const getSchedule = (id) => {
+  // Logic to save schedule
+  return async (dispatch) => {
+    dispatch(getScheduleRequest());
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/conselors/${id}`
+      );
+      dispatch(getScheduleSuccess(res.data.data.schedule));
+      console.log(res.data.data.schedule);
+    } catch (error) {
+      dispatch(getScheduleFailed(error.message));
+    }
+  };
+};
 
 export const saveSchedule = (data, id) => {
   // Logic to save schedule

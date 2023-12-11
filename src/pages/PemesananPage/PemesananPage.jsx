@@ -53,36 +53,16 @@ const PemesananPage = () => {
                     namaKonselor={item.user_id.fullname}
                     hargaKonselor={item.price ? item.price : 0}
                     ratingKonselor={Math.round(rate)}
-                    imgKonselor={`https://ik.imagekit.io/5dphfg/${item.user_id.image_url}`}
+                    imgKonselor={
+                      item.user_id.image_url
+                        ? `https://ik.imagekit.io/5dphfg/${item.user_id.image_url}`
+                        : ""
+                    }
                   />
                 </Link>
               );
             })
           )}
-          {/* <Link to="/booking/1">
-            <CardConselor
-              namaKonselor={"udin"}
-              hargaKonselor={40000}
-              ratingKonselor={5}
-              imgKonselor={
-                "https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg"
-              }
-            />
-          </Link> */}
-          {/* <Link to="/booking/2">
-            <CardConselor
-              namaKonselor={"asep"}
-              hargaKonselor={45000}
-              ratingKonselor={3}
-            />
-          </Link>
-          <Link to="/booking/3">
-            <CardConselor
-              namaKonselor={"bagus"}
-              hargaKonselor={30000}
-              ratingKonselor={2}
-            />
-          </Link> */}
         </div>
       </div>
     </SidebarSecond>

@@ -1,11 +1,12 @@
 import { FormatRupiah } from "@arismun/format-rupiah";
 
 /* eslint-disable react/prop-types */
+import defaultBg from "../../assets/defautl.webp";
 const CardConselor = ({
   namaKonselor,
   hargaKonselor,
   ratingKonselor,
-  imgKonselor = "https://images.westend61.de/0001544702pw/handsome-male-doctor-with-clipboard-standing-in-front-of-wall-GIOF12206.jpg",
+  imgKonselor,
 }) => {
   const ratingFull = new Array(5).fill(
     <svg
@@ -24,7 +25,7 @@ const CardConselor = ({
       <a href="#">
         <img
           className="rounded-t-lg w-full h-44 object-cover"
-          src={imgKonselor}
+          src={imgKonselor !== "" ? imgKonselor : defaultBg}
           alt="image"
         />
       </a>

@@ -19,6 +19,7 @@ export default function StoryList({ profile }) {
       dispatch(getStories(false));
     }
   }, [dispatch, profile]);
+
   if (loading === true) {
     return (
       <div className="text-center">

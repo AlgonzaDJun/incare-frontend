@@ -236,7 +236,7 @@ export function getStories(profile) {
       const response = await axios.get(
         profile
           ? `${import.meta.env.VITE_SERVER_URL}/stories?category=profile`
-          : `${import.meta.env.VITE_SERVER_URL}/stories`,
+          : `${import.meta.env.VITE_SERVER_URL}/stories?`,
         {
           headers: {
             "Content-Type": "application/json",

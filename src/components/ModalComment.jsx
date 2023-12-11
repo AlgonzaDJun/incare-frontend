@@ -96,7 +96,7 @@ export default function Modal({ isOpen, onClose, id }) {
               <hr />
             </div>
 
-            <div>
+            <div className="max-h-[250px] overflow-y-auto">
               {detail.comments.map((comment) => (
                 <div
                   key={comment._id}
@@ -110,13 +110,13 @@ export default function Modal({ isOpen, onClose, id }) {
               ))}
             </div>
             <div className="flex gap-3 mt-3">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className="w-full">
                 <input
                   onChange={handleChange}
                   value={value}
                   type="text"
                   placeholder="Ketik Disini"
-                  className="border-0 bg-gray-200 w-11/12 rounded outline-0"
+                  className="border-0 bg-gray-200 w-11/12 rounded outline-0 mr-2"
                 />
                 <button type="submit">
                   <BsFillSendFill className=" text-[#2E4185]" />
