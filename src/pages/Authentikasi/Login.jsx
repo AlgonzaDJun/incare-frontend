@@ -102,7 +102,7 @@ function Login() {
           </button>
           <br />
           <p className=" text-center">
-            Don't have an account?
+            {"Don't have an account?"}
             <Link
               to="/register"
               style={{ cursor: "pointer", color: "#435EBE" }}

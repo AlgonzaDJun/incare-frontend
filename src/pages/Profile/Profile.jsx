@@ -3,157 +3,168 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { useState } from "react";
-import { Button, Label, TextInput } from "flowbite-react";
+import { Button, FileInput, Label, TextInput } from "flowbite-react";
 import { getProfilUser } from "../../redux/reducers/userReducers";
-// import StoryList from "../../components/storyList";
 import axios from "axios";
 import SidebarKonselor from "../../components/SidebarKonselor";
 export default function Profile() {
   const dispatch = useDispatch();
   const [isUpdate, setIsUpdate] = useState(false);
   const { profile } = useSelector((state) => state.user);
-
   useEffect(() => {
     dispatch(getProfilUser());
   }, [dispatch]);
-  const [bio, setBio] = useState();
-  const [fullname, setFullname] = useState();
+
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
-  const handleBioValue = (e) => {
-    setBio(e.target.value);
-  };
-  const handleFullnameValue = (e) => {
-    setFullname(e.target.value);
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+  const handleSave = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("profile", selectedFile);
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `${import.meta.env.VITE_SERVER_URL}/users/profile`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(getProfilUser());
+    }
     setIsUpdate(false);
-    // const formData = new FormData();
-    // formData.append("profile", selectedFile);
-    // formData.append("bio", bio);
-    // formData.append("fullname", fullname);
-    // const token = localStorage.getItem("token");
-    // await axios.put(
-    //   `${import.meta.env.VITE_SERVER_URL}/users/profile`,
-    //   formData,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
-    // );
-    // dispatch(getProfilUser());
-    console.log(isUpdate);
+    setSelectedFile(null);
   };
 
   return (
     <>
       <SidebarKonselor>
-        <div className="flex flex-col items-center w-[1000px] mt-3">
+        <div className="flex flex-col items-center w-[1000px] ">
           {profile.user_id ? (
-            <div className="">
-              <div>
+            <div className="w-3/4 ">
+              <div className="w-[300px] h-[300px] mx-auto mb-5">
                 {profile.user_id.image_url ? (
                   <>
-                    <label htmlFor="fileInput">
-                      <img
-                        src={`https://ik.imagekit.io/5dphfg/${profile.user_id.image_url}`}
-                        alt=""
-                        style={{ borderRadius: "100%" }}
-                        className="inline-block w-[400px] h-[400px]"
-                      />
-                    </label>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      // style={{ display }}
+                    <img
+                      src={`https://ik.imagekit.io/5dphfg/${profile.user_id.image_url}`}
+                      alt=""
+                      style={{ borderRadius: "100%" }}
+                      className="inline-block w-full h-full"
                     />
                   </>
                 ) : (
                   <>
-                    <label htmlFor="fileInput">
-                      <img
-                        src={DefaultAvatar}
-                        className="inline-block w-[300px] h-[300px]"
-                      />
-                    </label>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      style={{ display: "none" }}
+                    <img
+                      src={DefaultAvatar}
+                      className="inline-block w-full h-full"
                     />
                   </>
                 )}
               </div>
-              <div>
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex w-full flex-col gap-4 mt-7"
-                >
-                  <div className="flex gap-5 w-full">
-                    <div>
-                      <div className="mb-2 block">
-                        <Label htmlFor="fullname" value="Fullname" />
-                      </div>
-                      <TextInput
-                        id="fullname"
-                        value={profile.user_id.fullname}
-                        type="text"
-                        disabled={isUpdate ? false : true}
-                        required
-                      />
+              <div className="w-full">
+                <div className="flex gap-3 w-full ">
+                  <div className="w-1/3">
+                    <div className="mb-2 block">
+                      <Label htmlFor="fullname" value="Fullname" />
                     </div>
-                    <div>
-                      <div className="mb-2 block">
-                        <Label htmlFor="username" value="Username" />
-                      </div>
-                      <TextInput
-                        id="username"
-                        value={profile.user_id.username}
-                        type="text"
-                        disabled={isUpdate ? false : true}
-                        required
-                      />
-                    </div>
+                    <TextInput
+                      id="fullname"
+                      value={profile.user_id.fullname}
+                      type="text"
+                      disabled={true}
+                      required
+                    />
                   </div>
-                  <div className="flex gap-5 w-full">
-                    <div>
-                      <div className="mb-2 block">
-                        <Label htmlFor="spesialisasi" value="Spesialisasi" />
-                      </div>
-                      <TextInput
-                        id="spesialisasi"
-                        value={profile.spesialisasi}
-                        type="text"
-                        disabled={isUpdate ? false : true}
-                        required
-                      />
+                  <div className="w-1/3">
+                    <div className="mb-2 block">
+                      <Label htmlFor="username" value="Username" />
                     </div>
-                    <div>
-                      <div className="mb-2 block">
-                        <Label htmlFor="price" value="Price" />
-                      </div>
-                      <TextInput
-                        id="price"
-                        value={profile.price}
-                        type="text"
-                        disabled={isUpdate ? false : true}
-                        required
-                      />
-                    </div>
+                    <TextInput
+                      id="username"
+                      value={profile.user_id.username}
+                      type="text"
+                      disabled={true}
+                      required
+                    />
                   </div>
-                  {isUpdate ? <Button type="submit">Save</Button> : null}
-                </form>
+                  <div className="w-1/3">
+                    <div className="mb-2 block">
+                      <Label htmlFor="email" value="email" />
+                    </div>
+                    <TextInput
+                      id="email"
+                      value={profile.user_id.email}
+                      type="text"
+                      disabled={true}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-5 w-full">
+                  <div className="w-1/3">
+                    <div className="mb-2 block">
+                      <Label htmlFor="no_hp" value="No Hp" />
+                    </div>
+                    <TextInput
+                      id="no_hp"
+                      value={profile.user_id.no_hp}
+                      type="text"
+                      disabled={true}
+                      required
+                    />
+                  </div>
+                  <div className="w-1/3">
+                    <div className="mb-2 block">
+                      <Label htmlFor="spesialisasi" value="Spesialisasi" />
+                    </div>
+                    <TextInput
+                      id="spesialisasi"
+                      value={profile.spesialisasi}
+                      type="text"
+                      disabled={true}
+                      required
+                    />
+                  </div>
+                  <div className="w-1/3">
+                    <div className="mb-2 block">
+                      <Label htmlFor="price" value="Price" />
+                    </div>
+                    <TextInput
+                      id="price"
+                      value={profile.price}
+                      type="text"
+                      disabled={true}
+                      required
+                    />
+                  </div>
+                </div>
+                <FileInput
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="mt-3 mb-5"
+                  style={{ display: isUpdate ? "block" : "none" }}
+                />
+                {isUpdate ? (
+                  <Button
+                    onClick={handleSave}
+                    className="w-1/4 mx-auto"
+                    type="submit"
+                  >
+                    Save
+                  </Button>
+                ) : null}
+
                 {isUpdate ? null : (
-                  <Button type="text" onClick={() => setIsUpdate(true)}>
+                  <Button
+                    type="text"
+                    className="w-1/4 mx-auto"
+                    onClick={() => setIsUpdate(true)}
+                  >
                     Edit Profile
                   </Button>
                 )}

@@ -14,7 +14,7 @@ const PemesananPage = () => {
 
   const { konselor, isErrored, isLoading } = data;
 
-  const { counselors } = konselor;
+  let { counselors } = konselor;
 
   useEffect(() => {
     dispatch(getKonselor());

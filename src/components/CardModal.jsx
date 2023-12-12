@@ -1,5 +1,3 @@
-import React from "react";
-
 const CardModal = ({ showModal, closeModal }) => {
   return (
     showModal && (
@@ -13,7 +11,9 @@ const CardModal = ({ showModal, closeModal }) => {
             >
               &times;
             </span>
-            <h2 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">Registrasi Berhasil</h2>
+            <h2 className="text-3xl font-bold mb-4 text-center text-[#435EBE]">
+              Registrasi Berhasil
+            </h2>
             <p>Kami akan menghubungi anda jika lulus tahap filtrasi pertama</p>
             <div className="mt-6 text-right">
               <button

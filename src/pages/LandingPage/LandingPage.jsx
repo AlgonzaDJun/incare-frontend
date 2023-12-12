@@ -301,7 +301,7 @@ const LandingPage = () => {
           {/* END KONSELOR */}
 
           {/* START BERITA */}
-          <section
+          {/* <section
             id="berita"
             className="bg-slate-100 -m-4 mt-24 p-4 rounded-lg flex flex-col justify-center items-center pt-4 pb-28 text-slate-900"
           >
@@ -360,7 +360,7 @@ const LandingPage = () => {
                 </button>
               </div>
             </div>
-          </section>
+          </section> */}
           {/* END BERITA */}
 
           {/* FAQ */}
