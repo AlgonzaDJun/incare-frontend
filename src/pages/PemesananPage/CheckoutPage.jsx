@@ -33,16 +33,14 @@ const CheckoutPage = () => {
   const [email, setEmail] = useState("");
   const [nama, setNama] = useState("");
 
-  // console.log(data);
-
   const date = isFulfilled
     ? moment.utc(data.tanggal_konseling).format("DD MMMM YYYY")
     : "loading";
   const jam = isFulfilled
-    ? moment.utc(data.tanggal_konseling).format("HH:mm")
+    ? moment.ISO_8601(data.tanggal_konseling).format("HH:mm")
     : "loading";
   const jam2 = isFulfilled
-    ? moment.utc(data.tanggal_konseling).add(1, "hours").format("HH:mm")
+    ? moment.ISO_8601(data.tanggal_konseling).add(1, "hours").format("HH:mm")
     : "loading";
 
   useEffect(() => {
