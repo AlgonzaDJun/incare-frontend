@@ -46,9 +46,9 @@ const ChatPage = () => {
       .filter((item) => {
         const currentTime = new Date();
         const conselingTime = new Date(item.tanggal_konseling);
-        conselingTime.setHours(conselingTime.getHours() - 1);
+        conselingTime.setHours(conselingTime.getHours() - 0);
         const conselingTimeOut = new Date(item.tanggal_konseling);
-        conselingTimeOut.setHours(conselingTimeOut.getHours());
+        conselingTimeOut.setHours(conselingTimeOut.getHours() - 7);
 
         if (currentTime >= conselingTime && item.status === "success") {
           return item;
@@ -231,10 +231,7 @@ const ChatPage = () => {
                 <div className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
                   {chatNow ? (
                     chatNow.filter((item) => {
-                      return (
-                        item.conselor_id._id === idKonselor &&
-                        item.conselingTime == true
-                      );
+                      return item.conselor_id._id === idKonselor;
                     }) == false ? (
                       <div className="font-bold text-center mx-auto">
                         waktu konseling habis atau belum mulai

@@ -11,6 +11,14 @@ export default function PertemuanKonselor() {
     const token = localStorage.getItem("token");
     dispatch(getAllBooking(token));
   }, [dispatch]);
+  const parseTime = (dateTime) => {
+    const isoDate = new Date(dateTime);
+    const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
+    const hours = addLeadingZero(isoDate.getHours());
+    const minutes = addLeadingZero(isoDate.getMinutes());
+    const formattedTime = `${hours}:${minutes}`;
+    return formattedTime;
+  };
 
   const disabledRatingClass =
     "text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center";
@@ -72,14 +80,9 @@ export default function PertemuanKonselor() {
                         .utc(item.tanggal_konseling)
                         .format("DD MMMM YYYY");
 
-                      const time = moment
-                        .utc(item.tanggal_konseling)
-                        .format("HH:mm");
+                      const time = parseTime(item.tanggal_konseling);
 
-                      const time2 = moment
-                        .utc(item.tanggal_konseling)
-                        .add(1, "hours")
-                        .format("HH:mm");
+                      const time2 = parseTime(item.tanggal_konseling);
 
                       // Waktu dari database
                       const targetTime = new Date(item.tanggal_konseling);

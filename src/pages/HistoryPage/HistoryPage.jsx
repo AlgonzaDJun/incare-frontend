@@ -33,9 +33,14 @@ const HistoryPage = () => {
   } = invoices;
 
   const dataInvoice = allInvoice.data;
-
-  console.log(allBooking);
-
+  const parseTime = (dateTime) => {
+    const isoDate = new Date(dateTime);
+    const addLeadingZero = (number) => (number < 10 ? `0${number}` : number);
+    const hours = addLeadingZero(isoDate.getHours());
+    const minutes = addLeadingZero(isoDate.getMinutes());
+    const formattedTime = `${hours}:${minutes}`;
+    return formattedTime;
+  };
   const token = localStorage.getItem("token")
     ? localStorage.getItem("token")
     : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njg5MThlZGUyMzk3MTBjMzBlZTU3OCIsImVtYWlsIjoia2lzaWdpOTY5MEBtYWlub2ouY29tIiwiaWF0IjoxNzAxMzkyMDkxfQ.M25J0ZPCcrcNWq50xuI3-YW4H2mtkyCrcQ7-7Si6y-0";
@@ -259,14 +264,9 @@ const HistoryPage = () => {
                           .utc(item.tanggal_konseling)
                           .format("DD MMMM YYYY");
 
-                        const time = moment
-                          .utc(item.tanggal_konseling)
-                          .format("HH:mm");
+                        const time = parseTime(item.tanggal_konseling);
 
-                        const time2 = moment
-                          .utc(item.tanggal_konseling)
-                          .add(1, "hours")
-                          .format("HH:mm");
+                        const time2 = parseTime(item.tanggal_konseling);
 
                         // Waktu dari database
                         const targetTime = new Date(item.tanggal_konseling);
