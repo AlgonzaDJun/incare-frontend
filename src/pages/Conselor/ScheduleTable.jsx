@@ -37,6 +37,7 @@ const ScheduleTable = () => {
   const formatDateTime = (date, time) => {
     const dateObject = new Date(date);
     const [hours, minutes] = time.split(":").map(Number);
+
     dateObject.setHours(hours, minutes);
     return dateObject.toISOString();
   };
@@ -51,7 +52,9 @@ const ScheduleTable = () => {
     });
     getSchedules();
   };
-
+  // console.log(startTime);
+  // console.log(selectedDate);
+  // console.log(formatDateTime(selectedDate, startTime));
   // const handleEditSchedule = (index) => {
   //   const schedule = schedules[index];
   //   setSelectedDate(new Date(schedule.date));

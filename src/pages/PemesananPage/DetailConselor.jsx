@@ -75,6 +75,7 @@ const DetailConselor = () => {
     // console.log(dataBooking);
     // console.log(dataToPost)
   };
+
   const parseDate = (datetime) => {
     const isoDate = new Date(datetime);
     const formattedDate = isoDate.toLocaleDateString("id-ID", {
@@ -103,7 +104,7 @@ const DetailConselor = () => {
       navigate("/payment/" + dataBooking.data._id);
     }
   }, [fullFiledBooking]);
-
+  console.log(parseTime(date));
   return (
     <>
       <div className="w-full p-7 block md:grid grid-cols-2">
@@ -228,42 +229,6 @@ const DetailConselor = () => {
                       );
                     })
                   )}
-                  {/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      2
-                    </th>
-                    <td className="px-6 py-4">Jumat</td>
-                    <td className="px-6 py-4">16.00-17.00</td>
-                    <td className="px-6 py-4">
-                      <button
-                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
-                        onClick={() => setOpenModal(true)}
-                      >
-                        Pilih
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="bg-white dark:bg-gray-800">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      3
-                    </th>
-                    <td className="px-6 py-4">Sabtu</td>
-                    <td className="px-6 py-4">15.00-16.00</td>
-                    <td className="px-6 py-4">
-                      <button
-                        className="py-2 px-4 bg-incare-primary hover:bg-incare-darker rounded text-white"
-                        onClick={() => setOpenModal(true)}
-                      >
-                        Pilih
-                      </button>
-                    </td>
-                  </tr> */}
                 </tbody>
               </table>
             </div>

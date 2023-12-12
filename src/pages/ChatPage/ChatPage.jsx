@@ -46,9 +46,9 @@ const ChatPage = () => {
       .filter((item) => {
         const currentTime = new Date();
         const conselingTime = new Date(item.tanggal_konseling);
-        conselingTime.setHours(conselingTime.getHours() - 7);
+        conselingTime.setHours(conselingTime.getHours() - 1);
         const conselingTimeOut = new Date(item.tanggal_konseling);
-        conselingTimeOut.setHours(conselingTimeOut.getHours() - 6);
+        conselingTimeOut.setHours(conselingTimeOut.getHours());
 
         if (currentTime >= conselingTime && item.status === "success") {
           return item;
