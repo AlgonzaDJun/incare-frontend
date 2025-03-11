@@ -113,7 +113,7 @@ export function sendOTP(data) {
 
     return axios
       .post(
-        `https://incare-backend-production.up.railway.app/auth/send-otp`,
+        `${import.meta.env.VITE_SERVER_URL}/auth/send-otp`,
         data
       )
       .then((response) => {
